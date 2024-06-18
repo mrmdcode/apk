@@ -148,7 +148,7 @@ class adminPanelController extends Controller
         $motor->save();
 
         session()->flash('success',"ثبت موتور با موفقیت به پایان رسید .");
-        return redirect()->route('motorManager.admin');
+        return redirect()->route('admin.motorManager');
 
     }
 
