@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-//    return redirect()->route('login');
+    return redirect()->route('login');
 //    return view('welcome');
 
 });
@@ -33,11 +33,17 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
         Route::get("companyManager",[\App\Http\Controllers\adminPanelController::class,'companyManager'])->name('admin.companyManager');
         Route::get("/companyCreate",[\App\Http\Controllers\adminPanelController::class,'companyCreate'])->name('admin.companyCreate');
         Route::post("/companyStore",[\App\Http\Controllers\adminPanelController::class,'companyStore'])->name('admin.companyStore');
+        Route::get("/company/{id}/",[\App\Http\Controllers\adminPanelController::class,'companyView'])->name('admin.companyView');
+        Route::get("/company/Edit/{id}/",[\App\Http\Controllers\adminPanelController::class,'companyEdit'])->name('admin.companyEdit');
+        Route::get("/company/Update/{id}/",[\App\Http\Controllers\adminPanelController::class,'companyUpdate'])->name('admin.companyUpdate');
         Route::get("/company/delete/{id}/",[\App\Http\Controllers\adminPanelController::class,'companyDelete'])->name('admin.companyDelete');
         Route::delete("/company/destroy/{id}/",[\App\Http\Controllers\adminPanelController::class,'companyDestroy'])->name('admin.companyDestroy');
         Route::get("/motorManager",[\App\Http\Controllers\adminPanelController::class,'motorManager'])->name('admin.motorManager');
+        Route::get("/motorManager/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorView'])->name('admin.motorView');
+        Route::get("/motorStore/edit/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorEdit'])->name('admin.motorEdit');
         Route::get("/motorCreate",[\App\Http\Controllers\adminPanelController::class,'motorCreate'])->name('admin.motorCreate');
         Route::post("/motorStore",[\App\Http\Controllers\adminPanelController::class,'motorStore'])->name('admin.motorStore');
+        Route::delete("/motorMAnager/delete/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorDelete'])->name('admin.motorDelete');
         Route::delete("/motorStore/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorDestroy'])->name('admin.motorDestroy');
         Route::get("/motorcreate/{motorId}/events",[\App\Http\Controllers\adminPanelController::class,'motorEvent'])->name('admin.motorEvent');
         Route::get("/motorcreate/{motorId}/event",[\App\Http\Controllers\adminPanelController::class,'motorEventCreate'])->name('admin.motorEventCreate');

@@ -68,10 +68,10 @@
             <div class="card pt-3 px-3 row ">
                 <div class="row ">
                     <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.companyDelete',0)}}" class="btn btn-primary btn-block disabled" id="view">مشاهده کلی</a>
+                        <a href="{{route('admin.companyView',0)}}" class="btn btn-primary btn-block disabled" id="view">مشاهده کلی</a>
                     </div>
                     <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.companyDelete',0)}}" class="btn btn-warning btn-block disabled" id="edit">ویرایش</a>
+                        <a href="{{route('admin.companyEdit',0)}}" class="btn btn-warning btn-block disabled" id="edit">ویرایش</a>
                     </div>
 
                     <div class="col-xl-4 col-md-6">

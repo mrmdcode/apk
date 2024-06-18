@@ -165,4 +165,30 @@ class adminPanelController extends Controller
         return view('Dashboard.Admin.motorData',compact('logs'));
     }
 
+    public function companyView($user)
+    {
+        $user = User::find($user);
+        if ($user->company->type == 'seller') {
+            $motors = $user->company->soldMotors;
+        }
+        elseif ($user->company->type == 'buyer') {
+            $motors = $user->company->boughtMotors;
+        }
+        else{
+
+            $motors = $user->company->soldMotors;
+            $motors->merge($user->company->boughtMotors);
+        }
+
+
+//        return $motor;
+        return view('Dashboard.Admin.companyView',compact('user','motors'));
+    }
+
+    public function companyEdit($user)
+    {
+        $user = User::find($user);
+        return view('Dashboard.Admin.companyEdit',compact('user'));
+    }
+
 }
