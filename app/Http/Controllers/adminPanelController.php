@@ -64,6 +64,7 @@ class adminPanelController extends Controller
         ]);
 
 
+
         $user = User::create([
             'email' => $validatedData['email'],
             'password' => Hash::make('password'),
@@ -79,7 +80,17 @@ class adminPanelController extends Controller
         return redirect()->route('admin.companyManager');
     }
 
+    public function companyDelete($user)
+    {
+        $company = User::find($user);
 
+        return view('Dashboard.Admin.companyDelete', compact('company'));
+    }
+    public function companyDestroy($user)
+    {
+        $company = User::find($user);
+        return [$company,$company->company,$company->company->boughtMotors,$company->company->soldMotors];
+    }
     public function motorCreate()
     {
             $company = User::where('type','company')->orderBy('created_at','desc')->get();

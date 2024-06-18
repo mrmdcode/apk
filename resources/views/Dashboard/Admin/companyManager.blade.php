@@ -1,6 +1,5 @@
 @extends("Dashboard.Layouts.app")
 @section("content")
-    <span class="mt-5">d</span>
     <div class="card row my-5 ">
         <div class="card-body">
             <h4 class="mt-0 header-title">مدیریت شرکت ها</h4>
@@ -69,13 +68,14 @@
             <div class="card pt-3 px-3 row ">
                 <div class="row ">
                     <div class="col-xl-4 col-md-6">
-                        <a href="#/view/" class="btn btn-primary btn-block disabled" id="view">مشاهده کلی</a>
+                        <a href="{{route('admin.companyDelete',0)}}" class="btn btn-primary btn-block disabled" id="view">مشاهده کلی</a>
                     </div>
                     <div class="col-xl-4 col-md-6">
-                        <a href="#/edit/" class="btn btn-warning btn-block disabled" id="edit">ویرایش</a>
+                        <a href="{{route('admin.companyDelete',0)}}" class="btn btn-warning btn-block disabled" id="edit">ویرایش</a>
                     </div>
+
                     <div class="col-xl-4 col-md-6">
-                        <a href="#/delete/" class="btn btn-danger btn-block disabled" id='delete'>حذف</a>
+                        <a href="{{route('admin.companyDelete',0)}}" class="btn btn-danger btn-block disabled" id='delete'>حذف</a>
                     </div>
                 </div>
                 <div class="row">
@@ -97,11 +97,19 @@
         console.log("ff")
         $('input[name="choice"]').on('change',function (){
             targer = $('input[name="choice"]:checked').val()
-            $('#view').attr('href',$('#view').attr('href')+targer)
-            $('#edit').attr('href',$('#edit').attr('href')+targer)
-            $('#delete').attr('href',$('#delete').attr('href')+targer)
-            $('#motors').attr('href',$('#motors').attr('href')+targer)
 
+            function updateHref(elementId, target) {
+                let url = $(elementId).attr('href');
+                url = url.split('/');
+                url.pop();
+                url = url.join('/');
+                $(elementId).attr('href', url + '/' + target);
+            }
+
+            updateHref('#view',targer);
+            updateHref('#edit',targer);
+            updateHref('#delete',targer);
+            updateHref('#motors',targer);
         if(targer !=  null){
             $('#view').removeClass('disabled')
             $('#edit').removeClass('disabled')

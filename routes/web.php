@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\MotorData;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+//    return redirect()->route('login');
+//    return view('welcome');
+
 });
 
 Auth::routes();
@@ -30,7 +33,8 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
         Route::get("companyManager",[\App\Http\Controllers\adminPanelController::class,'companyManager'])->name('admin.companyManager');
         Route::get("/companyCreate",[\App\Http\Controllers\adminPanelController::class,'companyCreate'])->name('admin.companyCreate');
         Route::post("/companyStore",[\App\Http\Controllers\adminPanelController::class,'companyStore'])->name('admin.companyStore');
-        Route::delete("/companyDestroy/{id}",[\App\Http\Controllers\adminPanelController::class,'companyDestroy'])->name('admin.companyDestroy');
+        Route::get("/company/delete/{id}/",[\App\Http\Controllers\adminPanelController::class,'companyDelete'])->name('admin.companyDelete');
+        Route::delete("/company/destroy/{id}/",[\App\Http\Controllers\adminPanelController::class,'companyDestroy'])->name('admin.companyDestroy');
         Route::get("/motorManager",[\App\Http\Controllers\adminPanelController::class,'motorManager'])->name('admin.motorManager');
         Route::get("/motorCreate",[\App\Http\Controllers\adminPanelController::class,'motorCreate'])->name('admin.motorCreate');
         Route::post("/motorStore",[\App\Http\Controllers\adminPanelController::class,'motorStore'])->name('admin.motorStore');

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\Process;
 use App\Models\CompanyMotors;
 use App\Models\MotorData;
 use App\Models\MotorEvent;
@@ -56,6 +57,7 @@ class MqttListener extends Command
                 'data'=>json_encode(json_decode($message)),
             ]);
             var_dump($MD->data);
+            Process::dispatch();
 
         }, 1);
         $mqtt->loop(true);

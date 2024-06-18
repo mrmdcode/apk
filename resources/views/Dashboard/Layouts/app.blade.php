@@ -112,6 +112,7 @@
 <!--Morris Chart-->
 <script src="{{asset("assets/dashboard/plugins/morris/morris.min.js")}}"></script>
 <script src="{{asset("assets/dashboard/plugins/raphael/raphael.min.js")}}"></script>
+<script src="{{asset("assets/dashboard/plugins/sweetaler2/sweetalert2@11.js")}}"></script>
 
 <!-- dashboard js -->
 <script src="{{asset("assets/dashboard/pages/dashboard.int.js")}}"></script>
