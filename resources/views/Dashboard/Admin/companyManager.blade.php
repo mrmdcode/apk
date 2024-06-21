@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <a href="#/motors/" class="btn btn-block btn-outline-secondary disabled" id="motors">موتور ها</a>
+                    <a href="{{route('admin.companyMotors',0)}}" class="btn btn-block btn-outline-secondary disabled" id="motors">موتور ها</a>
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
         let targer ;
 
 
-        console.log("ff")
+
         $('input[name="choice"]').on('change',function (){
             targer = $('input[name="choice"]:checked').val()
 

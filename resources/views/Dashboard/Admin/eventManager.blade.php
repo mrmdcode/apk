@@ -11,32 +11,33 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>نام موتور</th>
-                        <th>سریال موتور</th>
-                        <th>زمان استارت</th>
-                        <th>زمان نصب</th>
-                        <th>تعداد اخطار E</th>
-                        <th>تعداد اخطار W</th>
-                        <th>تعداد اخطار N</th>
-                        <th>توضیخات موتور</th>
+                        <th>نام رویداد</th>
+                        <th>تعداد دیتا</th>
+                        <th> مقادیر (کم - نرمال - زیاد)</th>
+                        <th>مقدار E</th>
+                        <th>مقدار W</th>
+                        <th>مقدار N</th>
+                        <th>payload</th>
+                        <th>topic</th>
                         <th>انتخاب</th>
                     </tr>
                     </thead>
                     <tbody>
                     @php $i=1; @endphp
-                    @forelse($motors as $motor)
+                    @forelse($events as $event)
                         <tr>
                             <th scope="row">{{$i++}}</th>
-                            <td>{{$motor->motor_name}}</td>
-                            <td>{{$motor->motor_serial}}</td>
-                            <td>{{ $motor->motor_start? $motor->motor_start : "راه اندازی نشده"  }}</td>
-                            <td>{{ verta($motor->instalation_date)->format("y/m") }}</td>
-                            <td>{{$motor->data->where('process','error')->count()}}</td>
-                            <td>{{$motor->data->where('process','warning')->count()}}</td>
-                            <td>{{$motor->data->where('process','normal')->count()}}</td>
-                            <td>{{\Illuminate\Support\Str::substr($motor->motor_description,0,50)}}</td>
+                            <td>{{$event->name}}</td>
+                            <td>{{$event->data->count()}}</td>
+                            <td>({{$event->min}} < {{$event->normal}} > {{$event->max}}) </td>
+                            <td>{{$event->data->where('process',"error")->count()}}</td>
+                            <td>{{$event->data->where('process',"warning")->count()}}</td>
+                            <td>{{$event->data->where('process',"normal")->count()}}</td>
+                            <td>{{$event->payload}}</td>
+                            <td>{{$event->topic}}</td>
+
                             <td>
-                                <input type="radio" name="choice" value="{{$motor->id}}" id="motor_{{$motor->id}}">
+                                <input type="radio" name="choice" value="{{$event->id}}" >
                             </td>
                         </tr>
                     @empty
@@ -58,9 +59,6 @@
                     <div class="col-xl-4 col-md-6">
                         <a href="{{route('admin.motorDelete',0)}}" class="btn btn-danger btn-block disabled" id="delete">حذف</a>
                     </div>
-                </div>
-                <div class="row">
-                    <a href="{{route('admin.motorEvent' ,0)}}" class="btn btn-block btn-outline-secondary disabled" id="event">تنظیم اخطار</a>
                 </div>
             </div>
         </div>
@@ -87,12 +85,11 @@
             updateHref('#view',targer);
             updateHref('#edit',targer);
             updateHref('#delete',targer);
-            updateHref('#event',targer);
+
             if(targer !=  null){
                 $('#view').removeClass('disabled')
                 $('#edit').removeClass('disabled')
                 $('#delete').removeClass('disabled')
-                $('#event').removeClass('disabled')
             }
 
         })

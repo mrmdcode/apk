@@ -37,8 +37,12 @@ class CompanyMotors extends Model
     public function seller(){
         return $this->belongsTo(UserCompany::class, "company_seller_id",'id',);
     }
-    public function motor(){
+    public function events(){
         return $this->hasMany(MotorEvent::class,"motor_id","id");
     }
 
+    public function data()
+    {
+        return $this->hasMany(MotorData::class,"motor_id","id");
+    }
 }

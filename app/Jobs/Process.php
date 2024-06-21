@@ -13,36 +13,25 @@ use Illuminate\Queue\SerializesModels;
 class Process implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public $data ;
+    public $value;
+    public function __construct($data,$value)
     {
-        //
+        $this->data = $data;
+        $this->value = $value;
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
     public function handle()
     {
-        $data = MotorData::where('process',null)->get();
-        foreach ($data as $value) {
-            $redata =json_decode($value->data,true);
-            $payload = explode('->',$value->event->payload);
-            $da = $redata[$payload[0]][$payload[1]];
+            $value = MotorData::find($this->value->id);
+            $motor_name = $value->motor->motor_name;
 
-            if ($da == $value->event->normal){
+            if ($this->data == $value->event->normal){
                 $value->process = 'normal';
                 $value->processed_at = now();
                 $value->save();
             }
-            elseif ( $da > $value->event->min && $da < $value->event->max){
+            elseif ( $this->data > $value->event->min && $this->data  < $value->event->max){
                 $value->process = 'warning';
                 $value->processed_at = now();
                 $value->save();
@@ -53,8 +42,16 @@ class Process implements ShouldQueue
                 $value->save();
             }
 
+            echo '|----------------------------------------'."\n"
+                .'| motor name : '.$motor_name ."\n"
+                .'| event name : '.$value->event->name."\n"
+                .'| data : '.$this->data.' | normal : '.$value->event->min.' < '.$value->event->normal.' > '.$value->event->max."\n"
+                .'| result: '.$value->process."\n"
+                .'|----------------------------------------'."\n"
+            ;
 
-        }
+
+
 
     }
 }

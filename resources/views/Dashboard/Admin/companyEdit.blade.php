@@ -6,7 +6,7 @@
            <h2>{{$user->company->company_name}}</h2>
            <form action="{{ route('admin.companyUpdate',$user->id) }}" method="POST">
                @csrf
-               @method("put")
+               @method("PUT")
                <div class="form-row">
 
 
@@ -86,7 +86,7 @@
                    </div>
                </div>
 
-               <button type="submit" class="btn btn-primary">ایجاد</button>
+               <button type="submit" class="btn btn-primary">بروزرسانی</button>
            </form>
        </div>
    </div>

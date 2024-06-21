@@ -2,7 +2,7 @@
 
     <div class="topbar-left	d-none d-lg-block">
         <div class="text-center">
-            <a href="index-2.html" class="logo"><img src="#" height="22" alt="logo"></a>
+            <a  class="logo"><img src="{{asset('assets/dashboard/images/logo_dark.png')}}" class="w-100" alt="logo"></a>
         </div>
     </div>
 

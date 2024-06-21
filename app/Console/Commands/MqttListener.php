@@ -46,20 +46,24 @@ class MqttListener extends Command
 
     public function handle()
     {
-        $mqtt = MQTT::connection();
-        $mqtt->subscribe('#', function (string $topic, string $message) {
-            var_dump($this->extractParts($topic)[0] );
-            $ME = MotorEvent::where('topic',$topic)->first();
-            $CM = CompanyMotors::where('motor_serial',$this->extractParts($topic)[0])->first();
-            $MD = MotorData::create([
-                'motor_id'=>$CM->id,
-                'event_id'=>$ME->id,
-                'data'=>json_encode(json_decode($message)),
-            ]);
-            var_dump($MD->data);
-            Process::dispatch();
+        try {
+            $mqtt = MQTT::connection();
+            $mqtt->subscribe('#', function (string $topic, string $message) {
+                //            var_dump( );
+                $ME = MotorEvent::where('topic',$topic)->first();
+                $CM = CompanyMotors::where('motor_serial',$this->extractParts($topic)[0])->first();
+                $MD = MotorData::create([
+                    'motor_id'=>$CM->id,
+                    'event_id'=>$ME->id,
+                    'data'=>json_encode(json_decode($message)),
+                ]);
+                var_dump($this->extractParts($topic)[0],$MD->data);
 
-        }, 1);
-        $mqtt->loop(true);
+            }, 1);
+            $mqtt->loop(true);
+        } catch (\Exception $e) {
+            // در صورت بروز خطا، پیام خطا را ذخیره و نمایش دهید
+            $this->error('An error occurred: ' . $e->getMessage());
+        }
     }
 }

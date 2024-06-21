@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CompanyMotors;
 use App\Models\MotorData;
+use App\Models\MotorEvent;
 use App\Models\User;
 use App\Models\UserCompany;
 use Carbon\Carbon;
@@ -77,6 +78,24 @@ class adminPanelController extends Controller
 
 
         session()->flash('success',"ثبت شرکت با موفقیت به پایان رسید .");
+        return redirect()->route('admin.companyManager');
+    }
+
+    public function companyUpdate(Request $request,$id)
+    {
+        $validatedData = $request->validate([
+            'company_name' => 'required|string|max:255',
+            'company_registration_number' => 'required|string|max:255',
+            'company_address' => 'required|string|max:255',
+            'legal_address_company' => 'required|string|max:255',
+            'economic_code_company' => 'required|string|max:255',
+            'postal_code_company' => 'required|string|max:255',
+            'name_agent_company' => 'string|max:255',
+            'phone_agent_company' => 'string|max:255',
+            'national_ID' => 'required|string|max:255',
+        ]);
+
+        UserCompany::find($id)->update($validatedData);
         return redirect()->route('admin.companyManager');
     }
 
@@ -191,4 +210,32 @@ class adminPanelController extends Controller
         return view('Dashboard.Admin.companyEdit',compact('user'));
     }
 
+    public function companyMotors($user)
+    {
+        $user = User::find($user);
+        if ($user->company->type == 'seller') {
+            $motors = $user->company->soldMotors;
+        }
+        elseif ($user->company->type == 'buyer') {
+            $motors = $user->company->boughtMotors;
+        }
+        else{
+
+            $motors = $user->company->soldMotors;
+            $motors->merge($user->company->boughtMotors);
+        }
+        return view('Dashboard.Admin.MotorManager', compact('motors'));
+    }
+
+    public function motorView($motorId)
+    {
+        $motor =     CompanyMotors::find($motorId);
+        return view('Dashboard.Admin.motorView',compact('motor'));
+    }
+
+    public function MotorEvent($motorId)
+    {
+        $events = MotorEvent::where('motor_id',$motorId)->orderBy('created_at','desc')->get();
+        return view('Dashboard.Admin.eventManager',compact('events'));
+    }
 }

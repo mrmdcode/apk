@@ -27,7 +27,7 @@ class MotorEvent extends Model
 
     public function data()
     {
-        return $this->hasMany(MotorData::class,'motor_id','id');
+        return $this->hasMany(MotorData::class,'event_id','id');
     }
 
 }
