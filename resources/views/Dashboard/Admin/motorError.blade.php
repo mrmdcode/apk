@@ -4,47 +4,23 @@
         <div class="card-body">
 
             {{--            <h4 class="mt-0 header-title"> مدیریت اخطار ها - {{$motor->name}}</h4>--}}
-            <div class="row px-4">
+            <div class="row px-4 justify-content-center">
                 {{--                <a href="{{route('admin.motorEventStore',$motor->id)}}" class="btn btn-outline-success">افزودن اخطار</a>--}}
+                {{$logs->links()}}
             </div>
 
-            <div class="table-responsive my-5">
-                <table class="table table-striped table-bordered dt-responsive nowrap" >
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>نام موتور</th>
-                        <th>خریدار</th>
-                        <th>فروشنده</th>
-                        <th>دیتا</th>
-                        <th>پردازش</th>
-                        <th>زمان پردازش</th>
-                        <th>زمان دریافت</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @php $i=1; @endphp
-                    @forelse($logs as $log)
-                        <tr>
-                            <td>{{$i++}}</td>
-                            <td>{{$log->motor->motor_name}}</td>
-                            <td>{{$log->motor->buyer->company_name}}</td>
-                            <td>{{$log->motor->seller->company_name}}</td>
-                            <td>{{$log->data}}</td>
-                            <td>@if($log->process)شده@elseنشده @endif</td>
-                            <td>{{verta($log->processed_at)}}</td>
-                            <td>{{verta($log->created_at)->formatWord('l d F')}}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8">دیتا نا موجود</td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                </table>
-                <div class="row justify-content-center">
-                    {{$logs->links()}}
-                </div>
+            <div class="my-5">
+                @forelse($logs as $log)
+                    @if($log->process == "warning")
+                        <div class="alert alert-warning">موتور {{$log->motor->motor_name}} که توسط  {{$log->motor->buyer->company_name}} خریداری شده  در زمان {{verta($log->created_at)}} خطای Warning دارد .</div>
+                    @else
+                        <div class="alert alert-danger">موتور {{$log->motor->motor_name}} که توسط  {{$log->motor->buyer->company_name}} خریداری شده  در زمان {{verta($log->created_at)}} خطای Error دارد .</div>
+                    @endif
+                @empty
+                    <div class="alert alert-success">
+                        هیچ خطای Error و Warning وجود ندارد.
+                    </div>
+                @endforelse
             </div>
         </div>
     </div>

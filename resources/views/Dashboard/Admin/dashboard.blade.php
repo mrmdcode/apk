@@ -62,8 +62,8 @@
                 <div class="card bg-pink mini-stat text-white">
                     <div class="p-3 mini-stat-desc">
                         <div class="clearfix">
-                            <h6 class="text-uppercase mt-0 float-left text-white-50">تعداد اخطار ها </h6>
-                            <h4 class="mb-3 mt-0 float-right">15</h4>
+                            <h6 class="text-uppercase mt-0 float-left text-white-50">تعداد اخطار E </h6>
+                            <h4 class="mb-3 mt-0 float-right">{{$logsE}}</h4>
                         </div>
 
                     </div>
@@ -71,7 +71,7 @@
                         <div class="float-right">
                             <a href="#" class="text-white-50"><i class="mdi mdi-tag-text-outline h5"></i></a>
                         </div>
-                        <p class="font-14 m-0">بیشترین اخطار : موتور یک</p>
+                        <p class="font-14 m-0">آخرین موتور ثبتی : {{$lastmotor}}</p>
                     </div>
                 </div>
             </div>
@@ -191,7 +191,7 @@
 
 
 
-            var map = L.map('map').setView([32.4279, 53.6880], 6);
+            var map = L.map('map').setView([32.4279, 53.6880], 5);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: ''
             }).addTo(map);

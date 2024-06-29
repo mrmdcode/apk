@@ -118,7 +118,7 @@
                            <td>{{$motor->motor_serial}}</td>
                            <td>{{ $motor->motor_start? $motor->motor_start : "راه اندازی نشده"  }}</td>
                            <td>{{ verta($motor->instalation_date)->format("y/m") }}</td>
-                           <td> 0 </td>
+                           <td> {{$motor->data->count()}} </td>
                            <td>{{\Illuminate\Support\Str::substr($motor->motor_description,0,50)}}</td>
                            <td>
                                <input type="radio" name="choice" value="{{$motor->id}}" id="motor_{{$motor->id}}">

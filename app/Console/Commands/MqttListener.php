@@ -57,7 +57,7 @@ class MqttListener extends Command
                     'event_id'=>$ME->id,
                     'data'=>json_encode(json_decode($message)),
                 ]);
-                var_dump($this->extractParts($topic),$MD->data);
+                var_dump($topic,$MD->data);
 
             }, 1);
             $mqtt->loop(true);

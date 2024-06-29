@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\UserCompany;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class adminPanelController extends Controller
@@ -19,8 +20,11 @@ class adminPanelController extends Controller
         $company = User::where('type','company')->count();
         $logs = MotorData::all()->count();
         $logsT = MotorData::where('created_at',">=",Carbon::today())->count();
+        $logsE = MotorData::where('process','error')->count();
+        $lastmotor = CompanyMotors::orderByDesc('id')->first('motor_name')['motor_name'];
 
-        return view('Dashboard.Admin.dashboard',compact('motor','company','logs','logsT'));
+
+        return view('Dashboard.Admin.dashboard',compact('motor','company','logs','logsE','logsT','lastmotor'));
     }
 
     public function motorLoc()
@@ -182,6 +186,12 @@ class adminPanelController extends Controller
     {
         $logs = MotorData::orderBy('created_at','desc')->paginate(10);
         return view('Dashboard.Admin.motorData',compact('logs'));
+    }
+
+    public function motorError()
+    {
+        $logs = MotorData::where('process','!=','normal')->orderBy('created_at','desc')->paginate(25);
+        return view('Dashboard.Admin.motorError',compact('logs'));
     }
 
     public function companyView($user)

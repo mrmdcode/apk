@@ -32,7 +32,7 @@
             <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-archive"></i> <span> دیتا </span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
             <ul class="list-unstyled">
                 <li><a href="{{route('admin.motorData')}}">دیتا ها</a></li>
-                <li><a href="#">هشدار ها </a></li>
+                <li><a href="{{route('admin.motorError')}}">هشدار ها </a></li>
             </ul>
         </li>
         <li class="has_sub">

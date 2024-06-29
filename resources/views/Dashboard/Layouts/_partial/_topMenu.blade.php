@@ -68,6 +68,8 @@
             </li>
 
 
+
+
             <li class="list-inline-item dropdown notification-list nav-user">
                 <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="false" aria-expanded="false">
@@ -75,6 +77,7 @@
                     <span class="d-none d-md-inline-block ml-1"> {{auth()->user()->company->company_name}} <i class="mdi mdi-chevron-down"></i> </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown">
+                    <a class="dropdown-item" href="#"><i class="dripicons-box text-muted"></i>تغییر زبان EN</a>
                     <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted"></i> قفل صفحه</a>
                     <div class="dropdown-divider"></div>
                     <form action="{{route('logout')}}" method="post" id="fmlogout">
