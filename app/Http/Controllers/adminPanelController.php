@@ -180,7 +180,7 @@ class adminPanelController extends Controller
 
     public function motorData()
     {
-        $logs = MotorData::orderBy('created_at','desc')->get();
+        $logs = MotorData::orderBy('created_at','desc')->paginate(10);
         return view('Dashboard.Admin.motorData',compact('logs'));
     }
 
@@ -237,5 +237,10 @@ class adminPanelController extends Controller
     {
         $events = MotorEvent::where('motor_id',$motorId)->orderBy('created_at','desc')->get();
         return view('Dashboard.Admin.eventManager',compact('events'));
+    }
+
+    public function notfounded()
+    {
+        return abort(404,"صفحه در حال راه اندازی میباشد یا پیدا نشده .");
     }
 }

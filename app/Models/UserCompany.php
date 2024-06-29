@@ -41,7 +41,7 @@ class UserCompany extends Model
 
     public function MotorData()
     {
-        return $this->hasMany(MotorData::class, 'mpotor_id','id');
+        return $this->hasMany(MotorData::class, 'motor_id','id');
     }
 
 }

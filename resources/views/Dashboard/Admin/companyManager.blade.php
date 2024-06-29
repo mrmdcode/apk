@@ -11,8 +11,7 @@
                         <th>شرکت</th>
                         <th>نوع شرکت</th>
                         <th>تعداد موتور ها</th>
-                        <th>تعداد اخطار</th>
-                        <th>تعداد اوپراتور</th>
+
                         <th>انتخاب</th>
                     </tr>
                     </thead>
@@ -49,8 +48,7 @@
                                         @break
                                 @endswitch
                             </td>
-                            <td>{{$user->company->company_name}}</td>
-                            <td>{{$user->company->company_name}}</td>
+
                             <td>
                                 <input type="radio" name="choice" id="choice_{{$user->id}}" value="{{$user->id}}">
                             </td>

@@ -48,17 +48,17 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
 
         Route::get("/motorManager",[\App\Http\Controllers\adminPanelController::class,'motorManager'])->name('admin.motorManager');
         Route::get("/motorManager/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorView'])->name('admin.motorView');
-        Route::get("/motorStore/edit/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorEdit'])->name('admin.motorEdit');
+        Route::get("/motorStore/edit/{motorId}",[\App\Http\Controllers\adminPanelController::class,'notfounded'])->name('admin.motorEdit');
         Route::get("/motorCreate",[\App\Http\Controllers\adminPanelController::class,'motorCreate'])->name('admin.motorCreate');
         Route::post("/motorStore",[\App\Http\Controllers\adminPanelController::class,'motorStore'])->name('admin.motorStore');
-        Route::get("/motorManager/delete/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorDelete'])->name('admin.motorDelete');
-        Route::delete("/motorManager/destroy/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorDestroy'])->name('admin.motorDestroy');
+        Route::get("/motorManager/delete/{motorId}",[\App\Http\Controllers\adminPanelController::class,'notfounded'])->name('admin.motorDelete');
+        Route::delete("/motorManager/destroy/{motorId}",[\App\Http\Controllers\adminPanelController::class,'notfounded'])->name('admin.motorDestroy');
 
 
 
         Route::get("events/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorEvent'])->name('admin.motorEvent');
-        Route::get("/motorcreate/{motorId}/event",[\App\Http\Controllers\adminPanelController::class,'motorEventCreate'])->name('admin.motorEventCreate');
-        Route::post("/motorcreate/{motorId}/event",[\App\Http\Controllers\adminPanelController::class,'motorEventStore'])->name('admin.motorEventStore');
+        Route::get("/motorcreate/{motorId}/event",[\App\Http\Controllers\adminPanelController::class,'notfounded'])->name('admin.motorEventCreate');
+        Route::post("/motorcreate/{motorId}/event",[\App\Http\Controllers\adminPanelController::class,'notfounded'])->name('admin.motorEventStore');
 
 
         Route::get("/motorData",[\App\Http\Controllers\adminPanelController::class,'motorData'])->name('admin.motorData');

@@ -9,7 +9,7 @@
             </div>
 
             <div class="table-responsive my-5">
-                <table class="table table-striped table-bordered dt-responsive nowrap" id="datatable">
+                <table class="table table-striped table-bordered dt-responsive nowrap" >
                     <thead>
                     <tr>
                         <th>#</th>
@@ -42,6 +42,9 @@
                     @endforelse
                     </tbody>
                 </table>
+                <div class="row justify-content-center">
+                    {{$logs->links()}}
+                </div>
             </div>
         </div>
     </div>
