@@ -3,6 +3,13 @@
     <div class="card row my-5 ">
         <div class="card-body">
             <h4 class="mt-0 header-title">مدیریت شرکت ها</h4>
+            @if(session('success'))
+                <div class="alert alert-success">{{session('success')}}</div>
+            @endif
+            @if(session('error'))
+                <div class="alert alert-danger">{{session('error')}}</div>
+            @endif
+
             <div class="table-responsive">
                 <table class="table table-bordered mb-0">
                     <thead>

@@ -49,7 +49,7 @@ class MqttListener extends Command
         try {
             $mqtt = MQTT::connection();
             $mqtt->subscribe('#', function (string $topic, string $message) {
-                //            var_dump( );
+                            var_dump($topic);
                 $ME = MotorEvent::where('topic',$topic)->first();
                 $CM = CompanyMotors::where('motor_serial',$this->extractParts($topic)[0])->first();
                 $MD = MotorData::create([

@@ -17,7 +17,7 @@
 
                    <div class="form-group col-md-6">
                        <label for="email" class="col-form-label">ایمیل</label>
-                       <input type="email" name="email" value="{{$user->company->email ? $user->company->email : ""}}" user class="user form-control" id="company_registration_number" placeholder="a@a.a">
+                       <input type="email" name="email" value="{{$user->email ? $user->email : ""}}" user class="user form-control" id="company_registration_number" placeholder="a@a.a">
 
                    </div>
 
@@ -69,7 +69,7 @@
                    </div>
 
                    <div class="form-group col-md-6 ">
-                       <label for="type" class="col-form-label user" user>نوع شرکت</label>
+                       <label for="type" class="col-form-label"r>نوع شرکت</label>
                        <select name="type" class="form-control" id="type">
                            @switch($user->company->type)
                                @case('seller')
@@ -88,6 +88,15 @@
 
                <button type="submit" class="btn btn-primary">بروزرسانی</button>
            </form>
+
+
+           @if($errors->any())
+               @foreach ($errors->all() as $error)
+               <div class="alert alert-danger">
+                   {{ $error }}
+               </div>
+               @endforeach
+           @endif
        </div>
    </div>
 @endsection

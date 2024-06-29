@@ -17,7 +17,7 @@
 
                    <div class="form-group col-md-6">
                        <label for="email" class="col-form-label">ایمیل</label>
-                       <input type="email" name="email" value="{{$user->company->email ? $user->company->email : ""}}" disabled class="disabled form-control" id="company_registration_number" placeholder="a@a.a">
+                       <input type="email" name="email" value="{{$user->email ? $user->email : ""}}" disabled class="disabled form-control" id="company_registration_number" placeholder="a@a.a">
 
                    </div>
 

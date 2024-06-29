@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class adminPanelController extends Controller
 {
@@ -88,18 +89,21 @@ class adminPanelController extends Controller
     public function companyUpdate(Request $request,$id)
     {
         $validatedData = $request->validate([
-            'company_name' => 'required|string|max:255',
             'company_registration_number' => 'required|string|max:255',
             'company_address' => 'required|string|max:255',
-            'legal_address_company' => 'required|string|max:255',
+            'legal_address_company' => 'nullable|string|max:255',
             'economic_code_company' => 'required|string|max:255',
             'postal_code_company' => 'required|string|max:255',
-            'name_agent_company' => 'string|max:255',
-            'phone_agent_company' => 'string|max:255',
+            'name_agent_company' => 'nullable|string|max:255',
+            'phone_agent_company' => 'nullable|string|max:255',
             'national_ID' => 'required|string|max:255',
         ]);
 
-        UserCompany::find($id)->update($validatedData);
+        $bool = UserCompany::find($id)->update($validatedData);
+        if ($bool)
+            session()->flash('success',"اطلاعات شرکت بروزرسانی شد .");
+        else
+            session()->flash('error',"مشکلی در صبت اطلاعات شرکت به وجود آمده.");
         return redirect()->route('admin.companyManager');
     }
 
@@ -112,7 +116,11 @@ class adminPanelController extends Controller
     public function companyDestroy($user)
     {
         $company = User::find($user);
-        return [$company,$company->company,$company->company->boughtMotors,$company->company->soldMotors];
+        Log::emergency("کد شرکت پاک شد .", [$company,$company->company,$company->company->boughtMotors,$company->company->soldMotors]);
+
+
+        session()->flash('success',"شرکت و موتور هایی که به آن فروخته شده و از آن خریداری شده پاک شد . و تمامی دیتا های مربوطه نیز پاک شد .");
+        return redirect()->route('admin.companyManager');
     }
     public function motorCreate()
     {
@@ -189,6 +197,11 @@ class adminPanelController extends Controller
     }
 
     public function motorError()
+    {
+        $logs = MotorData::orderBy('created_at','desc')->paginate(25);
+        return view('Dashboard.Admin.motorError',compact('logs'));
+    }
+    public function motorErrorWithOutNormal()
     {
         $logs = MotorData::where('process','!=','normal')->orderBy('created_at','desc')->paginate(25);
         return view('Dashboard.Admin.motorError',compact('logs'));

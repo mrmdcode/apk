@@ -8,13 +8,20 @@
                 {{--                <a href="{{route('admin.motorEventStore',$motor->id)}}" class="btn btn-outline-success">افزودن اخطار</a>--}}
                 {{$logs->links()}}
             </div>
+            @if(Route::current()->getName() == 'admin.motorError')
+
+                <a href="{{route('admin.motorErrorWON')}}" class="btn btn-secondary">بدون مقادیر normal</a>
+            @endif
 
             <div class="my-5">
                 @forelse($logs as $log)
                     @if($log->process == "warning")
                         <div class="alert alert-warning">موتور {{$log->motor->motor_name}} که توسط  {{$log->motor->buyer->company_name}} خریداری شده  در زمان {{verta($log->created_at)}} خطای Warning دارد .</div>
-                    @else
+                    @elseif($log->process == "error")
                         <div class="alert alert-danger">موتور {{$log->motor->motor_name}} که توسط  {{$log->motor->buyer->company_name}} خریداری شده  در زمان {{verta($log->created_at)}} خطای Error دارد .</div>
+                    @elseif('normal')
+                        <div class="alert alert-success">موتور {{$log->motor->motor_name}} که توسط  {{$log->motor->buyer->company_name}} خریداری شده  در زمان {{verta($log->created_at)}} خطای Normal دارد .</div>
+
                     @endif
                 @empty
                     <div class="alert alert-success">

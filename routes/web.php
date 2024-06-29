@@ -64,6 +64,7 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
         Route::get("/motorData",[\App\Http\Controllers\adminPanelController::class,'motorData'])->name('admin.motorData');
         Route::get("/motorLog/{motorId}/{userId}/{startReceived}/{endReceived}/{boolProcess}/{startTimeProcess}/{endTimeProcess}",[\App\Http\Controllers\adminPanelController::class,'motorLogsAPI'])->name('admin.motorLogs.api');
         Route::get("/motorError",[\App\Http\Controllers\adminPanelController::class,'motorError'])->name('admin.motorError');
+        Route::get("/motorError/motorErrorWithOutNormal",[\App\Http\Controllers\adminPanelController::class,'motorErrorWithOutNormal'])->name('admin.motorErrorWON');
     });
     Route::prefix('company')->group(function (){
         Route::get('/',[\App\Http\Controllers\Company\CompanyController::class,'dashboard'])->name('company.dashboard');
