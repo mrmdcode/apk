@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\logErrorMail;
 use App\Models\MotorData;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -9,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 
 class Process implements ShouldQueue
 {
@@ -40,6 +42,7 @@ class Process implements ShouldQueue
                 $value->process = 'error';
                 $value->processed_at = now();
                 $value->save();
+                errorMailSenderJob::dispatch($value->motor_id);
             }
 
             echo '|----------------------------------------'."\n"

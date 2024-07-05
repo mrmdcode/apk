@@ -1,4 +1,4 @@
-@extends("Dashboard.Admin.Layouts.app")
+@extends("Dashboard.Company.Layouts.app")
 @section("content")
     <div class="card mt-5">
         <div class="card-body">
@@ -49,22 +49,16 @@
             </div>
             <div class="card pt-3 px-3 row ">
                 <div class="row ">
-                    <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.motorView',0)}}" class="btn btn-primary btn-block disabled" id="view">مشاهده
+                    <div class="col-xl-6 col-md-6">
+                        <a href="{{route('company.motorView',0)}}" class="btn btn-primary btn-block disabled" id="view">مشاهده
                             کلی</a>
                     </div>
-                    <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.motorEdit',0)}}" class="btn btn-warning btn-block disabled" id="edit">ویرایش</a>
-                    </div>
-                    <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.motorDelete',0)}}" class="btn btn-danger btn-block disabled"
-                           id="delete">حذف</a>
+                    <div class="col-xl-6 col-md-6">
+                        <a href="{{route('company.motorEvent' ,0)}}" class="btn btn-block btn-outline-secondary disabled"
+                           id="event">تنظیم اخطار</a>
                     </div>
                 </div>
-                <div class="row">
-                    <a href="{{route('admin.motorEvent' ,0)}}" class="btn btn-block btn-outline-secondary disabled"
-                       id="event">تنظیم اخطار</a>
-                </div>
+
             </div>
         </div>
     </div>
@@ -88,13 +82,9 @@
             }
 
             updateHref('#view', targer);
-            updateHref('#edit', targer);
-            updateHref('#delete', targer);
             updateHref('#event', targer);
             if (targer != null) {
                 $('#view').removeClass('disabled')
-                $('#edit').removeClass('disabled')
-                $('#delete').removeClass('disabled')
                 $('#event').removeClass('disabled')
             }
 

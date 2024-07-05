@@ -1,6 +1,9 @@
 <?php
 
+use App\Mail\logErrorMail;
+use App\Models\CompanyMotors;
 use App\Models\MotorData;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,9 +19,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect()->route('login');
-//    return view('welcome');
+//    return view('Emails.logError');
+//\Illuminate\Support\Facades\Mail::to('mdka2885mdka@gmail.com')
+//    ->send(new \App\Mail\logErrorMail('d'));
+//    $motor = CompanyMotors::find(1);
+//    return  [$motor->seller->user->email,$motor->buyer->user->email];
+//    $mail = Mail::to('md2885ka2885@gmail.com')->send(new logErrorMail());
 
 });
+
 
 Auth::routes();
 
@@ -65,9 +74,40 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
         Route::get("/motorLog/{motorId}/{userId}/{startReceived}/{endReceived}/{boolProcess}/{startTimeProcess}/{endTimeProcess}",[\App\Http\Controllers\adminPanelController::class,'motorLogsAPI'])->name('admin.motorLogs.api');
         Route::get("/motorError",[\App\Http\Controllers\adminPanelController::class,'motorError'])->name('admin.motorError');
         Route::get("/motorError/motorErrorWithOutNormal",[\App\Http\Controllers\adminPanelController::class,'motorErrorWithOutNormal'])->name('admin.motorErrorWON');
+
+
+        Route::get('messages',[\App\Http\Controllers\adminPanelController::class,'messages'])->name('admin.messages');
     });
-    Route::prefix('company')->group(function (){
-        Route::get('/',[\App\Http\Controllers\Company\CompanyController::class,'dashboard'])->name('company.dashboard');
+    Route::prefix('company')->middleware(['aCC'])->group(function (){
+        Route::get('/',function (){return redirect()->route('company.dashboard');});
+        Route::prefix('FA')->group(function (){
+            Route::get('/',[\App\Http\Controllers\companyPanelController::class,'dashboard'])->name('company.dashboard');
+            Route::get('motorLoc',[\App\Http\Controllers\companyPanelController::class,'MotorLoc'])->name('company.MotorLoc');
+            Route::get('motorManager',[\App\Http\Controllers\companyPanelController::class,'MotorManager'])->name('company.motorManager');
+            Route::get('motorView/{id}',[\App\Http\Controllers\companyPanelController::class,'MotorView'])->name('company.motorView');
+            Route::get('eventManager/{id}',[\App\Http\Controllers\companyPanelController::class,'motorEvent'])->name('company.motorEvent');
+            Route::get('eventView/{id}',[\App\Http\Controllers\companyPanelController::class,'eventView'])->name('company.eventView');
+            Route::get('motorData',[\App\Http\Controllers\companyPanelController::class,'motorData'])->name('company.motorData');
+            Route::get('motorError',[\App\Http\Controllers\companyPanelController::class,'motorError'])->name('company.motorError');
+            Route::get("/motorError/motorErrorWithOutNormal",[\App\Http\Controllers\companyPanelController::class,'motorErrorWithOutNormal'])->name('company.motorErrorWON');
+            Route::get('messages',[\App\Http\Controllers\companyPanelController::class,'messages'])->name('company.messages');
+            Route::post('message',[\App\Http\Controllers\companyPanelController::class,'messageStore'])->name('company.messageStore');
+
+        });
+        Route::prefix('EN')->group(function (){
+            Route::get('/',[\App\Http\Controllers\companyPanelController::class,'dashboard'])->name('company.dashboard.en');
+            Route::get('motorManager',[\App\Http\Controllers\companyPanelController::class,'MotorManager'])->name('company.motorManager.en');
+            Route::get('motorView/{id}',[\App\Http\Controllers\companyPanelController::class,'MotorView'])->name('company.motorView.en');
+            Route::get('eventManager',[\App\Http\Controllers\companyPanelController::class,'EventManager'])->name('company.eventManager.en');
+            Route::get('eventView/{id}',[\App\Http\Controllers\companyPanelController::class,'eventView'])->name('company.eventView.en');
+            Route::get('motorData',[\App\Http\Controllers\companyPanelController::class,'motorData'])->name('company.motorData.en');
+            Route::get('motorError',[\App\Http\Controllers\companyPanelController::class,'motorError'])->name('company.motorError.en');
+            Route::get("/motorError/motorErrorWithOutNormal",[\App\Http\Controllers\companyPanelController::class,'motorErrorWithOutNormal'])->name('company.motorErrorWON');
+            Route::get('messages',[\App\Http\Controllers\companyPanelController::class,'messages'])->name('company.messages.en');
+            Route::post('message',[\App\Http\Controllers\companyPanelController::class,'messageStore'])->name('company.messageStore.en');
+
+        });
+
     });
     Route::prefix('supervisor')->group(function (){
         Route::get('/',[\App\Http\Controllers\Supervisor\SupervisorController::class,'dashboard'])->name('supervisor.dashboard');

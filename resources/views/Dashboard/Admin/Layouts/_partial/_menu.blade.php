@@ -35,16 +35,10 @@
                 <li><a href="{{route('admin.motorError')}}">هشدار ها </a></li>
             </ul>
         </li>
-        <li class="has_sub">
-            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-archive"></i> <span> گروه ها </span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-            <ul class="list-unstyled">
-                <li><a href="#">گروه ها</a></li>
-                <li><a href="#">ایجاد گروه</a></li>
-            </ul>
-        </li>
+
 
         <li>
-            <a href="#" class="waves-effect">
+            <a href="{{route('admin.messages')}}" class="waves-effect">
                 <i class="dripicons-home"></i>
                 <span> پیام ها </span>
             </a>

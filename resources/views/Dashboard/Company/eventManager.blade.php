@@ -1,4 +1,5 @@
-@extends("Dashboard.Admin.Layouts.app")
+@extends("Dashboard.Company.Layouts.app")
+
 @section("content")
     <div class="card mt-5">
         <div class="card-body">
@@ -19,7 +20,6 @@
                         <th>مقدار N</th>
                         <th>payload</th>
                         <th>topic</th>
-                        <th>انتخاب</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -36,9 +36,7 @@
                             <td>{{$event->payload}}</td>
                             <td>{{$event->topic}}</td>
 
-                            <td>
-                                <input type="radio" name="choice" value="{{$event->id}}">
-                            </td>
+
                         </tr>
                     @empty
                         <tr>
@@ -47,21 +45,6 @@
                     @endforelse
                     </tbody>
                 </table>
-            </div>
-            <div class="card pt-3 px-3 row ">
-                <div class="row ">
-                    <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.motorView',0)}}" class="btn btn-primary btn-block disabled" id="view">مشاهده
-                            کلی</a>
-                    </div>
-                    <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.motorEdit',0)}}" class="btn btn-warning btn-block disabled" id="edit">ویرایش</a>
-                    </div>
-                    <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.motorDelete',0)}}" class="btn btn-danger btn-block disabled"
-                           id="delete">حذف</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

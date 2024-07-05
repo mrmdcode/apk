@@ -1,4 +1,4 @@
-@extends('Dashboard.Admin.Layouts.app')
+@extends("Dashboard.Company.Layouts.app")
 
 @section('content')
     <div class="row">
@@ -96,63 +96,19 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-6 col-xl-4"></div>
+        <div class="col-md-6 col-xl-4"></div>
         <div class="col-md-6 col-xl-4">
             <div class="card mt-5">
                 <div class="card-body">
-                    @forelse($logs as $log)
-                        @if($log->process == 'error')
-                            <div class="alert alert-danger">موتور در ساعت {{$log->created_At}} اررور {{$log->event->name}} داده و مقادیر طبیعی خود را رد کرده .</div>
-                        @endif
-                        @if($log->process == 'warning')
-                            <div class="alert alert-warning">موتور در ساعت {{$log->created_At}} وارنینگ {{$log->event->name}} داده و مقادیر طبیعی خود را رد کرده .</div>
-                        @endif
-                    @empty
-                        <div class="alert alert-success">
-                            هیچ دیتا error یا warning ندارد .
-                        </div>
-                    @endforelse
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card mt-5">
-                <div class="card-body">
-                    col 2
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card mt-5">
-                <div class="card-body">
-                    col 3
+                    hello
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-6 col-xl-4">
-            <div class="card mt-5">
-                <div class="card-body">
-                    col 1
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card mt-5">
-                <div class="card-body">
-                    col 2
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card mt-5">
-                <div class="card-body">
-                    col 3
-                </div>
-            </div>
-        </div>
-    </div>@endsection
+
+@endsection
 
 
 

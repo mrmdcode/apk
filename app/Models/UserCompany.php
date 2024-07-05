@@ -44,4 +44,14 @@ class UserCompany extends Model
         return $this->hasMany(MotorData::class, 'motor_id','id');
     }
 
+    public function senderMes()
+    {
+        $this->hasMany(Message::class, 'company_sender','id');
+    }
+
+    public function receivedMes()
+    {
+        $this->hasMany(Message::class, 'company_receiver','id');
+    }
+
 }

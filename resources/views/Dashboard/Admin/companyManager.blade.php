@@ -1,4 +1,4 @@
-@extends("Dashboard.Layouts.app")
+@extends("Dashboard.Admin.Layouts.app")
 @section("content")
     <div class="card row my-5 ">
         <div class="card-body">
@@ -73,18 +73,21 @@
             <div class="card pt-3 px-3 row ">
                 <div class="row ">
                     <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.companyView',0)}}" class="btn btn-primary btn-block disabled" id="view">مشاهده کلی</a>
+                        <a href="{{route('admin.companyView',0)}}" class="btn btn-primary btn-block disabled" id="view">مشاهده
+                            کلی</a>
                     </div>
                     <div class="col-xl-4 col-md-6">
                         <a href="{{route('admin.companyEdit',0)}}" class="btn btn-warning btn-block disabled" id="edit">ویرایش</a>
                     </div>
 
                     <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.companyDelete',0)}}" class="btn btn-danger btn-block disabled" id='delete'>حذف</a>
+                        <a href="{{route('admin.companyDelete',0)}}" class="btn btn-danger btn-block disabled"
+                           id='delete'>حذف</a>
                     </div>
                 </div>
                 <div class="row">
-                    <a href="{{route('admin.companyMotors',0)}}" class="btn btn-block btn-outline-secondary disabled" id="motors">موتور ها</a>
+                    <a href="{{route('admin.companyMotors',0)}}" class="btn btn-block btn-outline-secondary disabled"
+                       id="motors">موتور ها</a>
                 </div>
             </div>
         </div>
@@ -96,11 +99,10 @@
     <script !src="">
 
 
-        let targer ;
+        let targer;
 
 
-
-        $('input[name="choice"]').on('change',function (){
+        $('input[name="choice"]').on('change', function () {
             targer = $('input[name="choice"]:checked').val()
 
             function updateHref(elementId, target) {
@@ -111,19 +113,18 @@
                 $(elementId).attr('href', url + '/' + target);
             }
 
-            updateHref('#view',targer);
-            updateHref('#edit',targer);
-            updateHref('#delete',targer);
-            updateHref('#motors',targer);
-        if(targer !=  null){
-            $('#view').removeClass('disabled')
-            $('#edit').removeClass('disabled')
-            $('#delete').removeClass('disabled')
-            $('#motors').removeClass('disabled')
-        }
+            updateHref('#view', targer);
+            updateHref('#edit', targer);
+            updateHref('#delete', targer);
+            updateHref('#motors', targer);
+            if (targer != null) {
+                $('#view').removeClass('disabled')
+                $('#edit').removeClass('disabled')
+                $('#delete').removeClass('disabled')
+                $('#motors').removeClass('disabled')
+            }
 
         })
-
 
 
     </script>

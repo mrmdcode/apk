@@ -16,6 +16,9 @@ class authCheckCompany
      */
     public function handle(Request $request, Closure $next)
     {
+        if (auth()->user()->type != 'company') {
+            return abort(403,'شما دسترسی به این قسمت را ندارید . ');
+        }
         return $next($request);
     }
 }

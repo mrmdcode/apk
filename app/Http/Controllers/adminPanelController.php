@@ -252,8 +252,9 @@ class adminPanelController extends Controller
 
     public function motorView($motorId)
     {
-        $motor =     CompanyMotors::find($motorId);
-        return view('Dashboard.Admin.motorView',compact('motor'));
+        $motor = CompanyMotors::find($motorId);
+        $logs = $motor->data()->limit(8);
+        return view('Dashboard.Admin.motorView',compact('motor','logs'));
     }
 
     public function MotorEvent($motorId)
@@ -265,5 +266,10 @@ class adminPanelController extends Controller
     public function notfounded()
     {
         return abort(404,"صفحه در حال راه اندازی میباشد یا پیدا نشده .");
+    }
+
+    public function messages()
+    {
+        return view('Dashboard.Admin.messages');
     }
 }

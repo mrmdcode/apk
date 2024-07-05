@@ -1,4 +1,4 @@
-@extends("Dashboard.Admin.Layouts.app")
+@extends("Dashboard.Company.Layouts.app")
 @section("content")
     <div class="row">
         <div class="col-sm-12">
@@ -45,8 +45,8 @@
                 <div class="card bg-info mini-stat text-white">
                     <div class="p-3 mini-stat-desc">
                         <div class="clearfix">
-                            <h6 class="text-uppercase mt-0 float-left text-white-50">تعداد شرکت ها </h6>
-                            <h4 class="mb-3 mt-0 float-right">{{ $company }}</h4>
+                            <h6 class="text-uppercase mt-0 float-left text-white-50">تعداد پیام ها</h6>
+                            <h4 class="mb-3 mt-0 float-right">5444444</h4>
                         </div>
 
                     </div>
@@ -140,24 +140,6 @@
     </div>
 
 
-    <div class="card pt-3 px-3 row ">
-        <div class="row ">
-            <div class="col-xl-3 col-md-6">
-                <div id="gaugeContainer_1"></div>
-            </div>
-
-            <div class="col-xl-3 col-md-6">
-                <div id="gaugeContainer_2"></div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div id="gaugeContainer_3"></div>
-            </div>
-
-            <div class="col-xl-3 col-md-6">
-                <div id="gaugeContainer_4"></div>
-            </div>
-        </div>
-    </div>
 
 @endsection
 
@@ -165,28 +147,18 @@
     <script src="{{asset('\assets\dashboard\plugins\leaflet\leaflet.js')}}"></script>
     <script src="{{asset('\assets\dashboard\plugins\raphael\raphael.min.js')}}"></script>
     <script src="{{asset('/assets/dashboard/plugins/justgage/justgage.min.js')}}"></script>
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.min.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.time.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.tooltip.min.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.resize.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.pie.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.selection.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.stack.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/curvedLines.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.crosshair.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/pages/flot.init.js')}}"></script>--}}
     <script>
 
 
         const getMotorLocation = async () => {
-            motorLocation = await fetch('/dashboard/admin/motorLoc');
+            motorLocation = await fetch('{{route('company.MotorLoc')}}');
             motorLocation = await motorLocation.json();
             console.log(motorLocation);
 
 
             // let motorLocation ;
-
-
+            //
+            //
             var map = L.map('map').setView([32.4279, 53.6880], 5);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: ''
@@ -206,52 +178,8 @@
 
                 marker.setIcon(divIcon);
             });
-
-
-            var g_1 = new JustGage({
-                id: "gaugeContainer_1",
-                value: 2, // مقدار اولیه نمودار
-                min: 0,    // حداقل مقدار
-                max: 100,  // حداکثر مقدار
-                title: "میزان آمپر", // عنوان نمودار
-                label: "آمپر",        // برچسب
-                levelColors: ['#FF0000', '#FFCC00', '#00FF00'] // رنگ‌های مختلف برای مقادیر مختلف
-            });
-
-            var g_2 = new JustGage({
-                id: "gaugeContainer_2",
-                value: 72, // مقدار اولیه نمودار
-                min: 0,    // حداقل مقدار
-                max: 100,  // حداکثر مقدار
-                title: "میزان آمپر", // عنوان نمودار
-                label: "آمپر",        // برچسب
-                levelColors: ['#FF0000', '#FFCC00', '#00FF00'] // رنگ‌های مختلف برای مقادیر مختلف
-            });
-            var g_3 = new JustGage({
-                id: "gaugeContainer_3",
-                value: 52, // مقدار اولیه نمودار
-                min: 0,    // حداقل مقدار
-                max: 100,  // حداکثر مقدار
-                title: "میزان آمپر", // عنوان نمودار
-                label: "آمپر",        // برچسب
-                levelColors: ['#FF0000', '#FFCC00', '#00FF00'] // رنگ‌های مختلف برای مقادیر مختلف
-            });
-            var g_4 = new JustGage({
-                id: "gaugeContainer_4",
-                value: 92, // مقدار اولیه نمودار
-                min: 0,    // حداقل مقدار
-                max: 100,  // حداکثر مقدار
-                title: "میزان آمپر", // عنوان نمودار
-                label: "آمپر",        // برچسب
-                levelColors: ['#FF0000', '#FFCC00', '#00FF00'] // رنگ‌های مختلف برای مقادیر مختلف
-            });
-            // به‌روزرسانی داده‌ها پس از 3 ثانیه
-            setTimeout(function () {
-                g_1.refresh(45); // مقدار جدید برای به‌روزرسانی
-                g_2.refresh(51); // مقدار جدید برای به‌روزرسانی
-                g_3.refresh(92); // مقدار جدید برای به‌روزرسانی
-                g_4.refresh(7); // مقدار جدید برای به‌روزرسانی
-            }, 3000);
+        //
+        //
         }
 
 

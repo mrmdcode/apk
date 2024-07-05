@@ -1,4 +1,5 @@
-@extends("Dashboard.Admin.Layouts.app")
+@extends("Dashboard.Company.Layouts.app")
+
 @section("content")
     <div class="card m-t-5">
         <div class="card-body">
@@ -37,7 +38,7 @@
                                     نشده
                                 @endif</td>
                             <td>{{verta($log->processed_at)}}</td>
-                            <td>{{verta($log->created_at)->formatWord('l d F')}}</td>
+                            <td>{{verta($log->created_at)}}</td>
                         </tr>
                     @empty
                         <tr>

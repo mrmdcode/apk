@@ -3,23 +3,23 @@
 
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <title>@yield('title')</title>
-    <meta content="Admin Dashboard" name="description" />
-    <meta content="ThemeDesign" name="author" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="Admin Dashboard" name="description"/>
+    <meta content="ThemeDesign" name="author"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
     <link rel="shortcut icon" href="assets/images/favicon.ico">
 
     <!-- morris css -->
-{{--    <link rel="stylesheet" href="{{asset('assets/dashboard/plugins/morris/morris.css')}}">--}}
+    {{--    <link rel="stylesheet" href="{{asset('assets/dashboard/plugins/morris/morris.css')}}">--}}
 
-    <link href="{{asset("assets/dashboard/css/bootstrap.min.css")}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset("assets/dashboard/css/bootstrap.min.css")}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset("assets/dashboard/css/icons.css")}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset("assets/dashboard/css/style.css")}}" rel="stylesheet" type="text/css"/>
-{{--    <link href="{{asset('\assets\dashboard\plugins\leaflet\leaflet.css')}}"/>--}}
+    {{--    <link href="{{asset('\assets\dashboard\plugins\leaflet\leaflet.css')}}"/>--}}
     @yield("css")
 
 </head>
@@ -52,13 +52,14 @@
         <div class="left-side-logo d-block d-lg-none">
             <div class="text-center">
 
-                <a  class="logo"><img src="{{asset('assets/dashboard/images/logo_dark.png')}}" height="20" alt="logo"></a>
+                <a class="logo"><img src="{{asset('assets/dashboard/images/logo_dark.png')}}" height="20"
+                                     alt="logo"></a>
             </div>
         </div>
 
         <div class="sidebar-inner slimscrollleft">
 
-            @include("Dashboard.Layouts._partial._menu")
+            @include("Dashboard.Company.Layouts._partial._menu")
             <div class="clearfix"></div>
         </div> <!-- end sidebarinner -->
     </div>
@@ -71,7 +72,7 @@
         <div class="content">
 
             <!-- Top Bar Start -->
-            @include("Dashboard.Layouts._partial._topMenu")
+            @include("Dashboard.Company.Layouts._partial._topMenu")
             <!-- Top Bar End -->
 
             <div class="page-content-wrapper ">

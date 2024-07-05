@@ -25,11 +25,8 @@ class HomeController extends Controller
         if (auth()->user()->type == "company"){
             return redirect()->route("company.dashboard");
         }
-        if (auth()->user()->type == "supervisor"){
-            return redirect()->route("supervisor.dashboard");
-        }
-        if (auth()->user()->type == "client"){
-            return redirect()->route("client.dashboard");
+        else{
+            return abort(403);
         }
 
 

@@ -1,4 +1,4 @@
-@extends("Dashboard.Layouts.app")
+@extends("Dashboard.Admin.Layouts.app")
 @section("content")
     <div class="card m-t-5">
         <div class="card-body">
@@ -16,11 +16,20 @@
             <div class="my-5">
                 @forelse($logs as $log)
                     @if($log->process == "warning")
-                        <div class="alert alert-warning">موتور {{$log->motor->motor_name}} که توسط  {{$log->motor->buyer->company_name}} خریداری شده  در زمان {{verta($log->created_at)}} خطای Warning دارد .</div>
+                        <div class="alert alert-warning">موتور {{$log->motor->motor_name}} که
+                            توسط {{$log->motor->buyer->company_name}} خریداری شده در زمان {{verta($log->created_at)}}
+                            خطای Warning دارد .
+                        </div>
                     @elseif($log->process == "error")
-                        <div class="alert alert-danger">موتور {{$log->motor->motor_name}} که توسط  {{$log->motor->buyer->company_name}} خریداری شده  در زمان {{verta($log->created_at)}} خطای Error دارد .</div>
+                        <div class="alert alert-danger">موتور {{$log->motor->motor_name}} که
+                            توسط {{$log->motor->buyer->company_name}} خریداری شده در زمان {{verta($log->created_at)}}
+                            خطای Error دارد .
+                        </div>
                     @elseif('normal')
-                        <div class="alert alert-success">موتور {{$log->motor->motor_name}} که توسط  {{$log->motor->buyer->company_name}} خریداری شده  در زمان {{verta($log->created_at)}} خطای Normal دارد .</div>
+                        <div class="alert alert-success">موتور {{$log->motor->motor_name}} که
+                            توسط {{$log->motor->buyer->company_name}} خریداری شده در زمان {{verta($log->created_at)}}
+                            خطای Normal دارد .
+                        </div>
 
                     @endif
                 @empty
@@ -49,13 +58,13 @@
     <script src="{{asset('assets/dasboard/plugins/datatables/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('assets/dashboard/plugins/datatables/responsive.bootstrap4.min.js')}}"></script>
     <script !src="">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#datatable').DataTable();
         });
     </script>
 @endsection
 @section('css')
-    <link href="{{asset('plugins/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('plugins/datatables/buttons.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('plugins/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset('plugins/datatables/buttons.bootstrap4.min.css')}}" rel="stylesheet" type="text/css"/>
 
 @endsection
