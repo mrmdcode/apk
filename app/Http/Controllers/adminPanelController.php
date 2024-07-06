@@ -17,6 +17,7 @@ class adminPanelController extends Controller
 {
     public function dashboard()
     {
+        $mess = appChatController::dontSeenMessages(auth()->user()->company->id);
         $motor = CompanyMotors::all();
         $company = User::where('type','company')->count();
         $logs = MotorData::all()->count();
@@ -25,7 +26,7 @@ class adminPanelController extends Controller
         $lastmotor = CompanyMotors::orderByDesc('id')->first('motor_name')['motor_name'];
 
 
-        return view('Dashboard.Admin.dashboard',compact('motor','company','logs','logsE','logsT','lastmotor'));
+        return view('Dashboard.Admin.dashboard',compact('motor','company','logs','logsE','logsT','lastmotor','mess'));
     }
 
     public function motorLoc()
@@ -260,9 +261,45 @@ class adminPanelController extends Controller
     public function MotorEvent($motorId)
     {
         $events = MotorEvent::where('motor_id',$motorId)->orderBy('created_at','desc')->get();
-        return view('Dashboard.Admin.eventManager',compact('events'));
+        return view('Dashboard.Admin.eventManager',compact('events','motorId'));
     }
 
+    public function motorEventCreate($motorId)
+    {
+        $motor = CompanyMotors::where('id',$motorId)->first(['id','motor_name']);
+        return view('Dashboard.Admin.eventCreate',compact('motor'));
+    }
+
+    public function motorEventStore(Request $request,$motorId)
+    {
+        MotorEvent::create([
+            'motor_id' => $motorId,
+            "name" =>$request->input('name'),
+            "topic" =>$request->input('topic'),
+            'payload'=>$request->input('payload'),
+            'normal'=>$request->input('normal'),
+            'min'=>$request->input('min'),
+            'max'=>$request->input('max'),
+
+        ]);
+        session()->flash('success','ساخت اخطار با موفقیت به پایان رسید');
+        return redirect()->route('admin.eventManager');
+    }
+
+    public function motorEventEdit($eventId)
+    {
+        $event = MotorEvent::find($eventId);
+        return view('Dashboard.Admin.eventEdit',compact('event'));
+    }
+
+    public function motorEventUpdate(Request $request,$eventId)
+    {
+
+        MotorEvent::find($eventId)->update($request->all());
+        session()->flash('success','بروزرسانی اخطار با موفقیت به پایان رسید');
+        return redirect()->route('admin.motorEvent',$request->input('motor_id'));
+
+    }
     public function notfounded()
     {
         return abort(404,"صفحه در حال راه اندازی میباشد یا پیدا نشده .");

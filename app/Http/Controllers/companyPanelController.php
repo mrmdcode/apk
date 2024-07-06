@@ -27,6 +27,7 @@ class companyPanelController extends Controller
     public function dashboard()
     {
 
+
         $motor = CompanyMotors::where('company_buyer_id',auth()->user()->company->id)
             ->orWhere('company_seller_id',auth()->user()->company->id)
             ->get();
@@ -69,6 +70,12 @@ class companyPanelController extends Controller
 
         return view('Dashboard.company.motorManager',compact('motors'));
     }
+    public function motorView($motorId)
+    {
+        $motor = CompanyMotors::find($motorId);
+        $logs = $motor->data()->limit(8);
+        return view('Dashboard.Company.motorView',compact('motor','logs'));
+    }
 
     public function motorData()
     {
@@ -104,5 +111,9 @@ class companyPanelController extends Controller
         }
         else
             return abort(403,'you are not access to this page');
+    }
+    public function messages()
+    {
+        return view('Dashboard.Company.messages');
     }
 }

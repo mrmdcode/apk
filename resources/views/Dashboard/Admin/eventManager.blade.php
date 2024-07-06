@@ -4,7 +4,12 @@
         <div class="card-body">
 
             <h4 class="mt-0 header-title">مدیریت موتور</h4>
-
+            @if(session('success'))
+                <div class="alert alert-success">{{session('success')}}</div>
+            @endif
+            @if(session('error'))
+                <div class="alert alert-danger">{{session('error')}}</div>
+            @endif
 
             <div class="table-responsive my-5">
                 <table class="table table-bordered mb-0">
@@ -50,17 +55,20 @@
             </div>
             <div class="card pt-3 px-3 row ">
                 <div class="row ">
+
                     <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.motorView',0)}}" class="btn btn-primary btn-block disabled" id="view">مشاهده
-                            کلی</a>
+                        <a href="{{route('admin.motorEventEdit',0)}}" class="btn btn-warning btn-block disabled" id="edit">ویرایش</a>
                     </div>
                     <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.motorEdit',0)}}" class="btn btn-warning btn-block disabled" id="edit">ویرایش</a>
+                        <a class="btn btn-outline-secondary btn-block" href="{{route('admin.motorEventCreate',$motorId)}}">ساخت اخطار</a>
                     </div>
                     <div class="col-xl-4 col-md-6">
                         <a href="{{route('admin.motorDelete',0)}}" class="btn btn-danger btn-block disabled"
                            id="delete">حذف</a>
                     </div>
+                </div>
+                <div class="row">
+
                 </div>
             </div>
         </div>
@@ -84,12 +92,10 @@
                 $(elementId).attr('href', url + '/' + target);
             }
 
-            updateHref('#view', targer);
             updateHref('#edit', targer);
             updateHref('#delete', targer);
 
             if (targer != null) {
-                $('#view').removeClass('disabled')
                 $('#edit').removeClass('disabled')
                 $('#delete').removeClass('disabled')
             }

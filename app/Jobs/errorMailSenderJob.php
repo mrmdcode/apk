@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Http\Controllers\appChatController;
 use App\Mail\logErrorMail;
 use App\Models\CompanyMotors;
 use Illuminate\Bus\Queueable;
@@ -35,9 +36,15 @@ class errorMailSenderJob implements ShouldQueue
     {
         echo $this->motor_id;
         $motor = CompanyMotors::find($this->motor_id);
-        $toAddresses = [$motor->seller->user->email,$motor->buyer->user->email];
-        var_dump($toAddresses);
-        $mail = Mail::to('md2885ka2885@gmail.com')->send(new logErrorMail());
-        var_dump($mail);
+        if (!appChatController::checkLastMessageTime($motor->seller->user->id,2)){
+            Mail::to($motor->seller->user->email)->send(new logErrorMail());
+            appChatController::store(null,$motor->seller->user->id,'your motor has error','superHigh','mail');
+            Mail::to($motor->buyer->user->email)->send(new logErrorMail());
+            appChatController::store(null,$motor->buyer->user->id,'your motor has error','superHigh','mail');
+        }
+        appChatController::store(null,$motor->buyer->user->id,'your motor has error','superHigh','system');
+        appChatController::store(null,$motor->seller->user->id,'your motor has error','superHigh','system');
+
+
     }
 }

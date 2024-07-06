@@ -55,7 +55,7 @@
                     </div>
                     <div class="col-xl-6 col-md-6">
                         <a href="{{route('company.motorEvent' ,0)}}" class="btn btn-block btn-outline-secondary disabled"
-                           id="event">تنظیم اخطار</a>
+                           id="event"> مشاهده اخطار</a>
                     </div>
                 </div>
 

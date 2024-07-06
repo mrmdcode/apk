@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->enum('type',['system','company'])->default('system');
+            $table->enum('type',['system','company','mail'])->default('system');
             $table->foreignId('company_sender')->nullable()->constrained('user_companies','id');
             $table->foreignId('company_receiver')->nullable()->constrained('user_companies','id');
             $table->text('message');

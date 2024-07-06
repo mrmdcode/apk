@@ -17,57 +17,41 @@
                 <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="false" aria-expanded="false">
                     <i class="mdi mdi-bell-outline noti-icon"></i>
-                    <span class="badge badge-danger badge-pill noti-icon-badge">3</span>
+                    <span class="badge badge-danger badge-pill noti-icon-badge">{{\App\Http\Controllers\appChatController::dontSeenMessages(auth()->user()->company->id)->count()}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-menu-lg dropdown-menu-animated">
                     <!-- item-->
                     <div class="dropdown-item noti-title">
-                        <h5>اعلانات (3)</h5>
+                        <h5>پیام های دیده نشده ({{\App\Http\Controllers\appChatController::dontSeenMessages(auth()->user()->company->id)->count()}})</h5>
                     </div>
 
                     <div class="slimscroll-noti">
                         <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item active">
-                            <div class="notify-icon bg-success"><i class="mdi mdi-cart-outline"></i></div>
-                            <p class="notify-details"><b>سفارش شما قرار داده شده است</b><span class="text-muted">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</span></p>
-                        </a>
 
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-danger"><i class="mdi mdi-message-text-outline"></i></div>
-                            <p class="notify-details"><b>پیام جدید دریافت شد</b><span class="text-muted">شما 87 پیام خوانده نشده دارید</span></p>
-                        </a>
+                        @forelse(\App\Http\Controllers\appChatController::dontSeenMessages(auth()->user()->company->id) as $message)
+                            <a href="javascript:void(0);" class="dropdown-item notify-item active">
+                                <div class="notify-icon bg-success"><i class="mdi mdi-message-text-outline"></i></div>
+                                <p class="notify-details"><b>{{$message->message}}</b><span>&nbsp;</span></p>
+                            </a>
+                        @empty
 
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-info"><i class="mdi mdi-filter-outline"></i></div>
-                            <p class="notify-details"><b>مورد شما حمل می شود</b><span class="text-muted">این یک واقعیت طولانی است که خواننده خواهد بود</span></p>
-                        </a>
+                            <a href="javascript:void(0);" class="dropdown-item notify-item active">
+                                <div class="notify-icon bg-success"></div>
+                                <p class="notify-details"><b>سفارش شما قرار داده شده است</b><span class="text-muted">شما هیچ پیام مشاهده نشده ای ندارید .</span></p>
+                            </a>
+                        @endforelse
 
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-success"><i class="mdi mdi-message-text-outline"></i></div>
-                            <p class="notify-details"><b>پیام جدید دریافت شد</b><span class="text-muted">شما 87 پیام خوانده نشده دارید</span></p>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-warning"><i class="mdi mdi-cart-outline"></i></div>
-                            <p class="notify-details"><b>سفارش شما قرار داده شده است</b><span class="text-muted">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</span></p>
-                        </a>
 
                     </div>
 
 
                     <!-- All-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-all">
+                    <a href="{{route('admin.messages')}}" class="dropdown-item notify-all">
                         مشاهده همه
                     </a>
 
                 </div>
             </li>
-
-
 
 
             <li class="list-inline-item dropdown notification-list nav-user">

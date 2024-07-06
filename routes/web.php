@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\appChatController;
 use App\Mail\logErrorMail;
 use App\Models\CompanyMotors;
 use App\Models\MotorData;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+//    return appChatController::dontSeenMessages(auth()->user()->company->id);
     return redirect()->route('login');
 //    return view('Emails.logError');
 //\Illuminate\Support\Facades\Mail::to('mdka2885mdka@gmail.com')
@@ -57,7 +59,7 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
 
         Route::get("/motorManager",[\App\Http\Controllers\adminPanelController::class,'motorManager'])->name('admin.motorManager');
         Route::get("/motorManager/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorView'])->name('admin.motorView');
-        Route::get("/motorStore/edit/{motorId}",[\App\Http\Controllers\adminPanelController::class,'notfounded'])->name('admin.motorEdit');
+        Route::get("/motor/edit/{motorId}",[\App\Http\Controllers\adminPanelController::class,'notfounded'])->name('admin.motorEdit');
         Route::get("/motorCreate",[\App\Http\Controllers\adminPanelController::class,'motorCreate'])->name('admin.motorCreate');
         Route::post("/motorStore",[\App\Http\Controllers\adminPanelController::class,'motorStore'])->name('admin.motorStore');
         Route::get("/motorManager/delete/{motorId}",[\App\Http\Controllers\adminPanelController::class,'notfounded'])->name('admin.motorDelete');
@@ -66,8 +68,10 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
 
 
         Route::get("events/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorEvent'])->name('admin.motorEvent');
-        Route::get("/motorcreate/{motorId}/event",[\App\Http\Controllers\adminPanelController::class,'notfounded'])->name('admin.motorEventCreate');
-        Route::post("/motorcreate/{motorId}/event",[\App\Http\Controllers\adminPanelController::class,'notfounded'])->name('admin.motorEventStore');
+        Route::get("/eventCreate/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorEventCreate'])->name('admin.motorEventCreate');
+        Route::post("/eventStore/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorEventStore'])->name('admin.motorEventStore');
+        Route::get("/eventEdit/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorEventEdit'])->name('admin.motorEventEdit');
+        Route::put("/eventUpdate/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorEventUpdate'])->name('admin.motorEventUpdate');
 
 
         Route::get("/motorData",[\App\Http\Controllers\adminPanelController::class,'motorData'])->name('admin.motorData');
@@ -76,7 +80,12 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
         Route::get("/motorError/motorErrorWithOutNormal",[\App\Http\Controllers\adminPanelController::class,'motorErrorWithOutNormal'])->name('admin.motorErrorWON');
 
 
-        Route::get('messages',[\App\Http\Controllers\adminPanelController::class,'messages'])->name('admin.messages');
+        Route::prefix('messages')->group(function (){
+            Route::get('/',[\App\Http\Controllers\adminPanelController::class,'messages'])->name('admin.messages');
+            Route::get('/init',[\App\Http\Controllers\appChatController::class,'initAdmin'])->name('admin.messages.init');
+            Route::get('/giveMessages/{targetId}',[\App\Http\Controllers\appChatController::class,'giveMessages'])->name('admin.messages.GM');
+            Route::post('/sendMessages/{targetId}',[\App\Http\Controllers\appChatController::class,'sendCTC'])->name('admin.messages.sendCTC');
+        });
     });
     Route::prefix('company')->middleware(['aCC'])->group(function (){
         Route::get('/',function (){return redirect()->route('company.dashboard');});
@@ -92,6 +101,12 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
             Route::get("/motorError/motorErrorWithOutNormal",[\App\Http\Controllers\companyPanelController::class,'motorErrorWithOutNormal'])->name('company.motorErrorWON');
             Route::get('messages',[\App\Http\Controllers\companyPanelController::class,'messages'])->name('company.messages');
             Route::post('message',[\App\Http\Controllers\companyPanelController::class,'messageStore'])->name('company.messageStore');
+            Route::prefix('messages')->group(function (){
+                Route::get('/',[\App\Http\Controllers\companyPanelController::class,'messages'])->name('company.messages');
+                Route::get('/init',[\App\Http\Controllers\appChatController::class,'initCompany'])->name('admin.messages.init');
+                Route::get('/giveMessages/{targetId}',[\App\Http\Controllers\appChatController::class,'giveMessages'])->name('company.messages.GM');
+                Route::post('/sendMessages/{targetId}',[\App\Http\Controllers\appChatController::class,'sendCTC'])->name('company.messages.sendCTC');
+            });
 
         });
         Route::prefix('EN')->group(function (){
@@ -224,7 +239,7 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
          'file_3' => null,
      ]);
 
-     $m1 = \App\Models\CompanyMotors::create([
+     $m2 = \App\Models\CompanyMotors::create([
          'company_seller_id' => $c1->id,
          'company_buyer_id' => $c3->id,
          'motor_name' => 'هاوند 2',

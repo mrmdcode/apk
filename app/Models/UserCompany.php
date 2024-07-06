@@ -19,6 +19,7 @@ class UserCompany extends Model
         "postal_code_company",
         "name_agent_company",
         "phone_agent_company",
+        'company_logo',
         "national_ID",
         "type",
     ];

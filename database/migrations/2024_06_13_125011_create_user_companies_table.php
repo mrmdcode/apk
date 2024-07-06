@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string("postal_code_company",250);
             $table->string("name_agent_company",250)->nullable();
             $table->string("phone_agent_company",250)->nullable();
+            $table->string("company_logo",250)->default('assets/dashboard/images/logo_dark.png');
             $table->enum("type",["seller","buyer","both"]);
             $table->timestamps();
         });
