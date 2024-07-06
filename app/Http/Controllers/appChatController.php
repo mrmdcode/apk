@@ -101,7 +101,7 @@ class appChatController extends Controller
     public static function checkLastMessageTime($receiverId,$time= 30)
     {
         $timeAgo = now()->subMinutes($time);
-        if (Message::where('created_at','>=',$timeAgo)->where('receiver_id',$receiverId)->exists()) {
+        if (Message::where('created_at','>=',$timeAgo)->where('company_receiver',$receiverId)->exists()) {
             return true;
         }
         return false;
