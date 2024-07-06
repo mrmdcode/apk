@@ -117,14 +117,14 @@
         <div class="col-md-6 col-xl-4">
             <div class="card mt-5">
                 <div class="card-body">
-                    col 2
+                    <canvas id="myChart"></canvas>
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-xl-4">
             <div class="card mt-5">
                 <div class="card-body">
-                    col 3
+                    <div id="gaugeContainer_1"></div>
                 </div>
             </div>
         </div>
@@ -134,14 +134,14 @@
         <div class="col-md-6 col-xl-4">
             <div class="card mt-5">
                 <div class="card-body">
-                    col 1
+                    <div id="gaugeContainer_2"></div>
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-xl-4">
             <div class="card mt-5">
                 <div class="card-body">
-                    col 2
+                    <canvas id="linechart" class="chart chart-line" data="data" labels="labels" legend="true" series="series" options="options" click="onClick"></canvas>
                 </div>
             </div>
         </div>
@@ -157,9 +157,91 @@
 
 
 @section('js')
-    <script src="{{asset('\assets\dashboard\plugins\leaflet\leaflet.js')}}"></script>
+{{--    <script src="{{asset('\assets\dashboard\plugins\leaflet\leaflet.js')}}"></script>--}}
 
+<script src="{{asset('\assets\dashboard\plugins\raphael\raphael.min.js')}}"></script>
+<script src="{{asset('/assets/dashboard/plugins/justgage/justgage.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+
+        const ctx = document.getElementById('myChart');
+        const linechart = document.getElementById('linechart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+        var g_1 = new JustGage({
+            id: "gaugeContainer_1",
+            value: 2, // مقدار اولیه نمودار
+            min: 0,    // حداقل مقدار
+            max: 100,  // حداکثر مقدار
+            title: "میزان آمپر", // عنوان نمودار
+            label: "آمپر",        // برچسب
+            levelColors: ['#FF0000', '#FFCC00', '#00FF00'] // رنگ‌های مختلف برای مقادیر مختلف
+        });
+
+        var g_2 = new JustGage({
+            id: "gaugeContainer_2",
+            value: 72, // مقدار اولیه نمودار
+            min: 0,    // حداقل مقدار
+            max: 100,  // حداکثر مقدار
+            title: "میزان آمپر", // عنوان نمودار
+            label: "آمپر",        // برچسب
+            levelColors: ['#FF0000', '#FFCC00', '#00FF00'] // رنگ‌های مختلف برای مقادیر مختلف
+        });
+
+
+        let chart = new Chart(linechart, {
+
+            type: 'line',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [
+                    {
+                        label: '# of Votes',
+                        data: [12, 1, 3, 5, 2, 3],
+                        fill: false, // <-- Here
+                    },
+                    {
+                        label: '# of Votes',
+                        data: [12, 19, 3, 5, 2, 13],
+                        fill: false, // <-- Here
+                    },{
+                        label: '# of Votes',
+                        data: [12, 19, 31, 50, 2, 3],
+                        fill: false, // <-- Here
+                    }
+
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
     </script>
 @endsection
 

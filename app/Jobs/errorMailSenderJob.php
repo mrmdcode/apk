@@ -42,7 +42,8 @@ class errorMailSenderJob implements ShouldQueue
                     echo 'mail send';
                 appChatController::store(null,$motor->seller->user->id,'your motor has error','superHigh','mail');
                     echo 'mail mess send';
-//                Mail::to($motor->buyer->user->email)->send(new logErrorMail());
+//                Mail
+//::to($motor->buyer->user->email)->send(new logErrorMail());
                     echo 'mail send';
                 appChatController::store(null,$motor->buyer->user->id,'your motor has error','superHigh','mail');
                     echo 'mail mess send';
