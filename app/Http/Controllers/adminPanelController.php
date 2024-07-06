@@ -283,7 +283,7 @@ class adminPanelController extends Controller
 
         ]);
         session()->flash('success','ساخت اخطار با موفقیت به پایان رسید');
-        return redirect()->route('admin.eventManager');
+        return redirect()->route('admin.motorEvent');
     }
 
     public function motorEventEdit($eventId)
