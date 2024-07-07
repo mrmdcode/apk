@@ -87,8 +87,7 @@ class appChatController extends Controller
 
     public static function dontSeenMessages($companyId)
     {
-
-        return Message::where('company_receiver',$companyId)->whereNull('seen_at')->orderByDesc('created_at')->get();
+        return Message::where('company_receiver',$companyId)->whereNull('seen_at')->orderByDesc('created_at')->take(5)->get();
     }
     public function sendCTC(Request $request) //send message company to company
     {
