@@ -129,9 +129,9 @@ class companyPanelController extends Controller
         $motor = CompanyMotors::where('id',$motorId)->where('company_seller_id',$sellerId)->where('company_buyer_id',$buyerId)->first();
         $lastTenData = $motor->data()->where('process','!=', null)->orderBy('created_at','DESC')->with('event')->take(7)->get();
         $temperature = $motor->events()->where('payload',"d->temperature")->orderBy('created_at','desc')->first();
-        $temperatureData = $temperature->data()->orderBy('created_at','desc')->first();
+        $temperatureData = $temperature->data()->where('process','!=', null)->orderBy('created_at','desc')->first();
         $ambtemperature = $motor->events()->where('payload',"d->ambtemperature")->orderBy('created_at','desc')->first();
-        $ambtemperatureData = $ambtemperature->data()->orderBy('created_at','desc')->first();
+        $ambtemperatureData = $ambtemperature->data()->where('process','!=', null)->orderBy('created_at','desc')->first();
         $imgData = $motor->events()->get()->map(function ($item) {
             return [
                 'name' => $item->name,

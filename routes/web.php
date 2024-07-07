@@ -20,18 +20,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 //    return appChatController::dontSeenMessages(auth()->user()->company->id);
-//    return redirect()->route('login');
+    return redirect()->route('login');
 //    return view('Emails.logError');
 //\Illuminate\Support\Facades\Mail::to('mdka2885mdka@gmail.com')
 //    ->send(new \App\Mail\logErrorMail('d'));
 //    $motor = CompanyMotors::find(1);
 //    return  [$motor->seller->user->email,$motor->buyer->user->email];
 //    $mail = Mail::to('md2885ka2885@gmail.com')->send(new logErrorMail());
-    $motor = CompanyMotors::where('id',4)->first();
 
-    $temperature = $motor->events()->where('payload',"d->temperature")->orderBy('created_at','desc')->first();
-        $temperatureData = $temperature->data()->orderBy('created_at','desc')->first();
-    return ['min' =>$temperature->min ,'max' =>$temperature->max,'data'=> $temperatureData->data    ];
 
 
 });
@@ -155,139 +151,139 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
 
 
 
-
- Route::get('init',function (){
-     $u0 = \App\Models\User::create([
-         "type"=>"admin",
-         "email"=>"a@a.a",
-         "password"=> \Illuminate\Support\Facades\Hash::make('123456789'),
-     ]);
-     $u1 = \App\Models\User::create([
-         "type"=>"company",
-         "email"=>"b@a.a",
-         "password"=> \Illuminate\Support\Facades\Hash::make('123456789'),
-     ]);
-      $u2 = \App\Models\User::create([
-         "type"=>"company",
-         "email"=>"c@a.a",
-         "password"=> \Illuminate\Support\Facades\Hash::make('123456789'),
-     ]);
-
-     $u3 = \App\Models\User::create([
-         "type"=>"company",
-         "email"=>"d@a.a",
-         "password"=> \Illuminate\Support\Facades\Hash::make('123456789'),
-     ]);
-     $c0 = \App\Models\UserCompany::create([
-         "user_id" => $u0->id,
-         'company_name' => "اسرار پایش کوشا",
-         "company_registration_number"=>rand(111111111111,999999999999),
-         "company_address"=>"خراسان رضوی ،سبزوار ، بالا تر از فهمیده پایین تر از سراه استثنایی، پلاک 6666 ",
-         "legal_address_company" => "lorem ipsum",
-         "economic_code_company" => rand(111111111111,999999999999),
-         "postal_code_company" => rand(111111111111,999999999999) ,
-         "national_ID" => rand(111111111111,999999999999) ,
-         "type" => "both",
-     ]);
-     $c1 = \App\Models\UserCompany::create([
-        "user_id" => $u1->id,
-        'company_name' => "شرکت جمکو",
-        "company_registration_number"=>rand(111111111111,999999999999),
-        "company_address"=>"خراسان رضوی ،سبزوار ، بالا تر از فهمیده پایین تر از سراه استثنایی، پلاک 6666 ",
-        "legal_address_company" => "lorem ipsum",
-        "economic_code_company" => rand(111111111111,999999999999),
-        "national_ID" => rand(111111111111,999999999999) ,
-        "postal_code_company" => rand(111111111111,999999999999) ,
-        "type" => "seller",
-    ]);
-
-     $c2 =\App\Models\UserCompany::create([
-         "user_id" => $u2->id,
-         'company_name' => "شرکت سیمان جوین",
-         "company_registration_number"=>rand(111111111111,999999999999),
-         "company_address"=>"خراسان رضوی ،سبزوار ، بالا تر از لاله پایین تر از سراه شرق سیلو، پلاک 6666 ",
-         "legal_address_company" => "lorem ipsum",
-         "economic_code_company" => rand(111111111111,999999999999),
-         "postal_code_company" => rand(111111111111,999999999999) ,
-         "national_ID" => rand(111111111111,999999999999) ,
-         "type" => "buyer",
-     ]);
-
-     $c3 = \App\Models\UserCompany::create([
-         "user_id" => $u3->id,
-         'company_name' => "شرکت سیمان مشهد ",
-         "company_registration_number"=>rand(111111111111,999999999999),
-         "company_address"=>"خراسان رضوی ،مشهد ، بالا تر از لاله پایین تر از سراه شرق سیلو، پلاک 6666 ",
-         "legal_address_company" => "lorem ipsum",
-         "economic_code_company" => rand(111111111111,999999999999),
-         "postal_code_company" => rand(111111111111,999999999999) ,
-         "national_ID" => rand(111111111111,999999999999) ,
-         "type" => "buyer",
-     ]);
-
-     $m1 = \App\Models\CompanyMotors::create([
-         'company_seller_id' => $c1->id,
-         'company_buyer_id' => $c2->id,
-         'motor_name' => 'هاوند',
-         'motor_model' => 'irani',
-         'motor_year' => '1400/05/02',
-         'motor_start' => '1400/09/01',
-         'motor_serial' => '140005024507806',
-         'motor_address' => 'پایین تر از مدرسه افق دانش 4 بین کلوتای سدید',
-         'motor_description' => 'این توضیحات تستی برای موتور هست',
-         'allowable_winding_temperature' => 4.5,
-         'allowable_bearing_temperature' => 5.4,
-         'hungarian_vibration' => 55,
-         'latitude' => '36.472235364352464',
-         'longitude' => '57.535571863832885',
-         'file_1' => null,
-         'file_2' => null,
-         'file_3' => null,
-     ]);
-
-     $m2 = \App\Models\CompanyMotors::create([
-         'company_seller_id' => $c1->id,
-         'company_buyer_id' => $c3->id,
-         'motor_name' => 'هاوند 2',
-         'motor_model' => 'usa',
-         'motor_year' => '1400/01/01',
-         'motor_start' => '1400/09/01',
-         'motor_serial' => '140005024507805',
-         'motor_address' => 'پایین تر از مدرسه افق دانش 4 بین کلوتای سدید',
-         'motor_description' => 'این توضیحات تستی برای موتور هست',
-         'allowable_winding_temperature' => 4.5,
-         'allowable_bearing_temperature' => 5.4,
-         'hungarian_vibration' => 55,
-         'latitude' => '36.216804023978504',
-         'longitude' => '57.68365143421714',
-         'file_1' => null,
-         'file_2' => null,
-         'file_3' => null,
-     ]);
-
-     $e1 = \App\Models\MotorEvent::create([
-         'motor_id' => $m1->id,
-         'name' => 'دما',
-         'topic' => 'motor_140005024507806_temperature',
-         'payload' => 'd->temperature',
-         'normal' => 5,
-         'min' => 2,
-         'max' => 8,
-
-     ]);
-
-     \App\Models\MotorData::create([
-         'motor_id' => $m1->id,
-         'event_id' => $e1->id,
-         'data' => json_encode([
-             'd' => [
-                 '$1' => '22.5',
-                 'temperature' => '22.5',
-                 'TYPE' => 'CAHR'
-             ]
-         ]),
-         'process' => null,
-         'processed_at' => null,
-
-     ]);
- });
+//
+// Route::get('init',function (){
+//     $u0 = \App\Models\User::create([
+//         "type"=>"admin",
+//         "email"=>"a@a.a",
+//         "password"=> \Illuminate\Support\Facades\Hash::make('123456789'),
+//     ]);
+//     $u1 = \App\Models\User::create([
+//         "type"=>"company",
+//         "email"=>"b@a.a",
+//         "password"=> \Illuminate\Support\Facades\Hash::make('123456789'),
+//     ]);
+//      $u2 = \App\Models\User::create([
+//         "type"=>"company",
+//         "email"=>"c@a.a",
+//         "password"=> \Illuminate\Support\Facades\Hash::make('123456789'),
+//     ]);
+//
+//     $u3 = \App\Models\User::create([
+//         "type"=>"company",
+//         "email"=>"d@a.a",
+//         "password"=> \Illuminate\Support\Facades\Hash::make('123456789'),
+//     ]);
+//     $c0 = \App\Models\UserCompany::create([
+//         "user_id" => $u0->id,
+//         'company_name' => "اسرار پایش کوشا",
+//         "company_registration_number"=>rand(111111111111,999999999999),
+//         "company_address"=>"خراسان رضوی ،سبزوار ، بالا تر از فهمیده پایین تر از سراه استثنایی، پلاک 6666 ",
+//         "legal_address_company" => "lorem ipsum",
+//         "economic_code_company" => rand(111111111111,999999999999),
+//         "postal_code_company" => rand(111111111111,999999999999) ,
+//         "national_ID" => rand(111111111111,999999999999) ,
+//         "type" => "both",
+//     ]);
+//     $c1 = \App\Models\UserCompany::create([
+//        "user_id" => $u1->id,
+//        'company_name' => "شرکت جمکو",
+//        "company_registration_number"=>rand(111111111111,999999999999),
+//        "company_address"=>"خراسان رضوی ،سبزوار ، بالا تر از فهمیده پایین تر از سراه استثنایی، پلاک 6666 ",
+//        "legal_address_company" => "lorem ipsum",
+//        "economic_code_company" => rand(111111111111,999999999999),
+//        "national_ID" => rand(111111111111,999999999999) ,
+//        "postal_code_company" => rand(111111111111,999999999999) ,
+//        "type" => "seller",
+//    ]);
+//
+//     $c2 =\App\Models\UserCompany::create([
+//         "user_id" => $u2->id,
+//         'company_name' => "شرکت سیمان جوین",
+//         "company_registration_number"=>rand(111111111111,999999999999),
+//         "company_address"=>"خراسان رضوی ،سبزوار ، بالا تر از لاله پایین تر از سراه شرق سیلو، پلاک 6666 ",
+//         "legal_address_company" => "lorem ipsum",
+//         "economic_code_company" => rand(111111111111,999999999999),
+//         "postal_code_company" => rand(111111111111,999999999999) ,
+//         "national_ID" => rand(111111111111,999999999999) ,
+//         "type" => "buyer",
+//     ]);
+//
+//     $c3 = \App\Models\UserCompany::create([
+//         "user_id" => $u3->id,
+//         'company_name' => "شرکت سیمان مشهد ",
+//         "company_registration_number"=>rand(111111111111,999999999999),
+//         "company_address"=>"خراسان رضوی ،مشهد ، بالا تر از لاله پایین تر از سراه شرق سیلو، پلاک 6666 ",
+//         "legal_address_company" => "lorem ipsum",
+//         "economic_code_company" => rand(111111111111,999999999999),
+//         "postal_code_company" => rand(111111111111,999999999999) ,
+//         "national_ID" => rand(111111111111,999999999999) ,
+//         "type" => "buyer",
+//     ]);
+//
+//     $m1 = \App\Models\CompanyMotors::create([
+//         'company_seller_id' => $c1->id,
+//         'company_buyer_id' => $c2->id,
+//         'motor_name' => 'هاوند',
+//         'motor_model' => 'irani',
+//         'motor_year' => '1400/05/02',
+//         'motor_start' => '1400/09/01',
+//         'motor_serial' => '140005024507806',
+//         'motor_address' => 'پایین تر از مدرسه افق دانش 4 بین کلوتای سدید',
+//         'motor_description' => 'این توضیحات تستی برای موتور هست',
+//         'allowable_winding_temperature' => 4.5,
+//         'allowable_bearing_temperature' => 5.4,
+//         'hungarian_vibration' => 55,
+//         'latitude' => '36.472235364352464',
+//         'longitude' => '57.535571863832885',
+//         'file_1' => null,
+//         'file_2' => null,
+//         'file_3' => null,
+//     ]);
+//
+//     $m2 = \App\Models\CompanyMotors::create([
+//         'company_seller_id' => $c1->id,
+//         'company_buyer_id' => $c3->id,
+//         'motor_name' => 'هاوند 2',
+//         'motor_model' => 'usa',
+//         'motor_year' => '1400/01/01',
+//         'motor_start' => '1400/09/01',
+//         'motor_serial' => '140005024507805',
+//         'motor_address' => 'پایین تر از مدرسه افق دانش 4 بین کلوتای سدید',
+//         'motor_description' => 'این توضیحات تستی برای موتور هست',
+//         'allowable_winding_temperature' => 4.5,
+//         'allowable_bearing_temperature' => 5.4,
+//         'hungarian_vibration' => 55,
+//         'latitude' => '36.216804023978504',
+//         'longitude' => '57.68365143421714',
+//         'file_1' => null,
+//         'file_2' => null,
+//         'file_3' => null,
+//     ]);
+//
+//     $e1 = \App\Models\MotorEvent::create([
+//         'motor_id' => $m1->id,
+//         'name' => 'دما',
+//         'topic' => 'motor_140005024507806_temperature',
+//         'payload' => 'd->temperature',
+//         'normal' => 5,
+//         'min' => 2,
+//         'max' => 8,
+//
+//     ]);
+//
+//     \App\Models\MotorData::create([
+//         'motor_id' => $m1->id,
+//         'event_id' => $e1->id,
+//         'data' => json_encode([
+//             'd' => [
+//                 '$1' => '22.5',
+//                 'temperature' => '22.5',
+//                 'TYPE' => 'CAHR'
+//             ]
+//         ]),
+//         'process' => null,
+//         'processed_at' => null,
+//
+//     ]);
+// });

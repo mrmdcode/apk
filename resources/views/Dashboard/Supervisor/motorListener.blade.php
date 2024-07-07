@@ -263,12 +263,12 @@
 
         }
         document.addEventListener('DOMContentLoaded',refresh);
-        setInterval(refresh,30000)
-        x = 30
+        setInterval(refresh,20000)
+        x = 20
         setInterval(()=>{
             $('#counter').text(x--)
             if (x ==0)
-                x =30
+                x =20
         },1000)
 
 
