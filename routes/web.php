@@ -20,13 +20,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 //    return appChatController::dontSeenMessages(auth()->user()->company->id);
-    return redirect()->route('login');
+//    return redirect()->route('login');
 //    return view('Emails.logError');
 //\Illuminate\Support\Facades\Mail::to('mdka2885mdka@gmail.com')
 //    ->send(new \App\Mail\logErrorMail('d'));
 //    $motor = CompanyMotors::find(1);
 //    return  [$motor->seller->user->email,$motor->buyer->user->email];
 //    $mail = Mail::to('md2885ka2885@gmail.com')->send(new logErrorMail());
+    $motor = CompanyMotors::where('id',4)->first();
+
+    $temperature = $motor->events()->where('payload',"d->temperature")->orderBy('created_at','desc')->first();
+        $temperatureData = $temperature->data()->orderBy('created_at','desc')->first();
+    return ['min' =>$temperature->min ,'max' =>$temperature->max,'data'=> $temperatureData->data    ];
+
 
 });
 
@@ -35,7 +41,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
+Route::get('/{motorId}/{sellerId}/{sellerName}/{buyerId}/{buyerName}/{motorName}/motorListener',[\App\Http\Controllers\companyPanelController::class,'motorMonitor'])->name('motor.listener');
 Route::prefix("dashboard")->middleware(['auth'])->group(function (){
     Route::get('/',[\App\Http\Controllers\HomeController::class,'choiser']);
     Route::middleware('aCA')->prefix("admin")->group(function (){

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 class companyPanelController extends Controller
 {
 
+
     public function motorCheck($MotorId )
     {
         if (CompanyMotors::where('id',$MotorId)->where('company_buyer_id',auth()->user()->company->id)->first())
@@ -68,7 +69,7 @@ class companyPanelController extends Controller
             ->orWhere('company_seller_id',auth()->user()->company->id)
             ->orderBy('created_at','desc')->get();
 
-        return view('Dashboard.company.motorManager',compact('motors'));
+        return view('Dashboard.Company.motorManager',compact('motors'));
     }
     public function motorView($motorId)
     {
@@ -115,5 +116,40 @@ class companyPanelController extends Controller
     public function messages()
     {
         return view('Dashboard.Company.messages');
+    }
+
+    public function motorMonitor($motorId)
+    {
+        $motor = CompanyMotors::find($motorId);
+        return view('Dashboard.Supervisor.motorListener',compact('motor'));
+    }
+
+    public function motorMonitorData($motorId,$sellerId,$buyerId)
+    {
+        $motor = CompanyMotors::where('id',$motorId)->where('company_seller_id',$sellerId)->where('company_buyer_id',$buyerId)->first();
+        $lastTenData = $motor->data()->where('process','!=', null)->orderBy('created_at','DESC')->with('event')->take(7)->get();
+        $temperature = $motor->events()->where('payload',"d->temperature")->orderBy('created_at','desc')->first();
+        $temperatureData = $temperature->data()->orderBy('created_at','desc')->first();
+        $ambtemperature = $motor->events()->where('payload',"d->ambtemperature")->orderBy('created_at','desc')->first();
+        $ambtemperatureData = $ambtemperature->data()->orderBy('created_at','desc')->first();
+        $imgData = $motor->events()->get()->map(function ($item) {
+            return [
+                'name' => $item->name,
+                'payload' => $item->payload,
+                'data' => $item->data()->orderBy('created_at','desc')->where('process','!=',null)->first('data')->data,
+            ];
+        });
+        if ($motor)
+            return response()->json([
+                'motor' => $motor,
+                'lastTenData' => $lastTenData,
+                'temperature' => ['payload' =>$temperature->payload,'min' =>$temperature->min ,'max' =>$temperature->max,'data'=> $temperatureData->data],
+                'ambtemperature' => ['payload' =>$ambtemperature->payload,'min' =>$ambtemperature->min ,'max' =>$ambtemperature->max,'data'=> $ambtemperatureData->data],
+                'imgData' => $imgData,
+            ]);
+        else
+            return response('not found',404)->header('status-code','404');
+
+        return response('Server Error',500);
     }
 }

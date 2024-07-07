@@ -248,7 +248,7 @@ class adminPanelController extends Controller
             $motors = $user->company->soldMotors;
             $motors->merge($user->company->boughtMotors);
         }
-        return view('Dashboard.Admin.MotorManager', compact('motors'));
+        return view('Dashboard.Admin.motorManager', compact('motors'));
     }
 
     public function motorView($motorId)

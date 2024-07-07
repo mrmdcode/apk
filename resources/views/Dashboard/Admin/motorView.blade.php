@@ -4,7 +4,7 @@
     <div class="row">
         <div class="card mt-5">
             <div class="card-body">
-
+                <a href="{{route('motor.listener',[$motor->id,$motor->seller->id,$motor->seller->company_name,$motor->buyer->id,$motor->buyer->company_name,$motor->motor_name])}}" class="btn btn-warning">صفخه سوپروایز</a>
                 <form>
                     <div class="form-row">
                         <div class="form-group col-md-6 ">

@@ -165,16 +165,6 @@
     <script src="{{asset('\assets\dashboard\plugins\leaflet\leaflet.js')}}"></script>
     <script src="{{asset('\assets\dashboard\plugins\raphael\raphael.min.js')}}"></script>
     <script src="{{asset('/assets/dashboard/plugins/justgage/justgage.min.js')}}"></script>
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.min.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.time.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.tooltip.min.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.resize.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.pie.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.selection.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.stack.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/curvedLines.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/plugins/flot-chart/jquery.flot.crosshair.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/dashboard/pages/flot.init.js')}}"></script>--}}
     <script>
 
 
