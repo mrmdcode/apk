@@ -22,7 +22,7 @@
                 <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-menu-lg dropdown-menu-animated">
                     <!-- item-->
                     <div class="dropdown-item noti-title">
-                        <h5>پیام های دیده نشده ({{\App\Http\Controllers\appChatController::dontSeenMessages(auth()->user()->company->id)->count()}})</h5>
+
                     </div>
 
                     <div class="slimscroll-noti">
