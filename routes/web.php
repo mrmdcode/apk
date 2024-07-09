@@ -43,6 +43,7 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
     Route::middleware('aCA')->prefix("admin")->group(function (){
         Route::get("/",[\App\Http\Controllers\adminPanelController::class,'dashboard'])->name('admin.dashboard');
         Route::get("/motorLoc",[\App\Http\Controllers\adminPanelController::class,'motorLoc'])->name('admin.motorLoc');
+        Route::get("/motorsData",[\App\Http\Controllers\adminPanelController::class,'motorsData'])->name('admin.motorsData');
 
 
         Route::get("companyManager",[\App\Http\Controllers\adminPanelController::class,'companyManager'])->name('admin.companyManager');

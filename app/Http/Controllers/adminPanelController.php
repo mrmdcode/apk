@@ -19,6 +19,7 @@ class adminPanelController extends Controller
     {
         $mess = appChatController::dontSeenMessages(auth()->user()->company->id);
         $motor = CompanyMotors::all();
+        $motors = CompanyMotors::orderBy('created_at',"desc")->take(4)->get();
         $company = User::where('type','company')->count();
         $logs = MotorData::all()->count();
         $logsT = MotorData::where('created_at',">=",Carbon::today())->count();
@@ -26,7 +27,8 @@ class adminPanelController extends Controller
         $lastmotor = CompanyMotors::orderByDesc('id')->first('motor_name')['motor_name'];
 
 
-        return view('Dashboard.Admin.dashboard',compact('motor','company','logs','logsE','logsT','lastmotor','mess'));
+//        return view('Dashboard.Admin.index');
+        return view('Dashboard.Admin.dashboard',compact('motor','company','logs','logsE','logsT','lastmotor','mess','motors'));
     }
 
     public function motorLoc()
@@ -34,12 +36,19 @@ class adminPanelController extends Controller
         $motor = CompanyMotors::all()->map(function ($motor) {
 
             return [
-                'text' => $motor->motor_name,
-                'coordinates' => [$motor->latitude ,$motor->longitude],
-                'color' => '#'.rand(111,999),
+                'url' => route('admin.motorView',$motor->id),
+                'title' => $motor->motor_name,
+                'latitude' => $motor->latitude ,
+                'longitude' => $motor->longitude,
             ];
         });
         return response()->json($motor);
+    }
+
+    public function motorsData()
+    {
+        $data = MotorData::orderByDesc('created_at')->with(['motor','event'])->take(17)->get();
+        return response()->json($data);
     }
 
     public function companyManager()
