@@ -7,7 +7,7 @@
             <form action="{{ route('admin.companyUpdate',$user->id) }}" method="POST">
                 @csrf
                 @method("PUT")
-                <div class="form-row">
+                <div class="row">
 
 
                     <div class="form-group col-md-6">
@@ -28,7 +28,7 @@
                 </div>
 
 
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6">
                         <label for="company_address" class="col-form-label">آدرس شرکت</label>
                         <input type="text" name="company_address"
@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6 ">
                         <label for="economic_code_company" class="col-form-label">کد اقتصادی شرکت</label>
                         <input type="text" name="economic_code_company"
@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6 ">
                         <label for="name_agent_company" class="col-form-label">نام نماینده شرکت</label>
                         <input type="text" name="name_agent_company"
@@ -76,7 +76,7 @@
                     </div>
                 </div>
 
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6 ">
                         <label for="national_ID" class="col-form-label">کد ملی</label>
                         <input type="text" name="national_ID"
@@ -89,20 +89,26 @@
                         <select name="type" class="form-control" id="type">
                             @switch($user->company->type)
                                 @case('seller')
-                                    <option value="seller">فروشنده</option>
+                                    <option value="seller" selected>فروشنده</option>
+                                    <option value="buyer">خریدار</option>
+                                    <option value="both">هردو</option>
                                     @break
                                 @case('buyer')
-                                    <option value="buyer">خریدار</option>
+                                    <option value="seller">فروشنده</option>
+                                    <option value="buyer" selected>خریدار</option>
+                                    <option value="both">هردو</option>
                                     @break
                                 @case('both')
-                                    <option value="both">هردو</option>
+                                    <option value="seller">فروشنده</option>
+                                    <option value="buyer">خریدار</option>
+                                    <option value="both" selected>هردو</option>
                                     @break
                             @endswitch
                         </select>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">بروزرسانی</button>
+                <button type="submit" class="btn btn-primary m-3 px-4 text-light">بروزرسانی</button>
             </form>
 
 

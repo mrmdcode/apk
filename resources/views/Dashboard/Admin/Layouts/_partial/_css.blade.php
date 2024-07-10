@@ -8,5 +8,6 @@
 <link rel="stylesheet" href="{{asset('assets/css/sweetalert.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/quill.snow.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+<link href="{{asset("\assets/css/leaflet.css")}}" rel="stylesheet"/>
 
-<link rel="icon" type="image/png" href="assets/images/favicon.png">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">

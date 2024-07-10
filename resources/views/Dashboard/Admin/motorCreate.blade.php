@@ -1,12 +1,12 @@
 @extends('Dashboard.Admin.Layouts.app')
 
 @section('content')
-    <div class="card mt-1">
-        <div class="card-body">
+    <div class="card bg-white border-0 rounded-10 my-4">
+        <div class="card-body ">
             <h2>ایجاد موتور جدید</h2>
             <form action="{{ route('admin.motorStore') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6 @if($errors->has('company_seller_id')) has-danger @endif">
                         <label for="company_seller_id" class="col-form-label">شناسه فروشنده</label>
                         <select name="company_seller_id" id="company_seller_id" class="form-control">
@@ -189,9 +189,12 @@
         </div>
     </div>
 
-<div class="containe">
-{{--<div  id="map"></div>--}}
-</div>
+    <div class="card">
+        <div class="card-body">
+            <div id="map" style="width: 100%; height: 50vh"></div>
+        </div>
+    </div>
+
 
 @endsection
 
@@ -199,7 +202,6 @@
 
 @section('js')
     <script src="{{asset('\assets\js\leaflet.js')}}"></script>
-
     <script>
         var map = L.map('map').setView([32.4279, 53.6880], 6);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -210,17 +212,18 @@
         map.on('click', function (e) {
             var lat = e.latlng.lat;
             var lng = e.latlng.lng;
-//
+
             if (marker) {
                 map.removeLayer(marker);
             }
-//
+
             marker = L.marker([lat, lng]).addTo(map);
-//
+
             document.getElementById('latitude').value = lat;
             document.getElementById('longitude').value = lng;
         });
         //
     </script>
 @endsection
+
 

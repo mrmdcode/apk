@@ -1,12 +1,12 @@
 @extends("Dashboard.Admin.Layouts.app")
 
 @section('content')
-    <div class="card mt-3">
+    <div class="card bg-white border-0 rounded-10 my-5">
         <div class="card-body">
             <h2>ایجاد شرکت جدید</h2>
             <form action="{{ route('admin.companyStore') }}" method="POST">
                 @csrf
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6 @if($errors->has('company_name')) has-danger @endif">
                         <label for="company_name" class="col-form-label">نام شرکت</label>
                         <input type="text" name="company_name" class="form-control" id="company_name">
@@ -26,7 +26,7 @@
                         <small class="form-text text-muted">مثال: 123456</small>
                     </div>
                 </div>
-                <div class="form-row">
+                <div class="row">
 
 
                     <div class="form-group col-md-6 @if($errors->has('email')) has-danger @endif">
@@ -50,7 +50,7 @@
                 </div>
 
 
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6 @if($errors->has('company_address')) has-danger @endif">
                         <label for="company_address" class="col-form-label">آدرس شرکت</label>
                         <input type="text" name="company_address" class="form-control" id="company_address">
@@ -70,7 +70,7 @@
                     </div>
                 </div>
 
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6 @if($errors->has('economic_code_company')) has-danger @endif">
                         <label for="economic_code_company" class="col-form-label">کد اقتصادی شرکت</label>
                         <input type="text" name="economic_code_company" class="form-control" id="economic_code_company">
@@ -90,7 +90,7 @@
                     </div>
                 </div>
 
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6 @if($errors->has('name_agent_company')) has-danger @endif">
                         <label for="name_agent_company" class="col-form-label">نام نماینده شرکت</label>
                         <input type="text" name="name_agent_company" class="form-control" id="name_agent_company">
@@ -110,7 +110,7 @@
                     </div>
                 </div>
 
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6 @if($errors->has('national_ID')) has-danger @endif">
                         <label for="national_ID" class="col-form-label">کد ملی</label>
                         <input type="text" name="national_ID" class="form-control" id="national_ID">

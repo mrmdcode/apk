@@ -1,11 +1,11 @@
 @extends("Dashboard.Admin.Layouts.app")
 @section('content')
-    <div class="card mt-3">
+    <div class="card bg-white border-0  my-5">
         <div class="card-body">
             <h2>{{$user->company->company_name}}</h2>
             <form>
 
-                <div class="form-row">
+                <div class="row">
 
                     <div class="form-group col-md-6">
                         <label for="company_registration_number" class="col-form-label">شماره ثبت شرکت</label>
@@ -27,7 +27,7 @@
                 </div>
 
 
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6">
                         <label for="company_address" class="col-form-label">آدرس شرکت</label>
                         <input type="text" name="company_address"
@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6 ">
                         <label for='economic_code_company' class="col-form-label"> کد اقتصادی شرکت </label>
                         <input type="text" name="economic_code_company"
@@ -62,7 +62,7 @@
                     </div>
                 </div>
 
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6 ">
                         <label for="name_agent_company" class="col-form-label">نام نماینده شرکت</label>
                         <input type="text" name="name_agent_company"
@@ -80,7 +80,7 @@
                     </div>
                 </div>
 
-                <div class="form-row">
+                <div class="row">
                     <div class="form-group col-md-6 ">
                         <label for="national_ID" class="col-form-label">کد ملی</label>
                         <input type="text" name="national_ID"
@@ -108,98 +108,110 @@
             </form>
         </div>
     </div>
-    <div class="card mt-5">
-        <div class="card-body">
+    <div class="card bg-white border-0 rounded-10 mb-4">
+        <div class="card-body p-4">
+            <div class="d-sm-flex text-center justify-content-between align-items-center border-bottom pb-20 mb-20">
+                <h4 class="fw-semibold fs-18 mb-sm-0">لیست موتور ها</h4>
 
-            <h4 class="mt-0 header-title">مدیریت موتور</h4>
-
-
-            <div class="table-responsive my-5">
-                <table class="table table-bordered mb-0">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>نام موتور</th>
-                        <th>سریال موتور</th>
-                        <th>زمان استارت</th>
-                        <th>زمان نصب</th>
-                        <th>تعداد اخطار</th>
-                        <th>توضیخات موتور</th>
-                        <th>انتخاب</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @php $i=1; @endphp
-                    @forelse($motors as $motor)
-                        <tr>
-                            <th scope="row">{{$i++}}</th>
-                            <td>{{$motor->motor_name}}</td>
-                            <td>{{$motor->motor_serial}}</td>
-                            <td>{{ $motor->motor_start? $motor->motor_start : "راه اندازی نشده"  }}</td>
-                            <td>{{ verta($motor->instalation_date)->format("y/m") }}</td>
-                            <td> {{$motor->data->count()}} </td>
-                            <td>{{\Illuminate\Support\Str::substr($motor->motor_description,0,50)}}</td>
-                            <td>
-                                <input type="radio" name="choice" value="{{$motor->id}}" id="motor_{{$motor->id}}">
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8">دیتا نا موجود</td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                </table>
             </div>
-            <div class="card pt-3 px-3 row ">
-                <div class="row ">
-                    <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.motorView',0)}}" class="btn btn-primary btn-block disabled" id="view">مشاهده
-                            کلی</a>
-                    </div>
-                    <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.motorEdit',0)}}" class="btn btn-warning btn-block disabled" id="edit">ویرایش</a>
-                    </div>
-                    <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.motorDelete',0)}}" class="btn btn-danger btn-block disabled"
-                           id="delete">حذف</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <a href="{{route('admin.motorEvent',0)}}" class="btn btn-block btn-outline-secondary disabled"
-                       id="event">تنظیم اخطار</a>
+
+            <div class="default-table-area members-list">
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                        <tr class="text-center">
+                            <th scope="col" class="text-primary text-start">
+                                <div class="form-check">
+                                    <label class="form-check-label ms-2" for="flexCheckDefault">نام/مالک</label>
+                                </div>
+                            </th>
+                            <th scope="col">سریال</th>
+                            <th scope="col">زمان استارت</th>
+                            <th scope="col">زمان نصب</th>
+                            <th scope="col">هشدار Err\هشدار War\هشدار Nor</th>
+                            <th scope="col">عملیات</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse($motors as $motor)
+
+
+                            <tr class="text-center">
+                                <td class="text-start">
+                                    <div class="d-flex align-items-center">
+                                        <div class="form-check pe-2">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+                                        </div>
+                                        <div class="d-flex align-items-center">
+
+                                            <div class="flex-grow-1 ms-10">
+                                                <h4 class="fw-semibold fs-16 mb-0">{{$motor->motor_name}}</h4>
+                                                <span class="text-gray-light">{{$motor->buyer->company_name}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{$motor->motor_serial}}
+                                </td>
+                                <td>
+                                    {{ $motor->motor_start? $motor->motor_start : "راه اندازی نشده"  }}
+                                </td>
+                                <td>
+                                    {{ verta($motor->instalation_date)->format("y/m") }}
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-2 justify-content-center">
+                                        <span class="bg-danger bg-opacity-10 text-danger fs-13 fw-semibold py-1 px-2 rounded-1">{{$motor->data->where('process','error')->count()}}</span>
+                                        <span class="bg-warning bg-opacity-10 text-warning fs-13 fw-semibold py-1 px-2 rounded-1">{{$motor->data->where('process','warning')->count()}}</span>
+                                        <span class="bg-success bg-opacity-10 text-success fs-13 fw-semibold py-1 px-2 rounded-1">{{$motor->data->where('process','normal')->count()}}</span>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="dropdown action-opt">
+                                        <button class="btn bg p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i data-feather="more-horizontal"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end bg-white border box-shadow">
+                                            <li>
+                                                <a class="dropdown-item" href="{{route('admin.motorEdit',$motor->id)}}">
+                                                    <i data-feather="edit-2"></i>
+                                                    ویرایش
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{route('admin.motorView',$motor->id)}}">
+                                                    <i data-feather="link-2"></i>
+                                                    مشاهده
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:;">
+                                                    <i data-feather="link-2"></i>
+                                                    دریافت گزارشات (Excel)
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{route('admin.motorDelete',$motor->id)}}">
+                                                    <i data-feather="trash-2"></i>
+                                                    حذف
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td>not data</td>
+                            </tr>
+                        @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-@section('js')
-    <script !src="">
-        let targer;
-        console.log("ff")
-        $('input[name="choice"]').on('change', function () {
-            targer = $('input[name="choice"]:checked').val()
 
-            function updateHref(elementId, target) {
-                let url = $(elementId).attr('href');
-                url = url.split('/');
-                url.pop();
-                url = url.join('/');
-                $(elementId).attr('href', url + '/' + target);
-            }
-
-            updateHref('#view', targer);
-            updateHref('#edit', targer);
-            updateHref('#delete', targer);
-            updateHref('#event', targer);
-            if (targer != null) {
-                $('#view').removeClass('disabled')
-                $('#edit').removeClass('disabled')
-                $('#delete').removeClass('disabled')
-                $('#event').removeClass('disabled')
-            }
-
-        })
-    </script>
-
-@endsection
