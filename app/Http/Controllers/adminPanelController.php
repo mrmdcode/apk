@@ -187,8 +187,69 @@ class adminPanelController extends Controller
         }
 
         $motor->save();
+        $events = [
+            [
+                'motor_id' => $motor->id,
+                "name" => 'میانگین دما سیم پیچ',
+                "topic" => 'motor_'.$motor->motor_serial.'_temperature',
+                'payload'=>'d->temperature',
+                'normal'=> 33.00,'min'=> 30.00,'max'=> 36.00,
+            ],
+            [
+                'motor_id' => $motor->id,
+                "name" => 'جریان 1',
+                "topic" => 'motor_'.$motor->motor_serial.'_Current1',
+                'payload'=>'d->Current1',
+                'normal'=> 6.00,'min'=> 4.00,'max'=> 8.00,
+            ],
+            [
+                'motor_id' => $motor->id,
+                "name" => 'جریان 2',
+                "topic" => 'motor_'.$motor->motor_serial.'_Current2',
+                'payload'=>'d->Current2',
+                'normal'=> 10.00,'min'=> 9.00,'max'=> 12.00,
+            ],
+            [
+                'motor_id' => $motor->id,
+                "name" => 'جریان 3',
+                "topic" => 'motor_'.$motor->motor_serial.'_Current3',
+                'payload'=>'d->Current3',
+                'normal'=> 8.00,'min'=> 6.00,'max'=> 10.00,
+            ],
+            [
+                'motor_id' => $motor->id,
+                "name" => 'دمای محیط',
+                "topic" => 'motor_'.$motor->motor_serial.'_ambtemperature',
+                'payload'=>'d->ambtemperature',
+                'normal'=> 29.00,'min'=> 27.00,'max'=> 30.00,
+            ],
+            [
+                'motor_id' => $motor->id,
+                "name" => 'لرزش سر عقب',
+                "topic" => 'motor_'.$motor->motor_serial.'_vibration1',
+                'payload'=>'d->vibration1',
+                'normal'=> 29.00,'min'=> 27.00,'max'=> 30.00,
+            ],
+            [
+                'motor_id' => $motor->id,
+                "name" => 'لرزش سر جلو',
+                "topic" => 'motor_'.$motor->motor_serial.'_vibration2',
+                'payload'=>'d->vibration2',
+                'normal'=> 29.00,'min'=> 27.00,'max'=> 30.00,
+            ],
 
-        session()->flash('success',"ثبت موتور با موفقیت به پایان رسید .");
+            ];
+        MotorEvent::create($events[0]);
+        MotorEvent::create($events[1]);
+        MotorEvent::create($events[2]);
+        MotorEvent::create($events[3]);
+        MotorEvent::create($events[4]);
+        MotorEvent::create($events[5]);
+        MotorEvent::create($events[6]);
+
+
+
+        session()->flash('success',"ثبت موتور با موفقیت به پایان رسید .هفت تا از رویداد های دیفالت اضافه شد .");
         return redirect()->route('admin.motorManager');
 
     }
