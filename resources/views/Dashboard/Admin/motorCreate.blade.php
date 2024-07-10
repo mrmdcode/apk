@@ -96,7 +96,7 @@
                         <small class="form-text text-muted">مثال: پایین تر از مدرسه افق دانش</small>
                     </div>
 
-                    <div class="form-group col-md-12 @if($errors->has('motor_description')) has-danger @endif">
+                    <div class="form-group col-md-6 @if($errors->has('motor_description')) has-danger @endif">
                         <label for="motor_description" class="col-form-label">توضیحات موتور</label>
                         <textarea name="motor_description" class="form-control" id="motor_description"
                                   placeholder="توضیحات موتور"></textarea>
@@ -183,20 +183,22 @@
                 </div>
 
 
-                <button type="submit" class="btn btn-primary">ایجاد</button>
+                <button type="submit" class="btn btn-primary m-3 px-5">ایجاد</button>
             </form>
 
         </div>
     </div>
-    <div class="row">
-        <div id="map" style="max-height: 400px; margin: 50px"></div>
-    </div>
+
+<div class="containe">
+{{--<div  id="map"></div>--}}
+</div>
+
 @endsection
 
 
 
 @section('js')
-    <script src="{{asset('\assets\dashboard\plugins\leaflet\leaflet.js')}}"></script>
+    <script src="{{asset('\assets\js\leaflet.js')}}"></script>
 
     <script>
         var map = L.map('map').setView([32.4279, 53.6880], 6);

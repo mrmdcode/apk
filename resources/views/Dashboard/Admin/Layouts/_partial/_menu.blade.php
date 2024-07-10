@@ -79,7 +79,7 @@
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{route('admin.companyCreate')}}" class="menu-link" @if(Route::current()->getName() == 'admin.companyCreate' ) active @endif>
+                        <a href="{{route('admin.companyCreate')}}" class="menu-link @if(Route::current()->getName() == 'admin.companyCreate' ) active @endif">
                            افزودن شرکت
                         </a>
                     </li>
@@ -97,7 +97,7 @@
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{route('admin.motorCreate')}}" class="menu-link" @if(Route::current()->getName() == 'admin.motorCreate' ) active @endif>
+                        <a href="{{route('admin.motorCreate')}}" class="menu-link @if(Route::current()->getName() == 'admin.motorCreate' ) active @endif">
                             افزودن
                         </a>
                     </li>
@@ -140,3 +140,4 @@
             </div>
         </div>
     </div>
+</div>

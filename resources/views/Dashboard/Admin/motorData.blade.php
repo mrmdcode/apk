@@ -14,11 +14,10 @@
                     <tr>
                         <th>#</th>
                         <th>نام موتور</th>
+                        <th>نام رویداد</th>
                         <th>خریدار</th>
-                        <th>فروشنده</th>
                         <th>دیتا</th>
-                        <th>پردازش</th>
-                        <th>زمان پردازش</th>
+                        <th>وضعیت</th>
                         <th>زمان دریافت</th>
                     </tr>
                     </thead>
@@ -28,16 +27,11 @@
                         <tr>
                             <td>{{$i++}}</td>
                             <td>{{$log->motor->motor_name}}</td>
+                            <td>{{$log->event->name}}</td>
                             <td>{{$log->motor->buyer->company_name}}</td>
-                            <td>{{$log->motor->seller->company_name}}</td>
                             <td>{{$log->data}}</td>
-                            <td>@if($log->process)
-                                    شده
-                                @else
-                                    نشده
-                                @endif</td>
-                            <td>{{verta($log->processed_at)}}</td>
-                            <td>{{verta($log->created_at)->formatWord('l d F')}}</td>
+                            <td>{{$log->process}}</td>
+                            <td>{{verta($log->created_at)}}</td>
                         </tr>
                     @empty
                         <tr>

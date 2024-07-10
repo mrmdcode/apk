@@ -158,7 +158,6 @@
 
 
 @endsection
-href="/motorManager/${item.motor.id}"
 @section('js')
     <script src="https://cdn.amcharts.com/lib/5/geodata/iranLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/iranHigh.js"></script>

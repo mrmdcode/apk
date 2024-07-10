@@ -24,7 +24,10 @@ Route::get('/', function () {
 //    return view('Emails.logError');
 //\Illuminate\Support\Facades\Mail::to('mdka2885mdka@gmail.com')
 //    ->send(new \App\Mail\logErrorMail('d'));
-//    $motor = CompanyMotors::find(1);
+//    $motor = CompanyMotors::where('id',4)->with('events.data')->first();
+//    return response()->json($motor);
+//    $users = \App\Models\CompanyMotors::with('data')->get();
+//    return response()->json($users);
 //    return  [$motor->seller->user->email,$motor->buyer->user->email];
 //    $mail = Mail::to('md2885ka2885@gmail.com')->send(new logErrorMail());
 

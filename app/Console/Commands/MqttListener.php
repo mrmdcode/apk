@@ -49,15 +49,68 @@ class MqttListener extends Command
         try {
             $mqtt = MQTT::connection();
             $mqtt->subscribe('#', function (string $topic, string $message) {
-                            var_dump($topic);
+//                            var_dump($topic);
                 $ME = MotorEvent::where('topic',$topic)->first();
                 $CM = CompanyMotors::where('motor_serial',$this->extractParts($topic)[0])->first();
-                $MD = MotorData::create([
-                    'motor_id'=>$CM->id,
-                    'event_id'=>$ME->id,
-                    'data'=>json_encode(json_decode($message)),
-                ]);
-                var_dump($topic,$MD->data);
+                $payload = explode('->', $ME->payload);
+                $data = json_decode($message,true)[$payload[0]][$payload[1]];
+                if ($data == $ME->normal) {
+                    MotorData::create([
+                        'motor_id' => $CM->id,
+                        'event_id' => $ME->id,
+                        'data' => $data,
+                        'process' => 'normal'
+                    ]);
+                    echo '|----------------------------------------'."\n"
+                        .'| motor name : '.$CM->motor_name ."\n"
+                        .'| event name : '.$ME->name."\n"
+                        .'| data : '.$data.' | normal : '.$ME->min.' < '.$ME->normal.' > '.$ME->max."\n"
+                        .'| result: Normal'."\n"
+                        .'|----------------------------------------'."\n"
+                    ;
+                }
+                elseif ( $data > $ME->min && $data  < $ME->max){
+                    MotorData::create([
+                        'motor_id' => $CM->id,
+                        'event_id' => $ME->id,
+                        'data' => $data,
+                        'process' => 'warning'
+                    ]);
+                    echo '|----------------------------------------'."\n"
+                        .'| motor name : '.$CM->motor_name ."\n"
+                        .'| event name : '.$ME->name."\n"
+                        .'| data : '.$data.' | normal : '.$ME->min.' < '.$ME->normal.' > '.$ME->max."\n"
+                        .'| result: Warning'."\n"
+                        .'|----------------------------------------'."\n"
+                    ;
+                }
+                else {
+                    MotorData::create([
+                        'motor_id' => $CM->id,
+                        'event_id' => $ME->id,
+                        'data' => $data,
+                        'process' => 'error'
+                    ]);
+                    echo '|----------------------------------------'."\n"
+                        .'| motor name : '.$CM->motor_name ."\n"
+                        .'| event name : '.$ME->name."\n"
+                        .'| data : '.$data.' | normal : '.$ME->min.' < '.$ME->normal.' > '.$ME->max."\n"
+                        .'| result: Error'."\n"
+                        .'|----------------------------------------'."\n"
+                    ;
+                }
+
+
+
+
+
+
+
+
+
+
+                var_dump($topic);
+                var_dump($data);
 
             }, 1);
             $mqtt->loop(true);

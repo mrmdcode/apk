@@ -39,16 +39,18 @@ class errorMailSenderJob implements ShouldQueue
             $motor = CompanyMotors::find($this->motor_id);
             if (!appChatController::checkLastMessageTime($motor->seller->user->id,2)){
 //                Mail::to($motor->seller->user->email)->send(new logErrorMail());
-                    echo 'mail send';
+//                    echo 'mail send';
                 appChatController::store(null,$motor->seller->user->id,'your motor has error','superHigh','mail');
-                    echo 'mail mess send';
+//                    echo 'mail mess send';
 //                Mail
 //::to($motor->buyer->user->email)->send(new logErrorMail());
-                    echo 'mail send';
+//                    echo 'mail send';
                 appChatController::store(null,$motor->buyer->user->id,'your motor has error','superHigh','mail');
-                    echo 'mail mess send';
-            }
+//                    echo 'mail mess send';
 
+                    echo 'email send';
+            }
+                   echo 'mail sended ago ';
 
         }
         catch (\Exception $e){

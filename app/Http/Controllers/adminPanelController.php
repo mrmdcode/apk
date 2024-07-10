@@ -53,7 +53,7 @@ class adminPanelController extends Controller
 
     public function companyManager()
     {
-        $users = User::where('type','company')->orderBy('created_at','desc')->get();
+        $users = User::where('type','company')->orderBy('created_at','desc')->paginate(10);
         return view('Dashboard.Admin.companyManager', compact('users'));
     }
 
@@ -195,7 +195,7 @@ class adminPanelController extends Controller
 
     public function motorManager()
     {
-        $motors = CompanyMotors::orderBy('created_at','desc')->get();
+        $motors = CompanyMotors::orderBy('created_at','desc')->paginate(10);
 
         return view('Dashboard.Admin.motorManager',compact('motors'));
     }

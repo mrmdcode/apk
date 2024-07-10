@@ -14,7 +14,6 @@ class MotorData extends Model
         "event_id",
         "data",
         "process",
-        "processed_at",
     ];
 
     public function motor()

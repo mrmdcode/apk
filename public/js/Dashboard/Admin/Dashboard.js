@@ -144,24 +144,27 @@ const mapInit =async () => {
 
 }
 
-
-
+const chartInit =async () => {
+    motorLoc = await fetch('/dashboard/admin/motorLoc');
+    cities = await motorLoc.json();
+}
 var options = {
-    series: [
-        {
-            name: 'series1',
-            data: [0, 60, 70, 110, 60, 70, 100, 85, 90, 70 ,77]
-
-        },
-        {
-            name: 'series2',
-            data: [50, 50, 60, 90, 50, 60, 90, 55, 44, 66, 55]
-        },
-        {
-            name: 'series2',
-            data: [90, 40, 50, 80, 40, 50, 80, 85, 98, 85, 46]
-        }
-    ],
+    series: [],
+    //     [
+    //     {
+    //         name: 'series1',
+    //         data: [0, 60, 70, 110, 60, 70, 100, 85, 90, 70 ,77]
+    //
+    //     },
+    //     {
+    //         name: 'series2',
+    //         data: [50, 50, 60, 90, 50, 60, 90, 55, 44, 66, 55]
+    //     },
+    //     {
+    //         name: 'series2',
+    //         data: [90, 40, 50, 80, 40, 50, 80, 85, 98, 85, 46]
+    //     }
+    // ],
     colors: ["#8EB0DE", "#90C6E0", "#E7EBF5"],
     chart: {
         height: 350,
@@ -222,9 +225,14 @@ var options = {
             format: 'dd/MM/yy HH:mm'
         },
     },
+    noData:{
+        text:"....Loading",
+    }
 };
 var chart = new ApexCharts(document.querySelector("#dataReceivering"), options);
 chart.render();
+
+// chart.updateSeries([])
 
 
 const dataListRefresh = async ()=>{
@@ -233,22 +241,22 @@ const dataListRefresh = async ()=>{
     // console.log(freshData);
     document.querySelector('#dataList').innerHTML ='';
     freshData.map((item)=>{
-        payload = item.event.payload.split('->')[1]
 
+        // console.log(item)
         if (item.process == 'normal')
-            document.querySelector('#dataList').innerHTML +=`<div class="alert alert-success">هشدار ${item.event.name}  طبیعی است .مقادیر طبیعی = ${item.event.min} < ${item.event.normal} < ${item.event.max} | مقدار ارسالی موتور =   ${JSON.parse(item.data).d[payload]} </div>`
+            document.querySelector('#dataList').innerHTML +=`<div class="alert alert-success">موتور ${item.motor.motor_name} |هشدار ${item.event.name}  طبیعی است .مقادیر طبیعی = ${item.event.min} < ${item.event.normal} < ${item.event.max} | مقدار ارسالی موتور =   ${item.data} </div>`
         if (item.process == 'warning')
-            document.querySelector('#dataList').innerHTML +=`<div class="alert alert-warning">هشدار ${item.event.name}  در بازه  مجاز  است .مقادیر طبیعی = ${item.event.min} < ${item.event.normal} < ${item.event.max} | مقدار ارسالی موتور =   ${JSON.parse(item.data).d[payload]} </div>`
+            document.querySelector('#dataList').innerHTML +=`<div class="alert alert-warning">موتور ${item.motor.motor_name} | هشدار ${item.event.name}  در بازه  مجاز  است .مقادیر طبیعی = ${item.event.min} < ${item.event.normal} < ${item.event.max} | مقدار ارسالی موتور =   ${item.data} </div>`
         if (item.process == 'error'){
-            document.querySelector('#dataList').innerHTML +=`<div class="alert alert-danger">هشدار ${item.event.name}  در بازه غیر مجاز  است .مقادیر طبیعی = ${item.event.min} < ${item.event.normal} < ${item.event.max} | مقدار ارسالی موتور =   ${JSON.parse(item.data).d[payload]} </div>`
+            document.querySelector('#dataList').innerHTML +=`<div class="alert alert-danger"> موتور ${item.motor.motor_name} | هشدار ${item.event.name}  در بازه غیر مجاز  است .مقادیر طبیعی = ${item.event.min} < ${item.event.normal} < ${item.event.max} | مقدار ارسالی موتور =   ${item.data} </div>`
         }
-    });
+    })  ;
 }
 
 
 
 
-setInterval(dataListRefresh,2000)
+setInterval(dataListRefresh,7000)
 
 mapInit()
 dataListRefresh()

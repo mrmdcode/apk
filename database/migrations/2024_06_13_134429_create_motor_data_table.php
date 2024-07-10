@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreignId("event_id")->constrained('motor_events');
             $table->text("data");
             $table->enum("process",["normal","warning","error"])->nullable();
-            $table->timestamp("processed_at")->nullable();
             $table->timestamps();
         });
     }
