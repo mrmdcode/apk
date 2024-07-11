@@ -1,6 +1,6 @@
 @extends("Dashboard.Admin.Layouts.app")
 @section("content")
-    <div class="card mt-5">
+    <div class="card bg-white border-0 mt-5">
         <div class="card-body">
 
             <h4 class="mt-0 header-title">مدیریت موتور</h4>
