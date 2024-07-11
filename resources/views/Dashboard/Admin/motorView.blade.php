@@ -2,7 +2,101 @@
 
 @section('content')
     <div class="row">
-        <div class="card mt-5">
+        <div class="col-md-6 col-xl-4">
+            <div class="card bg-white border-0 rounded-10 mt-5">
+                <div class="card-body" >
+                    <h3 class="border-bottom fs-18 mb-20 pb-20">هشدار ها</h3>
+                    <div class="row"  style="height: 266px;overflow: auto;" >
+
+                        @forelse($logs as $log)
+                            @if($log->process == 'error')
+                                <div class="alert alert-danger">موتور در ساعت {{verta($log->created_at)->format('H:i:s')}} اررور {{$log->event->name}} داده و مقادیر طبیعی خود را رد کرده .</div>
+                            @endif
+                            @if($log->process == 'warning')
+                                <div class="alert alert-warning">   موتور در ساعت {{verta($log->created_at)->format('H:i:s')}} وارنینگ {{$log->event->name}}  داده و مقادیر طبیعی خود را رد کرده . </div>
+                            @endif
+                        @empty
+                            <div class="alert alert-success">
+                                هیچ دیتا error یا warning ندارد .
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <div class="card bg-white border-0 rounded-10 mt-5">
+                <div class="card-body">
+                    <h3 class="fs-18 mb-20 pb-20  border-bottom">حجم درتای دریافتی</h3>
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <div class="card bg-white mt-5">
+                <div class="card-body">
+                    <div class="row border-bottom  justify-content-between mb-20 pb-20">
+                        <h3 class="fs-18  col">رویداد ها</h3>
+                        <a href="{{route('admin.motorEvent',$motor->id)}}" class="col-3 text-primary">مشاهده همه </a>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <th>نام</th>
+                        <th>کمترین</th>
+                        <th>عادی</th>
+                        <th>بیشترین</th>
+                        <th>---</th>
+                        </thead>
+                        <tbody>
+                        @forelse($motor->events->take(3) as $event)
+                            <tr>
+                                <td>{{$event->name}}</td>
+                                <td>{{$event->min}}</td>
+                                <td>{{$event->normal}}</td>
+                                <td>{{$event->max}}</td>
+                                <td><a href="{{route('admin.motorEventEdit',$event->id)}}" class="btn btn-secondary fw-semibold text-white py-2 px-2 me-2"><i class="ri-add-line"></i> ویرایش</a></td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5">no data     </td>
+                            </tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-xl-4">
+            <div class="card bg-white mt-5">
+                <div class="card-body">
+                    <h3 class="fs-18 mb-20 pb-20 border-bottom">دمای محیط</h3>
+                    <div id="gauge_1" style="height: 350px;"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <div class="card bg-white mt-5">
+                <div class="card-body">
+                    <h3 class="fs-18 mb-20 pb-20 border-bottom">دمای سیم پیچ</h3>
+                    <div id="gauge_2" style="height: 350px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <div class="card bg-white mt-5">
+                <div class="card-body">
+                    <h3 class="fs-18 mb-20 pb-20 border-bottom">جریان ها</h3>
+                    <div id="date_axis" style="height: 350px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card bg-white border-0 rounded-10 my-2">
             <div class="card-body">
                 <a href="{{route('motor.listener',[$motor->id,$motor->seller->id,$motor->seller->company_name,$motor->buyer->id,$motor->buyer->company_name,$motor->motor_name])}}" class="btn btn-warning">صفخه سوپروایز</a>
                 <form>
@@ -107,72 +201,15 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 col-xl-4">
-            <div class="card mt-5">
-                <div class="card-body">
-                    @forelse($logs as $log)
-                        @if($log->process == 'error')
-                            <div class="alert alert-danger">موتور در ساعت {{$log->created_At}} اررور {{$log->event->name}} داده و مقادیر طبیعی خود را رد کرده .</div>
-                        @endif
-                        @if($log->process == 'warning')
-                            <div class="alert alert-warning">موتور در ساعت {{$log->created_At}} وارنینگ {{$log->event->name}} داده و مقادیر طبیعی خود را رد کرده .</div>
-                        @endif
-                    @empty
-                        <div class="alert alert-success">
-                            هیچ دیتا error یا warning ندارد .
-                        </div>
-                    @endforelse
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <canvas id="myChart"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <div id="gaugeContainer_1"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-6 col-xl-4">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <div id="gaugeContainer_2"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <canvas id="linechart" class="chart chart-line" data="data" labels="labels" legend="true" series="series" options="options" click="onClick"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card mt-5">
-                <div class="card-body">
-                    col 3
-                </div>
-            </div>
-        </div>
-    </div>@endsection
+@endsection
 
 
 
 @section('js')
 {{--    <script src="{{asset('\assets\dashboard\plugins\leaflet\leaflet.js')}}"></script>--}}
 
-<script src="{{asset('\assets\dashboard\plugins\raphael\raphael.min.js')}}"></script>
-<script src="{{asset('/assets/dashboard/plugins/justgage/justgage.min.js')}}"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
 
@@ -197,28 +234,6 @@
                 }
             }
         });
-
-
-        var g_1 = new JustGage({
-            id: "gaugeContainer_1",
-            value: 2, // مقدار اولیه نمودار
-            min: 0,    // حداقل مقدار
-            max: 100,  // حداکثر مقدار
-            title: "میزان آمپر", // عنوان نمودار
-            label: "آمپر",        // برچسب
-            levelColors: ['#FF0000', '#FFCC00', '#00FF00'] // رنگ‌های مختلف برای مقادیر مختلف
-        });
-
-        var g_2 = new JustGage({
-            id: "gaugeContainer_2",
-            value: 72, // مقدار اولیه نمودار
-            min: 0,    // حداقل مقدار
-            max: 100,  // حداکثر مقدار
-            title: "میزان آمپر", // عنوان نمودار
-            label: "آمپر",        // برچسب
-            levelColors: ['#FF0000', '#FFCC00', '#00FF00'] // رنگ‌های مختلف برای مقادیر مختلف
-        });
-
 
         let chart = new Chart(linechart, {
 
@@ -253,6 +268,436 @@
                 }
             }
         });
+
+
+        am5.ready(function () {
+
+            // Create root element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            var root = am5.Root.new("gauge_1");
+
+
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root.setThemes([
+                am5themes_Animated.new(root)
+            ]);
+
+
+            // Create chart
+            // https://www.amcharts.com/docs/v5/charts/radar-chart/
+            var chart = root.container.children.push(am5radar.RadarChart.new(root, {
+                panX: false,
+                panY: false,
+                startAngle: 160,
+                endAngle: 380
+            }));
+
+
+            // Create axis and its renderer
+            // https://www.amcharts.com/docs/v5/charts/radar-chart/gauge-charts/#Axes
+            var axisRenderer = am5radar.AxisRendererCircular.new(root, {
+                innerRadius: -40
+            });
+
+            axisRenderer.grid.template.setAll({
+                stroke: root.interfaceColors.get("background"),
+                visible: true,
+                strokeOpacity: 0.8
+            });
+
+            var xAxis = chart.xAxes.push(am5xy.ValueAxis.new(root, {
+                maxDeviation: 0,
+                min: 10,
+                max: 90,
+                strictMinMax: true,
+                renderer: axisRenderer
+            }));
+
+
+            var axisDataItem = xAxis.makeDataItem({});
+
+            var clockHand = am5radar.ClockHand.new(root, {
+                pinRadius: am5.percent(20),
+                radius: am5.percent(100),
+                bottomWidth: 40
+            })
+
+            var bullet = axisDataItem.set("bullet", am5xy.AxisBullet.new(root, {
+                sprite: clockHand
+            }));
+
+            xAxis.createAxisRange(axisDataItem);
+
+            var label = chart.radarContainer.children.push(am5.Label.new(root, {
+                fill: am5.color(0xffffff),
+                centerX: am5.percent(50),
+                textAlign: "center",
+                centerY: am5.percent(50),
+                fontSize: "3em"
+            }));
+
+            axisDataItem.set("value", 50);
+            bullet.get("sprite").on("rotation", function () {
+                var value = axisDataItem.get("value");
+                var text = Math.round(axisDataItem.get("value")).toString();
+                var fill = am5.color(0x000000);
+                xAxis.axisRanges.each(function (axisRange) {
+                    if (value >= axisRange.get("value") && value <= axisRange.get("endValue")) {
+                        fill = axisRange.get("axisFill").get("fill");
+                    }
+                })
+
+                label.set("text", Math.round(value).toString());
+
+                clockHand.pin.animate({key: "fill", to: fill, duration: 500, easing: am5.ease.out(am5.ease.cubic)})
+                clockHand.hand.animate({key: "fill", to: fill, duration: 500, easing: am5.ease.out(am5.ease.cubic)})
+            });
+
+            setInterval(function () {
+                axisDataItem.animate({
+                    key: "value",
+                    to: Math.round(Math.random() * 14 + 50),
+                    duration: 500,
+                    easing: am5.ease.out(am5.ease.cubic)
+                });
+            }, 2000)
+
+            chart.bulletsContainer.set("mask", undefined);
+
+
+            // Create axis ranges bands
+            // https://www.amcharts.com/docs/v5/charts/radar-chart/gauge-charts/#Bands
+            var bandsData = [{
+                title: "Warning",
+                color: "#b0d136",
+                lowScore: 10,
+                highScore: 20
+            }, {
+                title: "Normal",
+                color: "#f3eb0c",
+                lowScore: 20,
+                highScore: 40
+            }, {
+                title: "Warning",
+                color: "#fdae19",
+                lowScore: 40,
+                highScore: 50
+            }, {
+                title: "Danger",
+                color: "#f04922",
+                lowScore: 50,
+                highScore: 90
+            },];
+
+            am5.array.each(bandsData, function (data) {
+                var axisRange = xAxis.createAxisRange(xAxis.makeDataItem({}));
+
+                axisRange.setAll({
+                    value: data.lowScore,
+                    endValue: data.highScore
+                });
+
+                axisRange.get("axisFill").setAll({
+                    visible: true,
+                    fill: am5.color(data.color),
+                    fillOpacity: 0.8
+                });
+
+                axisRange.get("label").setAll({
+                    text: data.title,
+                    inside: true,
+                    radius: 15,
+                    fontSize: "0.9em",
+                    fill: root.interfaceColors.get("background")
+                });
+            });
+
+
+            // Make stuff animate on load
+            chart.appear(1000, 100);
+        });
+        am5.ready(function () {
+
+            // Create root element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            var root = am5.Root.new("gauge_2");
+
+
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root.setThemes([
+                am5themes_Animated.new(root)
+            ]);
+
+
+            // Create chart
+            // https://www.amcharts.com/docs/v5/charts/radar-chart/
+            var chart = root.container.children.push(am5radar.RadarChart.new(root, {
+                panX: false,
+                panY: false,
+                startAngle: 160,
+                endAngle: 380
+            }));
+
+
+            // Create axis and its renderer
+            // https://www.amcharts.com/docs/v5/charts/radar-chart/gauge-charts/#Axes
+            var axisRenderer = am5radar.AxisRendererCircular.new(root, {
+                innerRadius: -40
+            });
+
+            axisRenderer.grid.template.setAll({
+                stroke: root.interfaceColors.get("background"),
+                visible: true,
+                strokeOpacity: 0.8
+            });
+
+            var xAxis = chart.xAxes.push(am5xy.ValueAxis.new(root, {
+                maxDeviation: 0,
+                min: 10,
+                max: 90,
+                strictMinMax: true,
+                renderer: axisRenderer
+            }));
+
+
+            var axisDataItem = xAxis.makeDataItem({});
+
+            var clockHand = am5radar.ClockHand.new(root, {
+                pinRadius: am5.percent(20),
+                radius: am5.percent(100),
+                bottomWidth: 40
+            })
+
+            var bullet = axisDataItem.set("bullet", am5xy.AxisBullet.new(root, {
+                sprite: clockHand
+            }));
+
+            xAxis.createAxisRange(axisDataItem);
+
+            var label = chart.radarContainer.children.push(am5.Label.new(root, {
+                fill: am5.color(0xffffff),
+                centerX: am5.percent(50),
+                textAlign: "center",
+                centerY: am5.percent(50),
+                fontSize: "3em"
+            }));
+
+            axisDataItem.set("value", 50);
+            bullet.get("sprite").on("rotation", function () {
+                var value = axisDataItem.get("value");
+                var text = Math.round(axisDataItem.get("value")).toString();
+                var fill = am5.color(0x000000);
+                xAxis.axisRanges.each(function (axisRange) {
+                    if (value >= axisRange.get("value") && value <= axisRange.get("endValue")) {
+                        fill = axisRange.get("axisFill").get("fill");
+                    }
+                })
+
+                label.set("text", Math.round(value).toString());
+
+                clockHand.pin.animate({key: "fill", to: fill, duration: 500, easing: am5.ease.out(am5.ease.cubic)})
+                clockHand.hand.animate({key: "fill", to: fill, duration: 500, easing: am5.ease.out(am5.ease.cubic)})
+            });
+
+            setInterval(function () {
+                axisDataItem.animate({
+                    key: "value",
+                    to: Math.round(Math.random() * 14 + 50),
+                    duration: 500,
+                    easing: am5.ease.out(am5.ease.cubic)
+                });
+            }, 2000)
+
+            chart.bulletsContainer.set("mask", undefined);
+
+
+            // Create axis ranges bands
+            // https://www.amcharts.com/docs/v5/charts/radar-chart/gauge-charts/#Bands
+            var bandsData = [{
+                title: "Warning",
+                color: "#b0d136",
+                lowScore: 10,
+                highScore: 20
+            }, {
+                title: "Normal",
+                color: "#f3eb0c",
+                lowScore: 20,
+                highScore: 40
+            }, {
+                title: "Warning",
+                color: "#fdae19",
+                lowScore: 40,
+                highScore: 50
+            }, {
+                title: "Danger",
+                color: "#f04922",
+                lowScore: 50,
+                highScore: 90
+            },];
+
+            am5.array.each(bandsData, function (data) {
+                var axisRange = xAxis.createAxisRange(xAxis.makeDataItem({}));
+
+                axisRange.setAll({
+                    value: data.lowScore,
+                    endValue: data.highScore
+                });
+
+                axisRange.get("axisFill").setAll({
+                    visible: true,
+                    fill: am5.color(data.color),
+                    fillOpacity: 0.8
+                });
+
+                axisRange.get("label").setAll({
+                    text: data.title,
+                    inside: true,
+                    radius: 15,
+                    fontSize: "0.9em",
+                    fill: root.interfaceColors.get("background")
+                });
+            });
+
+
+            // Make stuff animate on load
+            chart.appear(1000, 100);
+        });
+        // Date axis with labels near minor grid lines
+        am5.ready(function () {
+
+            // Create root element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            var root = am5.Root.new("date_axis");
+
+            const myTheme = am5.Theme.new(root);
+
+            // Move minor label a bit down
+            myTheme.rule("AxisLabel", ["minor"]).setAll({
+                dy: 1
+            });
+
+            // Tweak minor grid opacity
+            myTheme.rule("Grid", ["minor"]).setAll({
+                strokeOpacity: 0.08
+            });
+
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root.setThemes([
+                am5themes_Animated.new(root),
+                myTheme
+            ]);
+
+
+            // Create chart
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/
+            var chart = root.container.children.push(am5xy.XYChart.new(root, {
+                panX: false,
+                panY: false,
+                wheelX: "panX",
+                wheelY: "zoomX",
+                paddingLeft: 0
+            }));
+
+
+            // Add cursor
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
+            var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
+                behavior: "zoomX"
+            }));
+            cursor.lineY.set("visible", false);
+
+            var date = new Date();
+            date.setHours(0, 0, 0, 0);
+            var value = 100;
+
+            function generateData() {
+                value = Math.round((Math.random() * 10 - 5) + value);
+                am5.time.add(date, "day", 1);
+                return {
+                    date: date.getTime(),
+                    value: value
+                };
+            }
+
+            function generateDatas(count) {
+                var data = [];
+                for (var i = 0; i < count; ++i) {
+                    data.push(generateData());
+                }
+                return data;
+            }
+
+
+            // Create axes
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+            var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
+                maxDeviation: 0,
+                baseInterval: {
+                    timeUnit: "day",
+                    count: 1
+                },
+                renderer: am5xy.AxisRendererX.new(root, {
+                    minorGridEnabled: true,
+                    minGridDistance: 200,
+                    minorLabelsEnabled: true
+                }),
+                tooltip: am5.Tooltip.new(root, {})
+            }));
+
+            xAxis.set("minorDateFormats", {
+                day: "dd",
+                month: "MM"
+            });
+
+            var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+                renderer: am5xy.AxisRendererY.new(root, {})
+            }));
+
+
+            // Add series
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+            var series = chart.series.push(am5xy.LineSeries.new(root, {
+                name: "Series",
+                xAxis: xAxis,
+                yAxis: yAxis,
+                valueYField: "value",
+                valueXField: "date",
+                tooltip: am5.Tooltip.new(root, {
+                    labelText: "{valueY}"
+                })
+            }));
+
+            // Actual bullet
+            series.bullets.push(function () {
+                var bulletCircle = am5.Circle.new(root, {
+                    radius: 5,
+                    fill: series.get("fill")
+                });
+                return am5.Bullet.new(root, {
+                    sprite: bulletCircle
+                })
+            })
+
+            // Add scrollbar
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
+            chart.set("scrollbarX", am5.Scrollbar.new(root, {
+                orientation: "horizontal"
+            }));
+
+            var data = generateDatas(30);
+            series.data.setAll(data);
+
+
+            // Make stuff animate on load
+            // https://www.amcharts.com/docs/v5/concepts/animations/
+            series.appear(1000);
+            chart.appear(1000, 100);
+
+        });
+
 
     </script>
 @endsection

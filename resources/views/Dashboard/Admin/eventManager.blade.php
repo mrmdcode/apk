@@ -11,59 +11,61 @@
                 <div class="alert alert-danger">{{session('error')}}</div>
             @endif
 
-            <div class="table-responsive my-5">
-                <table class="table table-bordered mb-0">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>نام رویداد</th>
-                        <th>تعداد دیتا</th>
-                        <th> مقادیر (کم - نرمال - زیاد)</th>
-                        <th>مقدار E</th>
-                        <th>مقدار W</th>
-                        <th>مقدار N</th>
-                        <th>payload</th>
-                        <th>topic</th>
-                        <th>انتخاب</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @php $i=1; @endphp
-                    @forelse($events as $event)
+            <div class="default-table-area recent-orders">
+                <div class="table-responsive">
+                    <table class="table table-striped mb-0 align-middle">
+                        <thead>
                         <tr>
-                            <th scope="row">{{$i++}}</th>
-                            <td>{{$event->name}}</td>
-                            <td>{{$event->data->count()}}</td>
-                            <td>({{$event->min}} < {{$event->normal}} > {{$event->max}})</td>
-                            <td>{{$event->data->where('process',"error")->count()}}</td>
-                            <td>{{$event->data->where('process',"warning")->count()}}</td>
-                            <td>{{$event->data->where('process',"normal")->count()}}</td>
-                            <td>{{$event->payload}}</td>
-                            <td>{{$event->topic}}</td>
+                            <th>#</th>
+                            <th>نام رویداد</th>
+                            <th>تعداد دیتا</th>
+                            <th> مقادیر (کم - نرمال - زیاد)</th>
+                            <th>مقدار E</th>
+                            <th>مقدار W</th>
+                            <th>مقدار N</th>
+                            <th>payload</th>
+                            <th>topic</th>
+                            <th>انتخاب</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @php $i=1; @endphp
+                        @forelse($events as $event)
+                            <tr>
+                                <th scope="row">{{$i++}}</th>
+                                <td>{{$event->name}}</td>
+                                <td>{{$event->data->count()}}</td>
+                                <td>({{$event->min}} < {{$event->normal}} > {{$event->max}})</td>
+                                <td>{{$event->data->where('process',"error")->count()}}</td>
+                                <td>{{$event->data->where('process',"warning")->count()}}</td>
+                                <td>{{$event->data->where('process',"normal")->count()}}</td>
+                                <td>{{$event->payload}}</td>
+                                <td>{{$event->topic}}</td>
 
-                            <td>
-                                <input type="radio" name="choice" value="{{$event->id}}">
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8">دیتا نا موجود</td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                </table>
+                                <td>
+                                    <input type="radio" name="choice" value="{{$event->id}}">
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8">دیتا نا موجود</td>
+                            </tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="card pt-3 px-3 row ">
-                <div class="row ">
+            <div class="card mt-5 border-0">
+                <div class="row my-2">
 
                     <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.motorEventEdit',0)}}" class="btn btn-warning btn-block disabled" id="edit">ویرایش</a>
+                        <a href="{{route('admin.motorEventEdit',0)}}" class="btn btn-warning btn-block disabled w-100" id="edit">ویرایش</a>
                     </div>
                     <div class="col-xl-4 col-md-6">
-                        <a class="btn btn-outline-secondary btn-block" href="{{route('admin.motorEventCreate',$motorId)}}">ساخت اخطار</a>
+                        <a class="btn btn-outline-secondary btn-block w-100" href="{{route('admin.motorEventCreate',$motorId)}}">ساخت اخطار</a>
                     </div>
                     <div class="col-xl-4 col-md-6">
-                        <a href="{{route('admin.motorDelete',0)}}" class="btn btn-danger btn-block disabled"
+                        <a href="{{route('admin.motorDelete',0)}}" class="btn btn-danger btn-block disabled w-100"
                            id="delete">حذف</a>
                     </div>
                 </div>

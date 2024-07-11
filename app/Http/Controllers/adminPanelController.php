@@ -324,7 +324,7 @@ class adminPanelController extends Controller
     public function motorView($motorId)
     {
         $motor = CompanyMotors::find($motorId);
-        $logs = $motor->data()->limit(8);
+        $logs = $motor->data->take(8);
         return view('Dashboard.Admin.motorView',compact('motor','logs'));
     }
 
