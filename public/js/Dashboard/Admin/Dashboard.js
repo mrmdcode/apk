@@ -150,27 +150,12 @@ const chartInit =async () => {
 }
 var options = {
     series: [],
-    //     [
-    //     {
-    //         name: 'series1',
-    //         data: [0, 60, 70, 110, 60, 70, 100, 85, 90, 70 ,77]
-    //
-    //     },
-    //     {
-    //         name: 'series2',
-    //         data: [50, 50, 60, 90, 50, 60, 90, 55, 44, 66, 55]
-    //     },
-    //     {
-    //         name: 'series2',
-    //         data: [90, 40, 50, 80, 40, 50, 80, 85, 98, 85, 46]
-    //     }
-    // ],
     colors: ["#8EB0DE", "#90C6E0", "#E7EBF5"],
     chart: {
         height: 350,
         type: 'area',
         toolbar: {
-            show: false,
+            show: true,
         }
     },
     dataLabels: {
@@ -257,6 +242,84 @@ const dataListRefresh = async ()=>{
 
 
 setInterval(dataListRefresh,7000)
-
 mapInit()
 dataListRefresh()
+
+
+
+
+// تابعی برای گرد کردن زمان به نزدیک‌ترین بازه نیم ساعتی
+function roundToNearestHalfHour(date) {
+    const minutes = date.getMinutes();
+    const roundedMinutes = (minutes < 30) ? 0 : 30;
+    date.setMinutes(roundedMinutes, 0, 0);
+    return date;
+}
+
+// تبدیل تاریخ به رشته با فرمت YYYY-MM-DD HH:mm
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+}
+
+// تابع اصلی برای گرفتن و پردازش داده‌ها
+async function fetchAndProcessData() {
+    try {
+        // گرفتن داده از API
+        const response = await fetch('/dashboard/admin/motorsDatas');
+        const data = await  response.json();
+
+        // پردازش داده‌ها
+        let processedData = {};
+
+        data.forEach(item => {
+            const date = new Date(item.created_at);
+            const roundedTime = formatDate(roundToNearestHalfHour(date));
+
+            if (!processedData[roundedTime]) {
+                processedData[roundedTime] = { normal: 0, warning: 0, error: 0 };
+            }
+
+            processedData[roundedTime][item.process]++;
+        });
+
+        // آماده‌سازی داده‌ها برای چارت
+        const labels = Object.keys(processedData);
+        const normalData = labels.map(time => processedData[time].normal);
+        const warningData = labels.map(time => processedData[time].warning);
+        const errorData = labels.map(time => processedData[time].error);
+        chart.up
+        chart.updateOptions({
+
+            xaxis : {
+                categories: labels,
+            },
+            series: [
+                {
+                    name: 'normal',
+                    data: normalData
+
+                },
+                {
+                    name: 'warning',
+                    data: warningData
+                },
+                {
+                    name: 'error',
+                    data: errorData
+                }
+            ]
+        })
+
+        // حالا می‌توانید از chartData برای ساخت چارت خود استفاده کنید
+    } catch (error) {
+        console.error('Error fetching or processing data:', error);
+    }
+}
+
+// فراخوانی تابع اصلی
+fetchAndProcessData();

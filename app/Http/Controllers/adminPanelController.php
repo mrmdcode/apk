@@ -51,6 +51,12 @@ class adminPanelController extends Controller
         return response()->json($data);
     }
 
+    public function motorsDatas()
+    {
+        $data = MotorData::orderByDesc('created_at')->get(['id','data','process','created_at']);
+        return response()->json($data);
+    }
+
     public function companyManager()
     {
         $users = User::where('type','company')->orderBy('created_at','desc')->paginate(10);
@@ -326,6 +332,12 @@ class adminPanelController extends Controller
         $motor = CompanyMotors::find($motorId);
         $logs = $motor->data->take(8);
         return view('Dashboard.Admin.motorView',compact('motor','logs'));
+    }
+
+        public function motorViewData($motorId)
+    {
+        $motor = CompanyMotors::where('id',$motorId)->with('events.data')->orderBy('created_at','desc')->get();
+        return response()->json($motor);
     }
 
     public function MotorEvent($motorId)

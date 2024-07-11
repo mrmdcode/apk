@@ -47,6 +47,7 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
         Route::get("/",[\App\Http\Controllers\adminPanelController::class,'dashboard'])->name('admin.dashboard');
         Route::get("/motorLoc",[\App\Http\Controllers\adminPanelController::class,'motorLoc'])->name('admin.motorLoc');
         Route::get("/motorsData",[\App\Http\Controllers\adminPanelController::class,'motorsData'])->name('admin.motorsData');
+        Route::get("/motorsDatas",[\App\Http\Controllers\adminPanelController::class,'motorsDatas'])->name('admin.motorsDatas');
 
 
         Route::get("companyManager",[\App\Http\Controllers\adminPanelController::class,'companyManager'])->name('admin.companyManager');
@@ -65,6 +66,7 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
 
         Route::get("/motorManager",[\App\Http\Controllers\adminPanelController::class,'motorManager'])->name('admin.motorManager');
         Route::get("/motorManager/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorView'])->name('admin.motorView');
+        Route::get("/motorManager/{motorId}/data",[\App\Http\Controllers\adminPanelController::class,'motorViewData'])->name('admin.motorView');
         Route::get("/motor/edit/{motorId}",[\App\Http\Controllers\adminPanelController::class,'notfounded'])->name('admin.motorEdit');
         Route::get("/motorCreate",[\App\Http\Controllers\adminPanelController::class,'motorCreate'])->name('admin.motorCreate');
         Route::post("/motorStore",[\App\Http\Controllers\adminPanelController::class,'motorStore'])->name('admin.motorStore');

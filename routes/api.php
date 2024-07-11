@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/{motorId}/{sellerId}/{buyerId}/',[\App\Http\Controllers\companyPanelController::class,'motorMonitorData']);
+Route::get('/{motorId}/',[\App\Http\Controllers\adminPanelController::class,'motorViewData']);
