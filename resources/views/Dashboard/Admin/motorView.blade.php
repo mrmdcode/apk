@@ -1,6 +1,7 @@
 @extends('Dashboard.Admin.Layouts.app')
 
 @section('content')
+    <input type="hidden" id="motor_id" value="{{$motor->id}}">
     <div class="row">
         <div class="col-md-6 col-xl-4">
             <div class="card bg-white border-0 rounded-10 mt-5">
@@ -212,7 +213,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-
+        const getData = async () => {
+          data = await fetch(`/dashboard/admin/motorManager/${$('#motor_id').val()}/data`)
+            data = await data.json();
+            console.log(data)
+        }
+        getData()
         const ctx = document.getElementById('myChart');
         const linechart = document.getElementById('linechart');
 
