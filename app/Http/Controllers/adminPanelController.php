@@ -336,7 +336,7 @@ class adminPanelController extends Controller
 
         public function motorViewData($motorId)
     {
-        $motor = CompanyMotors::where('id',$motorId)->with('events.data')->orderBy('created_at','desc')->get();
+        $motor = CompanyMotors::where('id',$motorId)->with('events.data')->orderBy('created_at','desc')->first();
         return response()->json($motor);
     }
 

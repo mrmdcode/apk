@@ -270,7 +270,9 @@ function formatDate(date) {
 async function fetchAndProcessData() {
     try {
         // گرفتن داده از API
-        const response = await fetch('/dashboard/admin/motorsDatas');
+        const response = await fetch('/dashboard/admin/motorsDatas',{
+            headers: {'Accept':'application/json'}
+        });
         const data = await  response.json();
 
         // پردازش داده‌ها
