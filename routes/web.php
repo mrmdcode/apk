@@ -66,7 +66,7 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
 
         Route::get("/motorManager",[\App\Http\Controllers\adminPanelController::class,'motorManager'])->name('admin.motorManager');
         Route::get("/motorManager/{motorId}",[\App\Http\Controllers\adminPanelController::class,'motorView'])->name('admin.motorView');
-        Route::get("/motorManager/{motorId}/data",[\App\Http\Controllers\adminPanelController::class,'motorViewData'])->name('admin.motorView');
+        Route::get("/motorManager/{motorId}/data",[\App\Http\Controllers\adminPanelController::class,'motorViewData'])->name('admin.motor.data');
         Route::get("/motor/edit/{motorId}",[\App\Http\Controllers\adminPanelController::class,'notfounded'])->name('admin.motorEdit');
         Route::get("/motorCreate",[\App\Http\Controllers\adminPanelController::class,'motorCreate'])->name('admin.motorCreate');
         Route::post("/motorStore",[\App\Http\Controllers\adminPanelController::class,'motorStore'])->name('admin.motorStore');
