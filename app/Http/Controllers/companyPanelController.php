@@ -29,9 +29,10 @@ class companyPanelController extends Controller
     {
 
 
-        $motor = CompanyMotors::where('company_buyer_id',auth()->user()->company->id)
+        $motors = CompanyMotors::where('company_buyer_id',auth()->user()->company->id)
             ->orWhere('company_seller_id',auth()->user()->company->id)
             ->get();
+        $motor = $motors;
         $company = User::where('type','company')->count();
         $MCids =CompanyMotors::where('company_buyer_id',auth()->user()->company->id)
             ->orWhere('company_seller_id',auth()->user()->company->id)
@@ -45,7 +46,7 @@ class companyPanelController extends Controller
         ->orderByDesc('id')->first('motor_name')['motor_name'];
 
         $logs = $logs->count();
-        return view('Dashboard.Company.dashboard',compact('company','logs','logsT','logsE','lastmotor','motor'));
+        return view('Dashboard.Company.dashboard',compact('company','logs','logsT','logsE','motor','lastmotor','motors'));
     }
     public function motorLoc()
     {
@@ -54,22 +55,47 @@ class companyPanelController extends Controller
             ->get()
             ->map(function ($motor) {
 
-            return [
-                'text' => $motor->motor_name,
-                'coordinates' => [$motor->latitude ,$motor->longitude],
-                'color' => '#'.rand(111,999),
-            ];
-        });
+                return [
+                    'url' => route('admin.motorView',$motor->id),
+                    'title' => $motor->motor_name,
+                    'latitude' => $motor->latitude ,
+                    'longitude' => $motor->longitude,
+                ];
+            });
         return response()->json($motor);
     }
+    public function motorsDatas()
+    {
+        $motor = CompanyMotors::where('company_buyer_id',auth()->user()->company->id)
+            ->orWhere('company_seller_id',auth()->user()->company->id)
+            ->get('id')->map(function ($item) {return $item->id;});
+        $data = MotorData::whereIn('id',$motor)->orderByDesc('created_at')->get(['id','data','process','created_at']);
+        return response()->json($data);
+    }
 
+    public function motorsData()
+    {
+        $data = MotorData::where('company_buyer_id',auth()->user()->company->id)
+            ->orWhere('company_seller_id',auth()->user()->company->id)
+            ->orderByDesc('created_at')
+            ->with(['motor','event'])
+            ->take(17)
+            ->get();
+        return response()->json($data);
+    }
     public function motorManager()
     {
         $motors = CompanyMotors::where('company_buyer_id',auth()->user()->company->id)
             ->orWhere('company_seller_id',auth()->user()->company->id)
-            ->orderBy('created_at','desc')->get();
+            ->orderBy('created_at','desc')->paginate(10);
 
         return view('Dashboard.Company.motorManager',compact('motors'));
+    }
+
+    public function motorViewData($motorId)
+    {
+        $motor = CompanyMotors::where('id',$motorId)->with('events.data')->orderBy('created_at','desc')->first();
+        return response()->json($motor);
     }
     public function motorView($motorId)
     {
@@ -126,30 +152,12 @@ class companyPanelController extends Controller
 
     public function motorMonitorData($motorId,$sellerId,$buyerId)
     {
-        $motor = CompanyMotors::where('id',$motorId)->where('company_seller_id',$sellerId)->where('company_buyer_id',$buyerId)->first();
-        $lastTenData = $motor->data()->where('process','!=', null)->orderBy('created_at','DESC')->with('event')->take(7)->get();
-        $temperature = $motor->events()->where('payload',"d->temperature")->orderBy('created_at','desc')->first();
-        $temperatureData = $temperature->data()->where('process','!=', null)->orderBy('created_at','desc')->first();
-        $ambtemperature = $motor->events()->where('payload',"d->ambtemperature")->orderBy('created_at','desc')->first();
-        $ambtemperatureData = $ambtemperature->data()->where('process','!=', null)->orderBy('created_at','desc')->first();
-        $imgData = $motor->events()->get()->map(function ($item) {
-            return [
-                'name' => $item->name,
-                'payload' => $item->payload,
-                'data' => $item->data()->orderBy('created_at','desc')->where('process','!=',null)->first('data')->data,
-            ];
-        });
-        if ($motor)
-            return response()->json([
-                'motor' => $motor,
-                'lastTenData' => $lastTenData,
-                'temperature' => ['payload' =>$temperature->payload,'min' =>$temperature->min ,'max' =>$temperature->max,'data'=> $temperatureData->data],
-                'ambtemperature' => ['payload' =>$ambtemperature->payload,'min' =>$ambtemperature->min ,'max' =>$ambtemperature->max,'data'=> $ambtemperatureData->data],
-                'imgData' => $imgData,
-            ]);
-        else
-            return response('not found',404)->header('status-code','404');
-
-        return response('Server Error',500);
+        $motor = CompanyMotors::where('id',$motorId)
+            ->where('company_buyer_id',$buyerId)
+            ->where('company_seller_id',$sellerId)
+            ->with('events.data')
+            ->orderBy('created_at','desc')
+            ->first();
+        return response()->json($motor);
     }
 }

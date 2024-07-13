@@ -22,247 +22,247 @@ function imageDataSet(points) {
 
 
 
-        var bandsData = [
-            {
-                title: "cold",
-                color: "#f3eb0c",
-                lowScore: 0,
-                highScore:30
-            }, {
-                title: "above",
-                color: "#fdae19",
-                lowScore: 30,
-                highScore: 60
-            }, {
-                title: "hot",
-                color: "#f04922",
-                lowScore: 60,
-                highScore: 90
-            },];
+var bandsData = [
+    {
+        title: "cold",
+        color: "#f3eb0c",
+        lowScore: 0,
+        highScore:30
+    }, {
+        title: "above",
+        color: "#fdae19",
+        lowScore: 30,
+        highScore: 60
+    }, {
+        title: "hot",
+        color: "#f04922",
+        lowScore: 60,
+        highScore: 90
+    },];
 
 
-        var currentsOption = {
-            series: [],
-            colors: ["#8EB0DE", "#90C6E0", "#E7EBF5"],
-            chart: {
-                height: 350,
-                type: 'area',
-                toolbar: {
-                    show: true,
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'smooth'
-            },
-            grid: {
-                borderColor: '#EDEFF5',
-                strokeDashArray: 5,
-                xaxis: {
-                    lines: {
-                        show: true
-                    }
-                },
-                yaxis: {
-                    lines: {
-                        show: true
-                    }
-                }
-            },
-            xaxis: {
-                type: 'datetime',
-                categories: ["13 Jan", "14 Jan", "15 Jan", "16 Jan", "17 Jan", "18 Jan", "19 Jan", "20 Jan", "21 Jan", "22 Jan", "23 Jan"],
-                labels: {
-                    style: {
-                        colors: ['#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8',],
-                        fontSize: '14px',
-                    },
-                },
-                axisBorder: {
-                    show: false,
-                },
-                axisTicks: {
-                    show: false,
-                }
-            },
-            yaxis: {
-                labels: {
-                    style: {
-                        colors: ['#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8',],
-                        fontSize: '14px',
-                    },
-                }
-            },
-            legend: {
-                show: false,
-            },
-            tooltip: {
-                x: {
-                    format: 'dd/MM/yy HH:mm'
-                },
-            },
-            noData:{
-                text:"....ng",
+var currentsOption = {
+    series: [],
+    colors: ["#8EB0DE", "#90C6E0", "#E7EBF5"],
+    chart: {
+        height: 350,
+        type: 'area',
+        toolbar: {
+            show: true,
+        }
+    },
+    dataLabels: {
+        enabled: false
+    },
+    stroke: {
+        curve: 'smooth'
+    },
+    grid: {
+        borderColor: '#EDEFF5',
+        strokeDashArray: 5,
+        xaxis: {
+            lines: {
+                show: true
             }
-        };
-        var currentsChart = new ApexCharts(document.querySelector("#currents"), currentsOption);
-        currentsChart.render();
-
-
-
-
-
-        var temperatureOption = {
-            series: [],
-            colors: ["#8EB0DE", "#90C6E0", "#E7EBF5"],
-            chart: {
-                height: 350,
-                type: 'area',
-                toolbar: {
-                    show: true,
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'smooth'
-            },
-            grid: {
-                borderColor: '#EDEFF5',
-                strokeDashArray: 5,
-                xaxis: {
-                    lines: {
-                        show: true
-                    }
-                },
-                yaxis: {
-                    lines: {
-                        show: true
-                    }
-                }
-            },
-            xaxis: {
-                type: 'datetime',
-                categories: ["13 Jan", "14 Jan", "15 Jan", "16 Jan", "17 Jan", "18 Jan", "19 Jan", "20 Jan", "21 Jan", "22 Jan", "23 Jan"],
-                labels: {
-                    style: {
-                        colors: ['#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8',],
-                        fontSize: '14px',
-                    },
-                },
-                axisBorder: {
-                    show: false,
-                },
-                axisTicks: {
-                    show: false,
-                }
-            },
-            yaxis: {
-                labels: {
-                    style: {
-                        colors: ['#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8',],
-                        fontSize: '14px',
-                    },
-                }
-            },
-            legend: {
-                show: false,
-            },
-            tooltip: {
-                x: {
-                    format: 'dd/MM/yy HH:mm'
-                },
-            },
-            noData:{
-                text:"....Loading",
+        },
+        yaxis: {
+            lines: {
+                show: true
             }
-        };
-        var temperatureChart = new ApexCharts(document.querySelector("#temperatureChart"), temperatureOption);
-        temperatureChart.render();
+        }
+    },
+    xaxis: {
+        type: 'datetime',
+        categories: ["13 Jan", "14 Jan", "15 Jan", "16 Jan", "17 Jan", "18 Jan", "19 Jan", "20 Jan", "21 Jan", "22 Jan", "23 Jan"],
+        labels: {
+            style: {
+                colors: ['#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8',],
+                fontSize: '14px',
+            },
+        },
+        axisBorder: {
+            show: false,
+        },
+        axisTicks: {
+            show: false,
+        }
+    },
+    yaxis: {
+        labels: {
+            style: {
+                colors: ['#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8',],
+                fontSize: '14px',
+            },
+        }
+    },
+    legend: {
+        show: false,
+    },
+    tooltip: {
+        x: {
+            format: 'dd/MM/yy HH:mm'
+        },
+    },
+    noData:{
+        text:"....ng",
+    }
+};
+var currentsChart = new ApexCharts(document.querySelector("#currents"), currentsOption);
+currentsChart.render();
 
 
 
 
-        var vibrationOptions = {
-            series: [],
-            noData: {
-                text :"... Lodaing"
+
+var temperatureOption = {
+    series: [],
+    colors: ["#8EB0DE", "#90C6E0", "#E7EBF5"],
+    chart: {
+        height: 350,
+        type: 'area',
+        toolbar: {
+            show: true,
+        }
+    },
+    dataLabels: {
+        enabled: false
+    },
+    stroke: {
+        curve: 'smooth'
+    },
+    grid: {
+        borderColor: '#EDEFF5',
+        strokeDashArray: 5,
+        xaxis: {
+            lines: {
+                show: true
+            }
+        },
+        yaxis: {
+            lines: {
+                show: true
+            }
+        }
+    },
+    xaxis: {
+        type: 'datetime',
+        categories: ["13 Jan", "14 Jan", "15 Jan", "16 Jan", "17 Jan", "18 Jan", "19 Jan", "20 Jan", "21 Jan", "22 Jan", "23 Jan"],
+        labels: {
+            style: {
+                colors: ['#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8',],
+                fontSize: '14px',
             },
-            chart: {
-                id: 'area-datetime',
-                type: 'area',
-                height: 365,
-                zoom: {
-                    autoScaleYaxis: true
-                },
-                toolbar: {
-                    show: false,
-                }
+        },
+        axisBorder: {
+            show: false,
+        },
+        axisTicks: {
+            show: false,
+        }
+    },
+    yaxis: {
+        labels: {
+            style: {
+                colors: ['#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8',],
+                fontSize: '14px',
             },
-            colors: ['#ff001d','#b8c325','#757FEF'],
-            dataLabels: {
-                enabled: false
+        }
+    },
+    legend: {
+        show: false,
+    },
+    tooltip: {
+        x: {
+            format: 'dd/MM/yy HH:mm'
+        },
+    },
+    noData:{
+        text:"....Loading",
+    }
+};
+var temperatureChart = new ApexCharts(document.querySelector("#temperatureChart"), temperatureOption);
+temperatureChart.render();
+
+
+
+
+var vibrationOptions = {
+    series: [],
+    noData: {
+        text :"... Lodaing"
+    },
+    chart: {
+        id: 'area-datetime',
+        type: 'area',
+        height: 365,
+        zoom: {
+            autoScaleYaxis: true
+        },
+        toolbar: {
+            show: false,
+        }
+    },
+    colors: ['#ff001d','#b8c325','#757FEF'],
+    dataLabels: {
+        enabled: false
+    },
+    markers: {
+        size: 0,
+        style: 'hollow',
+    },
+    xaxis: {
+        type: 'datetime',
+        tickAmount: 6,
+        labels: {
+            style: {
+                colors: ['#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8',],
             },
-            markers: {
-                size: 0,
-                style: 'hollow',
+        },
+        axisBorder: {
+            show: false,
+        },
+        axisTicks: {
+            show: false,
+        }
+    },
+    yaxis: {
+        labels: {
+            style: {
+                colors: ['#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8',],
             },
-            xaxis: {
-                type: 'datetime',
-                tickAmount: 6,
-                labels: {
-                    style: {
-                        colors: ['#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8',],
-                    },
-                },
-                axisBorder: {
-                    show: false,
-                },
-                axisTicks: {
-                    show: false,
-                }
-            },
-            yaxis: {
-                labels: {
-                    style: {
-                        colors: ['#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8', '#A9A9C8',],
-                    },
-                },
-            },
-            grid: {
-                borderColor: '#EDEFF5',
-                strokeDashArray: 4,
-                xaxis: {
-                    lines: {
-                        show: true
-                    }
-                },
-                yaxis: {
-                    lines: {
-                        show: true
-                    }
-                },
-            },
-            tooltip: {
-                x: {
-                    format: 'dd MMM yyyy'
-                }
-            },
-            fill: {
-                type: 'gradient',
-                gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.7,
-                    opacityTo: 0.9,
-                    stops: [0, 100]
-                }
-            },
-        };
-        var vibrationC = new ApexCharts(document.querySelector("#vibrations"), vibrationOptions);
-        vibrationC.render();
+        },
+    },
+    grid: {
+        borderColor: '#EDEFF5',
+        strokeDashArray: 4,
+        xaxis: {
+            lines: {
+                show: true
+            }
+        },
+        yaxis: {
+            lines: {
+                show: true
+            }
+        },
+    },
+    tooltip: {
+        x: {
+            format: 'dd MMM yyyy'
+        }
+    },
+    fill: {
+        type: 'gradient',
+        gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.7,
+            opacityTo: 0.9,
+            stops: [0, 100]
+        }
+    },
+};
+var vibrationC = new ApexCharts(document.querySelector("#vibrations"), vibrationOptions);
+vibrationC.render();
 
 
 
@@ -278,7 +278,7 @@ function formatDate(date) {
 
 
 const getData = async () => {
-    data = await fetch(`/dashboard/admin/motorManager/${$('#motor_id').val()}/data`)
+    data = await fetch(`/api/${$('#motor_id').val()}/${$('#motor_seller').val()}/${$('#motor_buyer').val()}`)
     data = await data.json();
     console.log(data)
     allData = data;
@@ -366,15 +366,15 @@ const getData = async () => {
             }),
         },
         series : [
-                {
-                    name:vibration1.name,
-                    data:vibration1.data.map((item)=>{return parseInt(item['data'])})
-                },
-                {
-                    name:vibration2.name,
-                    data:vibration2.data.map((item)=>{return parseInt(item['data'])})
-                }
-                ]
+            {
+                name:vibration1.name,
+                data:vibration1.data.map((item)=>{return parseInt(item['data'])})
+            },
+            {
+                name:vibration2.name,
+                data:vibration2.data.map((item)=>{return parseInt(item['data'])})
+            }
+        ]
     })
 
     console.log(current1,current2,current3)
@@ -490,12 +490,12 @@ const getData = async () => {
         });
 
 
-            axisDataItem.animate({
-                key: "value",
-                to: temp2.data[temp2.data.length-1].data,
-                duration: 500,
-                easing: am5.ease.out(am5.ease.cubic)
-            });
+        axisDataItem.animate({
+            key: "value",
+            to: temp2.data[temp2.data.length-1].data,
+            duration: 500,
+            easing: am5.ease.out(am5.ease.cubic)
+        });
 
         chart.bulletsContainer.set("mask", undefined);
 
@@ -637,12 +637,12 @@ const getData = async () => {
         });
 
 
-            axisDataItem.animate({
-                key: "value",
-                to: temp1.data[temp1.data.length-1].data,
-                duration: 500,
-                easing: am5.ease.out(am5.ease.cubic)
-            });
+        axisDataItem.animate({
+            key: "value",
+            to: temp1.data[temp1.data.length-1].data,
+            duration: 500,
+            easing: am5.ease.out(am5.ease.cubic)
+        });
 
         chart.bulletsContainer.set("mask", undefined);
 

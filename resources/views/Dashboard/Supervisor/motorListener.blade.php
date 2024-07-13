@@ -20,8 +20,8 @@
                     height: 55px;
                 }
                 #bio{
-                    font-size: 21px;
-                    font-weight: 100;
+                    font-size: 18px;
+                    font-weight: 800;
                 }
             }
         }
@@ -47,12 +47,12 @@
         }
     </style>
 </head>
-<body>
+<body dir="rtl">
 
     <div class="container-fluid ">
-        <div class="row bg-secondary" id="navTab">
+        <div class="row bg-secondary pb-2" id="navTab">
             <div class="col-3 d-flex mt-1 justify-content-center">
-                <img src="{{asset('assets/dashboard/images/logo_dark.png')}}" alt="" id="logo">
+                <img src="{{asset('img/logo.png')}}" alt="" id="logo">
             </div>
             <div class="col-6">
                 <div class="row d-flex justify-content-around text-center text-light pt-3" id="bio">
@@ -69,50 +69,238 @@
             </div>
         </div>
 
+        <input type="hidden" id="motor_id" value="{{$motor->id}}">
+        <input type="hidden" id="motor_seller" value="{{$motor->seller->id}}">
+        <input type="hidden" id="motor_buyer" value="{{$motor->buyer->id}}">
 
-        <div class="row d-flex justify-content-evenly mt-5">
-            <div class="col" >
-                <div class="card">
-                    <div class="card-body" id="errorManager">
+
+        <div class="row">
+
+            <div class="col-md-6 col-xl-8">
+                <div class="card bg-white mt-5">
+                    <div class="card-body">
+                        <h3 class="fs-18 mb-20 pb-20 border-bottom">جریان ها</h3>
+                        <div id="currents" style="height: 350px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card bg-white mt-5">
+                    <div class="card-body">
+                        <h3 class="fs-18 mb-20 pb-20 border-bottom">دمای محیط</h3>
+                        <div id="gauge_1" style="height: 350px;"></div>
 
                     </div>
                 </div>
             </div>
-            <div class="col" >
-            <canvas id="myCanvas"></canvas>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-xl-8">
+                <div class="card bg-white mt-5">
+                    <div class="card-body">
+                        <h3 class="fs-18 mb-20 pb-20 border-bottom">دمای </h3>
+                        <div id="temperatureChart" class="w-100" style="height: 350px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card bg-white mt-5">
+                    <div class="card-body">
+                        <h3 class="fs-18 mb-20 pb-20 border-bottom">دمای سیم پیچ</h3>
+                        <div id="gauge_2" style="height: 350px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-xl-8">
+                <div class="card bg-white border-0 rounded-10 mt-5">
+                    <div class="card-body">
+                        <h3 class="fs-18 mb-20 pb-20  border-bottom">لرزش</h3>
+                        <div id="vibrations"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card bg-white border-0 rounded-10 mt-5" style="height: 350px;">
+                    <div class="card-body">
+                        <h3 class="fs-18 mb-20 pb-20  border-bottom">حجم درتای دریافتی</h3>
+                        <canvas id="eventChart" ></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-xl-8 p-5">
+                <canvas id="mototoImage" class="w-100"></canvas>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card bg-white border-0 rounded-10 mt-5">
+                    <div class="card-body" >
+                        <h3 class="border-bottom fs-18 mb-20 pb-20">هشدار ها</h3>
+                        <div class="row"  style="height: 266px;overflow: auto;" >
+
+                            @forelse($motor->data->take(20) as $log)
+                                @if($log->process == 'error')
+                                    <div class="alert alert-danger">موتور در ساعت {{verta($log->created_at)->format('H:i:s')}} اررور {{$log->event->name}} داده و مقادیر طبیعی خود را رد کرده .</div>
+                                @endif
+                                @if($log->process == 'warning')
+                                    <div class="alert alert-warning">   موتور در ساعت {{verta($log->created_at)->format('H:i:s')}} وارنینگ {{$log->event->name}}  داده و مقادیر طبیعی خود را رد کرده . </div>
+                                @endif
+                            @empty
+                                <div class="alert alert-success">
+                                    هیچ دیتا error یا warning ندارد .
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-white mt-5">
+                    <div class="card-body">
+                        <div class="row border-bottom  justify-content-between mb-20 pb-20">
+                            <h3 class="fs-18  col">رویداد ها</h3>
+                            <a href="{{route('admin.motorEvent',$motor->id)}}" class="col-3 text-primary">مشاهده همه </a>
+                        </div>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <th>نام</th>
+                            <th>کمترین</th>
+                            <th>عادی</th>
+                            <th>بیشترین</th>
+                            <th>---</th>
+                            </thead>
+                            <tbody>
+                            @forelse($motor->events->take(3) as $event)
+                                <tr>
+                                    <td>{{$event->name}}</td>
+                                    <td>{{$event->min}}</td>
+                                    <td>{{$event->normal}}</td>
+                                    <td>{{$event->max}}</td>
+                                    <td><a href="{{route('admin.motorEventEdit',$event->id)}}" class="btn btn-secondary fw-semibold text-white py-2 px-2 me-2"><i class="ri-add-line"></i> ویرایش</a></td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5">no data     </td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <div class="row">
 
 
-        <div class="row mt-5">
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body" style="height:450px">
-                        <canvas id="linechart" class="chart chart-line" data="data" labels="labels" legend="true" series="series" options="options" click="onClick"></canvas>
+            <div class="col-md-6 col-xl-4">
 
-                    </div>
-                </div>
             </div>
-            <div class="col-3">
-                <div class="card ">
-                    <div class="card-body">
-                        <div id="gaugeContainer_1"></div>
-                    </div>
-                </div>
-            </div>
+        </div>
+        <div class="row">
+            <div class="card bg-white border-0 rounded-10 my-2">
+                <div class="card-body">
+                     <form>
+                        <div class="form-row">
+                            <div class="row">
+                                <div class="form-group col-md-6 ">
+                                    <label for="company_seller_id" class="col-form-label">شناسه فروشنده</label>
+                                    <input type="text" value="{{$motor->seller->company_name}}" class="form-control" disabled/>
+                                </div>
+                                <div class="form-group col-md-6 ">
+                                    <label for="company_buyer_id" class="col-form-label">شناسه خریدار</label>
+                                    <input type="text" value="{{$motor->buyer->company_name}}" class="form-control" disabled/>
+                                </div>
+                            </div>
 
-            <div class="col-3">
-                <div class="card ">
-                    <div class="card-body">
-                        <div id="gaugeContainer_2"></div>
-                    </div>
+                            <div class="row">
+                                <div class="form-group col-md-6 ">
+                                    <label for="motor_name" class="col-form-label">نام موتور</label>
+                                    <input type="text" name="motor_name" value="{{$motor->motor_name}}" disabled
+                                           class="form-control" id="motor_name" placeholder="نام موتور">
+                                </div>
 
-                </div>
-                <div class="card mt-2">
-                    <div class="card-body">
-                        <span id="counter"></span>
-                    </div>
+                                <div class="form-group col-md-6 ">
+                                    <label for="motor_model" class="col-form-label">مدل موتور</label>
+                                    <input type="text" name="motor_model" value="{{$motor->motor_model}}" disabled
+                                           class="form-control" id="motor_model" placeholder="مدل موتور">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6 ">
+                                    <label for="motor_year" class="col-form-label">سال تولید</label>
+                                    <input type="text" name="motor_year" value="{{$motor->motor_year}}" disabled
+                                           class="form-control" id="motor_year" placeholder="سال تولید" />
+                                </div>
+
+                                <div class="form-group col-md-6 ">
+                                    <label for="motor_start" class="col-form-label">تاریخ شروع</label>
+                                    <input type="text" name="motor_start" value="{{$motor->motor_start}}" disabled
+                                           class="form-control" id="motor_start" placeholder="تاریخ شروع">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6 ">
+                                    <label for="motor_serial" class="col-form-label">سریال موتور</label>
+                                    <input type="text" name="motor_serial" value="{{$motor->motor_serial}}" disabled
+                                           class="form-control" id="motor_serial" placeholder="سریال موتور">
+                                </div>
+
+                                <div class="form-group col-md-6 ">
+                                    <label for="motor_address" class="col-form-label">آدرس موتور</label>
+                                    <input type="text" name="motor_address" value="{{$motor->motor_address}}" disabled
+                                           class="form-control" id="motor_address" placeholder="آدرس موتور">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6 ">
+                                    <label for="motor_description" class="col-form-label">توضیحات موتور</label>
+                                    <textarea name="motor_description" value="{{$motor->motor_description}}"
+                                              class="form-control  control" disabled id="motor_description"
+                                              placeholder="توضیحات موتور"></textarea>
+                                </div>
+
+                                <div class="form-group col-md-6 ">
+                                    <label for="allowable_winding_temperature" class="col-form-label">حداکثر دمای سیم پیچی</label>
+                                    <input type="text" name="allowable_winding_temperature"
+                                           value="{{$motor->allowable_winding_temperature}}" disabled class="form-control"
+                                           id="allowable_winding_temperature" placeholder="حداکثر دمای سیم پیچی">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6 ">
+                                    <label for="allowable_bearing_temperature" class="col-form-label">حداکثر دمای یاتاقان</label>
+                                    <input type="text" name="allowable_bearing_temperature"
+                                           value="{{$motor->allowable_bearing_temperature}}" disabled class="form-control"
+                                           id="allowable_bearing_temperature" placeholder="حداکثر دمای یاتاقان">
+                                </div>
+
+                                <div class="form-group col-md-6 ">
+                                    <label for="hungarian_vibration" class="col-form-label">لرزش</label>
+                                    <input type="text" name="hungarian_vibration" value="{{$motor->hungarian_vibration}}" disabled
+                                           class="form-control" id="hungarian_vibration" placeholder="لرزش">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6 mt-4">
+                                <a class="btn btn-outline-secondary text-center ">دانلود فایل 1</a>
+                                <a class="btn btn-outline-secondary mx-3">دانلود فایل 2</a>
+                                <a class="btn btn-outline-secondary">دانلود فایل 3</a>
+                            </div>
+
+
+                        </div>
+
+
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -128,150 +316,9 @@
 
 <!-- App js -->
 <script src="{{asset("assets/dashboard/js/app.js")}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
-        const motorId =$('input[name="motorId"]').val();
-        const sellerId =$('input[name="sellerId"]').val();
-        const buyerId =$('input[name="buyerId"]').val();
-        console.log(motorId)
+<script src="{{asset("js/dashboard/Supervisor/supervisor.js")}}"></script>
 
-        function imageDataSet(points) {
-            // انتخاب کانواس و تنظیم اندازه آن برابر با اندازه تصویر
-            const canvas = document.getElementById('myCanvas');
-            const ctx = canvas.getContext('2d');
-
-            // بارگذاری تصویر
-            const img = new Image();
-            img.src = '/img/motorImage.jpg';
-            img.onload = function() {
-                canvas.width = img.width;
-                canvas.height = img.height;
-                ctx.drawImage(img, 0, 0);
-
-                // نقاطی که می‌خواهید داده‌ها را نمایش دهید (X, Y)
-
-
-                // افزودن نقاط و داده‌ها به تصویر
-                points.forEach(point => {
-                    // نمایش نقطه
-
-                    // نمایش داده
-                    ctx.font = '32px Arial';
-                    ctx.fillStyle = 'black';
-                    ctx.fillText(point.data, point.x + 10, point.y + 5);
-                });
-            };
-        };
-
-        const errorManager = (data) => {
-            $('#errorManager').html("");
-          data.map((item)=>{
-              payload = item.event.payload.split('->')[1]
-
-              if (item.process == 'normal')
-                  $('#errorManager').append(`<div class="alert alert-success">اخطار ${item.event.name}  طبیعی است .مقادیر طبیعی = ${item.event.min} < ${item.event.normal} < ${item.event.max} | مقدار ارسالی موتور =   ${JSON.parse(item.data).d[payload]} </div>`)
-              if (item.process == 'warning')
-                  $('#errorManager').append(`<div class="alert alert-warning">اخطار ${item.event.name}  در بازه  مجاز  است .مقادیر طبیعی = ${item.event.min} < ${item.event.normal} < ${item.event.max} | مقدار ارسالی موتور =   ${JSON.parse(item.data).d[payload]} </div>`)
-              if (item.process == 'error'){
-                  $('#errorManager').append(`<div class="alert alert-danger">اخطار ${item.event.name}  در بازه غیر مجاز  است .مقادیر طبیعی = ${item.event.min} < ${item.event.normal} < ${item.event.max} | مقدار ارسالی موتور =   ${JSON.parse(item.data).d[payload]} </div>`)
-              }
-          });
-        }
-
-        var g_2 = new JustGage({
-            id: "gaugeContainer_2",
-            value: 30,
-            min: 0,
-            max: 100,
-            title: "میزان آمپر",
-            label: "دما محیط",
-            levelColors: ['#FF0000','#00FF00','#FF0000']
-        });
-        var g_1 = new JustGage({
-            id: "gaugeContainer_1",
-            value: 2,
-            min: 0,
-            max: 100,
-            title: "میزان آمپر",
-            label: "دما سیم پیچ",
-            levelColors: ['#FF0000', '#FFCC00', '#00FF00']
-        });
-
-
-
-
-        const linechart = document.getElementById('linechart');
-
-        let chart = new Chart(linechart, {
-
-            type: 'line',
-            data: {
-                labels: ['Red', 'green', 'Yellow',],
-                datasets: [
-                    {
-                        label: 'Error',
-                        data: [12, 1, 3, 5, 2, 3],
-                        fill: true, // <-- Here
-                    },
-                    {
-                        label: 'Warning',
-                        data: [120, 19, 3, 5, 2, 13],
-                        fill: true, // <-- Here
-                    },{
-                        label: 'normal',
-                        data: [12, 19, 31, 50, 2, 3],
-                        fill: true, // <-- Here
-                    }
-
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-
-        const refresh = async () => {
-            freshData = await fetch(`/api/${motorId}/${sellerId}/${buyerId}/`);
-            freshData = await freshData.json();
-            console.log(freshData)
-            g_1.refresh(JSON.parse(freshData.temperature.data).d[freshData.temperature.payload.split('->')[1]]);
-            g_2.refresh(JSON.parse(freshData.ambtemperature.data).d[freshData.ambtemperature.payload.split('->')[1]]);
-
-
-
-            point = [
-
-                { x: 798, y: 50, data: JSON.parse(freshData.imgData[0].data).d[freshData.imgData[0].payload.split('->')[1]] },
-                { x: 796, y: 141, data: JSON.parse(freshData.imgData[1].data).d[freshData.imgData[1].payload.split('->')[1]] },
-                { x: 798, y: 199, data: JSON.parse(freshData.imgData[2].data).d[freshData.imgData[2].payload.split('->')[1]] },
-                { x: 798, y: 298, data: JSON.parse(freshData.imgData[3].data).d[freshData.imgData[3].payload.split('->')[1]]  },
-                { x: 798, y: 199, data: JSON.parse(freshData.imgData[4].data).d[freshData.imgData[4].payload.split('->')[1]] },
-                { x: 798, y: 371, data: JSON.parse(freshData.imgData[5].data).d[freshData.imgData[5].payload.split('->')[1]] },
-            ]
-            imageDataSet(point)
-
-
-            errorManager(freshData.lastTenData)
-
-
-        }
-        document.addEventListener('DOMContentLoaded',refresh);
-        setInterval(refresh,20000)
-        x = 20
-        setInterval(()=>{
-            $('#counter').text(x--)
-            if (x ==0)
-                x =20
-        },1000)
-
-
-    </script>
 </body>
 </html>

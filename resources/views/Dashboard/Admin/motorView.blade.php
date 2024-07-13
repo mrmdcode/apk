@@ -61,7 +61,11 @@
         </div>
 
     </div>
+
     <div class="row">
+        <div class="col-md-6 col-xl-8 p-5">
+            <canvas id="mototoImage" class="w-100"></canvas>
+        </div>
         <div class="col-md-6 col-xl-4">
             <div class="card bg-white border-0 rounded-10 mt-5">
                 <div class="card-body" >
@@ -83,9 +87,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-md-6 col-xl-4">
             <div class="card bg-white mt-5">
                 <div class="card-body">
                     <div class="row border-bottom  justify-content-between mb-20 pb-20">
@@ -118,6 +119,14 @@
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+
+        <div class="col-md-6 col-xl-4">
+
         </div>
     </div>
     <div class="row">

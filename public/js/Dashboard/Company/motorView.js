@@ -278,7 +278,7 @@ function formatDate(date) {
 
 
 const getData = async () => {
-    data = await fetch(`/dashboard/admin/motorManager/${$('#motor_id').val()}/data`)
+    data = await fetch(`/dashboard/company/FA/motorManager/${$('#motor_id').val()}/data`)
     data = await data.json();
     console.log(data)
     allData = data;

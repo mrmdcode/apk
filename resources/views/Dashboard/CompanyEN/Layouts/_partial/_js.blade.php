@@ -12,3 +12,5 @@
 <script src="{{asset('/assets/js/simplebar.min.js')}}"></script>
 <script src="{{asset('/assets/js/apexcharts.min.js')}}"></script>
 <script src="{{asset('/assets/js/amcharts.js')}}"></script>
+<script src="{{asset('/assets/js/custom/ecommerce-chart.js')}}"></script>
+<script src="{{asset('/assets/js/custom/custom.js')}}"></script>

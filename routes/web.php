@@ -98,7 +98,10 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
         Route::prefix('FA')->group(function (){
             Route::get('/',[\App\Http\Controllers\companyPanelController::class,'dashboard'])->name('company.dashboard');
             Route::get('motorLoc',[\App\Http\Controllers\companyPanelController::class,'MotorLoc'])->name('company.MotorLoc');
+            Route::get("/motorsData",[\App\Http\Controllers\companyPanelController::class,'motorsData'])->name('company.motorsData');
+            Route::get("/motorsDatas",[\App\Http\Controllers\companyPanelController::class,'motorsDatas'])->name('company.motorsDatas');
             Route::get('motorManager',[\App\Http\Controllers\companyPanelController::class,'MotorManager'])->name('company.motorManager');
+            Route::get("/motorManager/{motorId}/data",[\App\Http\Controllers\companyPanelController::class,'motorViewData'])->name('company.motor.data');
             Route::get('motorView/{id}',[\App\Http\Controllers\companyPanelController::class,'MotorView'])->name('company.motorView');
             Route::get('eventManager/{id}',[\App\Http\Controllers\companyPanelController::class,'motorEvent'])->name('company.motorEvent');
             Route::get('eventView/{id}',[\App\Http\Controllers\companyPanelController::class,'eventView'])->name('company.eventView');
