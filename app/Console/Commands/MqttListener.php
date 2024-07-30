@@ -2,10 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Events\MqttPublishEvent;
+use App\Jobs\errorMailSenderJob;
 use App\Jobs\Process;
 use App\Models\CompanyMotors;
 use App\Models\MotorData;
 use App\Models\MotorEvent;
+use App\Services\MqttService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use PhpMqtt\Client\Facades\MQTT;
@@ -43,7 +46,15 @@ class MqttListener extends Command
     }
 
 
+    public function handless()
+    {
+        $mqtt = MQTT::connection();
+        $mqtt->subscribe('#', function (string $topic, string $message) {
+            var_dump($topic,$message);
+        });
+        $mqtt->loop(true);
 
+    }
     public function handle()
     {
         try {
@@ -91,6 +102,19 @@ class MqttListener extends Command
                         'data' => $data,
                         'process' => 'error'
                     ]);
+                    event(new MqttPublishEvent('notife/app',
+                        json_encode(
+                            [
+                                "d"=>[
+                                    'company_seller'=>$CM->seller->id,
+                                    'company_buyer'=>$CM->buyer->id,
+                                    'alarm'=>$ME->name,
+                                    'motor'=>$CM->motor_name,
+                                    'status'=>1,
+
+                                ]
+                            ]
+                        )));
                     echo '|----------------------------------------'."\n"
                         .'| motor name : '.$CM->motor_name ."\n"
                         .'| event name : '.$ME->name."\n"
@@ -98,6 +122,7 @@ class MqttListener extends Command
                         .'| result: Error'."\n"
                         .'|----------------------------------------'."\n"
                     ;
+                    errorMailSenderJob::dispatch($CM->id);
                 }
 
 

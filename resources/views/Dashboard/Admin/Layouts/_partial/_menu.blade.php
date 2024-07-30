@@ -130,13 +130,16 @@
     <div class="bg-white z-1 admin">
         <div class="d-flex align-items-center admin-info border-top">
             <div class="flex-shrink-0">
-                <a href="profile.html" class="d-block">
-                    <img src="assets/images/admin.jpg" class="rounded-circle wh-54" alt="admin">
+                <a href="{{route('admin.dashboard')}}" class="d-block">
+                    <img src="{{auth()->user()->company->company_logo}}" class="rounded-circle wh-54" alt="admin">
                 </a>
             </div>
             <div class="flex-grow-1 ms-3 info">
-                <a href="profile.html" class="d-block name">جان اسمیت</a>
-                <a href="logout.html">خروج</a>
+                <a href="{{route('company.dashboard')}}" class="d-block name">{{auth()->user()->company->company_name}}</a>
+                <form class="d-none" id="f-logout" action="{{route('logout')}}" method="post">
+                    @csrf
+                </form>
+                <a onclick="$('#f-logout').submit()">خروج</a>
             </div>
         </div>
     </div>

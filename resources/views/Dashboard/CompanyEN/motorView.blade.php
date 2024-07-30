@@ -1,4 +1,4 @@
-@extends('Dashboard.Company.Layouts.app')
+@extends('Dashboard.CompanyEN.Layouts.app')
 
 @section('content')
     <input type="hidden" id="motor_id" value="{{$motor->id}}">

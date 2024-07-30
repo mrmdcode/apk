@@ -34,7 +34,15 @@ Route::get('/', function () {
 });
 
 
-Auth::routes();
+Auth::routes([
+
+    'register' => false, // Register Routes...
+
+    'reset' => false, // Reset Password Routes...
+
+    'verify' => false, // Email Verification Routes...
+
+]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -119,16 +127,16 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function (){
 
         });
         Route::prefix('EN')->group(function (){
-            Route::get('/',[\App\Http\Controllers\companyPanelController::class,'dashboard'])->name('company.dashboard.en');
-            Route::get('motorManager',[\App\Http\Controllers\companyPanelController::class,'MotorManager'])->name('company.motorManager.en');
-            Route::get('motorView/{id}',[\App\Http\Controllers\companyPanelController::class,'MotorView'])->name('company.motorView.en');
-            Route::get('eventManager',[\App\Http\Controllers\companyPanelController::class,'EventManager'])->name('company.eventManager.en');
-            Route::get('eventView/{id}',[\App\Http\Controllers\companyPanelController::class,'eventView'])->name('company.eventView.en');
-            Route::get('motorData',[\App\Http\Controllers\companyPanelController::class,'motorData'])->name('company.motorData.en');
-            Route::get('motorError',[\App\Http\Controllers\companyPanelController::class,'motorError'])->name('company.motorError.en');
-            Route::get("/motorError/motorErrorWithOutNormal",[\App\Http\Controllers\companyPanelController::class,'motorErrorWithOutNormal'])->name('company.motorErrorWON');
-            Route::get('messages',[\App\Http\Controllers\companyPanelController::class,'messages'])->name('company.messages.en');
-            Route::post('message',[\App\Http\Controllers\companyPanelController::class,'messageStore'])->name('company.messageStore.en');
+            Route::get('/',[\App\Http\Controllers\companyEnPanelController::class,'dashboard'])->name('company.dashboard.en');
+            Route::get('motorManager',[\App\Http\Controllers\companyEnPanelController::class,'MotorManager'])->name('company.motorManager.en');
+            Route::get('motorView/{id}',[\App\Http\Controllers\companyEnPanelController::class,'MotorView'])->name('company.motorView.en');
+            Route::get('eventManager',[\App\Http\Controllers\companyEnPanelController::class,'EventManager'])->name('company.eventManager.en');
+            Route::get('eventView/{id}',[\App\Http\Controllers\companyEnPanelController::class,'eventView'])->name('company.eventView.en');
+            Route::get('motorData',[\App\Http\Controllers\companyEnPanelController::class,'motorData'])->name('company.motorData.en');
+            Route::get('motorError',[\App\Http\Controllers\companyEnPanelController::class,'motorError'])->name('company.motorError.en');
+            Route::get("/motorError/motorErrorWithOutNormal",[\App\Http\Controllers\companyEnPanelController::class,'motorErrorWithOutNormal'])->name('company.motorErrorWON');
+            Route::get('messages',[\App\Http\Controllers\companyEnPanelController::class,'messages'])->name('company.messages.en');
+
 
         });
 

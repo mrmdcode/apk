@@ -57,28 +57,28 @@
 <body>
     <div class="wrapper">
         <div class="header">
-            Dear company, buyer or seller of engine named {$motor_name} and serial {$motor_serial}, your engine has violated the requirements of the seller
+            Dear company, buyer or seller of engine named {{$details['motor_name']}} and serial {{$details['motor_serial']}}, your engine has violated the requirements of the seller
         </div>
         <div class="body">
             <h2>10 last Error Data</h2>
 
-            <ul>
-                    <li class="col col-1">#</li>
-                    <li class="col col-1">motor name</li>
-                    <li class="col col-2">event name</li>
-                    <li class="col col-3">allowed amount</li>
-                    <li class="col col-3">data amount</li>
-                    <li class="col col-4">date/time</li>
-            </ul>
 
-            <ul>
-                <li></li>
-                <li>a</li>
-                <li>b</li>
-                <li>c</li>
-                <li>d</li>
-                <li>e</li>
-            </ul>
+            <table>
+                <thead>
+                <th></th>
+                </thead>
+                <tbody>
+                @foreach($details['datas'] as $data)
+
+                    <tr>
+                        <td>{{$data->event->name}}</td>
+                        <td>{{$data->event->max}} > {{$data->event->normal}} > {{$data->event->min}}</td>
+                        <td>{{$data->data}}</td>
+                        <td>{{$data->process}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
         </div>
         <div class="footer"></div>
     </div>

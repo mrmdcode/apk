@@ -1,4 +1,4 @@
-@extends("Dashboard.Company.Layouts.app")
+@extends("Dashboard.CompanyEN.Layouts.app")
 @section("content")
     <div class="card m-t-5">
         <div class="card-body">

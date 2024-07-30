@@ -1,4 +1,4 @@
-@extends('Dashboard.Company.Layouts.app')
+@extends('Dashboard.CompanyEN.Layouts.app')
 @section('content')
     @if(session('success'))
         <div class="alert alert-success">{{session('success')}}</div>

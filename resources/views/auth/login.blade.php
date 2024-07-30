@@ -70,4 +70,8 @@
         </div>
     </div>
 </div>
+
+
+<script src="{{asset("/js/mqtt.min.js")}}"></script>
+<script src="{{asset('/js/main.js')}}"></script>
 @endsection

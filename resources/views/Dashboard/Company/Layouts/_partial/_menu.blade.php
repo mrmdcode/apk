@@ -60,8 +60,8 @@
     <div class="bg-white z-1 company">
         <div class="d-flex align-items-center company-info border-top">
             <div class="flex-shrink-0">
-                <a href="profile.html" class="d-block">
-                    <img src="{{auth()->user()->company->company_logo}}" class="rounded-circle wh-54" alt="company">
+                <a href="{{route('company.dashboard')}}" class="d-block">
+                    <img src="{{auth()->user()->company->company_logo}}" class="rounded-circle wh-54" alt="admin">
                 </a>
             </div>
             <div class="flex-grow-1 ms-3 info">

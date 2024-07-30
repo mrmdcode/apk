@@ -35,26 +35,25 @@ class errorMailSenderJob implements ShouldQueue
     public function handle()
     {
         try {
-            echo $this->motor_id;
-            $motor = CompanyMotors::find($this->motor_id);
-            if (!appChatController::checkLastMessageTime($motor->seller->user->id,2)){
-//                Mail::to($motor->seller->user->email)->send(new logErrorMail());
-//                    echo 'mail send';
-                appChatController::store(null,$motor->seller->user->id,'your motor has error','superHigh','mail');
-//                    echo 'mail mess send';
-//                Mail
-//::to($motor->buyer->user->email)->send(new logErrorMail());
-//                    echo 'mail send';
-                appChatController::store(null,$motor->buyer->user->id,'your motor has error','superHigh','mail');
-//                    echo 'mail mess send';
+            $motor = CompanyMotors::where('id', $this->motor_id)->first();
+            $details = [
+                "motor_name"=>$motor->name,
+                "motor_serial"=>$motor->motor_serial,
+                "datas"=>$motor->data()->with('event')->orderByDesc('created_at')->take(10)->get(),
+                "company_buyer_name"=>$motor->buyer->company_name,
+                "company_seller_name"=>$motor->seller->company_name,
+                "company_buyer_mail"=>$motor->buyer->user->email,
+                "company_seller_mail"=>$motor->seller->user->email,
+                ];
+            Mail::to($motor->seller->user->email)->send(new logErrorMail($details));
+            Mail::to($motor->buyer->user->email)->send(new logErrorMail($details));
+            Mail::to(env("SUPERVISOR_MAIL"))->send(new logErrorMail($details));
 
-                    echo 'email send';
-            }
-                   echo 'mail sended ago ';
-
+//            Mail::to($motor->buyer->user->email,$motor->seller->user->email)->send(new logErrorMail($details));
+            echo 'success';
         }
         catch (\Exception $e){
-            var_dump($e);
+            echo "how err ".$e->getMessage()."\n";
         }
     }
 }

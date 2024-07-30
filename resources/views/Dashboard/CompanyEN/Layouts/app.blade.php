@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
 
     <meta charset="utf-8">
@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="MrMDCode">
 
-    @include('Dashboard.Company.Layouts._partial._css')
+    @include('Dashboard.CompanyEN.Layouts._partial._css')
     @yield('css')
 
     <title>@yield('title')</title>
@@ -26,14 +26,14 @@
 </div>
 
 
-@include('Dashboard.Company.Layouts._partial._menu')
+@include('Dashboard.CompanyEN.Layouts._partial._menu')
 </div>
 
 
 <div class="container-fluid">
     <div class="main-content d-flex flex-column">
 
-        @include('Dashboard.Company.Layouts._partial._topMenu')
+        @include('Dashboard.CompanyEN.Layouts._partial._topMenu')
 
 
         @yield('content')
