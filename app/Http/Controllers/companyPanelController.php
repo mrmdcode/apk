@@ -56,7 +56,7 @@ class companyPanelController extends Controller
             ->map(function ($motor) {
 
                 return [
-                    'url' => route('admin.motorView',$motor->id),
+                    'url' => route('company.motorView.en',$motor->id),
                     'title' => $motor->motor_name,
                     'latitude' => $motor->latitude ,
                     'longitude' => $motor->longitude,
