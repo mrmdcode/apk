@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 //    return appChatController::dontSeenMessages(auth()->user()->company->id);
-    return redirect()->route('login');
+//    return redirect()->route('login');
 //    return view('Emails.logError');
 //\Illuminate\Support\Facades\Mail::to('mdka2885mdka@gmail.com')
 //    ->send(new \App\Mail\logErrorMail('d'));
@@ -28,6 +28,72 @@ Route::get('/', function () {
 //    return response()->json($users);
 //    return  [$motor->seller->user->email,$motor->buyer->user->email];
 //    $mail = Mail::to('md2885ka2885@gmail.com')->send(new logErrorMail());
+
+    $d =  CompanyMotors::where('id',4)->first()->events()->where('payload','=','d->Current1')->first()->data;
+    function calculate_times_and_switches($data) {
+        $total_time = 0;
+        $off_time = 0;
+        $on_time = 0;
+        $off_count = 0;
+        $on_count = 0;
+        $last_time = null;
+        $last_status = null;
+
+        foreach ($data as $entry) {
+            $timestamp = $entry['created_at'];
+            $status = $entry['data'];
+
+            $time = strtotime($timestamp);
+
+            if ($last_time !== null) {
+                $elapsed_time = ($time - $last_time);
+                $total_time += $elapsed_time;
+
+                if ($last_status == "0") {
+                    $off_time += $elapsed_time;
+                    if ($status != "0") {
+                        $on_count++;
+                    }
+                } else {
+                    $on_time += $elapsed_time;
+                    if ($status == "0") {
+                        $off_count++;
+                    }
+                }
+            }
+
+            $last_time = $time;
+            $last_status = $status;
+        }
+
+        // اگر موتور هنوز خاموش یا روشن است و داده‌ها تمام شده‌اند
+        if ($last_time !== null) {
+            $current_time = time();
+            $elapsed_time = ($current_time - $last_time);
+            $total_time += $elapsed_time;
+
+            if ($last_status == "0") {
+                $off_time += $elapsed_time;
+            } else {
+                $on_time += $elapsed_time;
+            }
+        }
+
+        return [
+            'total_time' => $total_time / 3600, // به ساعت
+            'off_time' => $off_time / 3600, // به ساعت
+            'on_time' => $on_time / 3600, // به ساعت
+            'off_count' => $off_count,
+            'on_count' => $on_count
+        ];
+    }
+
+    $results = calculate_times_and_switches($d);
+    echo "Total time: " . $results['total_time'] . " hours\n";
+    echo "Off time: " . $results['off_time'] . " hours\n";
+    echo "On time: " . $results['on_time'] . " hours\n";
+    echo "Number of times turned off: " . $results['off_count']-1 . "\n";
+    echo "Number of times turned on: " . $results['on_count'] . "\n";
 
 
 

@@ -58,6 +58,7 @@
                     <canvas id="eventChart" ></canvas>
                 </div>
             </div>
+
         </div>
 
     </div>
@@ -65,7 +66,34 @@
     <div class="row">
         <div class="col-md-6 col-xl-8 p-5">
             <canvas id="mototoImage" class="w-100"></canvas>
+            <div class="card bg-white mt-5">
+                <div class="card-body">
+                    <div class="row border-bottom  justify-content-between mb-20 pb-20">
+                        <h3 class="fs-18  col">اطلاعات استارت</h3>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <th>تایم تحویل</th>
+                        <th>مدت خاموشی</th>
+                        <th>مدت کار</th>
+                        <th>تعداد خاموشی ها</th>
+                        <th>تعداد استارت ها</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{$data['total_time']}}</td>
+                            <td>{{$data['off_time']}}</td>
+                            <td>{{$data['on_time']}}</td>
+                            <td>{{$data['off_count']}}</td>
+                            <td>{{$data['on_count']}}</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+
         <div class="col-md-6 col-xl-4">
             <div class="card bg-white border-0 rounded-10 mt-5">
                 <div class="card-body" >
