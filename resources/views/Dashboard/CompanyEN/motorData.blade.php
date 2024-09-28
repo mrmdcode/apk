@@ -15,10 +15,10 @@
                         <th>#</th>
                         <th>نام موتور</th>
                         <th>نام رویداد</th>
-                        <th>خریدار</th>
-                        <th>دیتا</th>
-                        <th>وضعیت</th>
-                        <th>زمان دریافت</th>
+                        <th>buyer</th>
+                        <th>volume of data</th>
+                        <th>status</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>

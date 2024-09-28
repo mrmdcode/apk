@@ -13,12 +13,12 @@
                             </div>
                         </div>
                         <div class="flex-grow-1 ms-md-3 mt-3 mt-md-0">
-                            <span class="fs-15 fw-semibold">تعداد موتور ها</span>
+                            <span class="fs-15 fw-semibold">Motor Count</span>
                             <div class="d-flex align-items-center justify-content-between my-1 up-down">
                                 <h3 class="body-font fw-bold fs-3 mb-0">{{$motor->count()}}</h3>
                                 {{--                                <span class="bg-success text-success bg-opacity-10 fs-13 fw-semibold py-1 px-2 rounded-2">%5.80 <i class="flaticon-arrow-up fs-13 fw-normal ms-1"></i></span>--}}
                             </div>
-                            <p class="fs-15">با احتصاب موتور های غیرفعال</p>
+                            <p class="fs-15">Counting inactive engines</p>
                         </div>
                     </div>
                 </div>
@@ -34,12 +34,12 @@
                             </div>
                         </div>
                         <div class="flex-grow-1 ms-md-3 mt-3 mt-md-0">
-                            <span class="fs-15 fw-semibold">پیام های خوانده نشده</span>
+                            <span class="fs-15 fw-semibold">Unread messages</span>
                             <div class="d-flex align-items-center justify-content-between my-1 up-down">
                                 <h3 class="body-font fw-bold fs-3 mb-0">+5 </h3>
                                 {{--                                <span class="bg-danger text-danger bg-opacity-10 fs-13 fw-semibold py-1 px-2 rounded-2">%1.04 <i class="flaticon-down-filled-triangular-arrow fs-13 fw-normal ms-1"></i></span>--}}
                             </div>
-                            <p class="fs-15">شرکت فروشنده و خریدار</p>
+                            <p class="fs-15">Seller and buyer company</p>
                         </div>
                     </div>
                 </div>
@@ -55,12 +55,12 @@
                             </div>
                         </div>
                         <div class="flex-grow-1 ms-md-3 mt-3 mt-md-0">
-                            <span class="fs-15 fw-semibold">تعداد هشدار</span>
+                            <span class="fs-15 fw-semibold">Number of alerts</span>
                             <div class="d-flex align-items-center justify-content-between my-1 up-down">
                                 <h3 class="body-font fw-bold fs-3 mb-0">{{$logs}}</h3>
                                 {{--                                <span class="bg-success text-success bg-opacity-10 fs-13 fw-semibold py-1 px-2 rounded-2">%5.80 <i class="flaticon-arrow-up fs-13 fw-normal ms-1"></i></span>--}}
                             </div>
-                            <p class="fs-15">تمامی هشدار ها</p>
+                            <p class="fs-15">All warnings</p>
                         </div>
                     </div>
                 </div>
@@ -76,12 +76,12 @@
                             </div>
                         </div>
                         <div class="flex-grow-1 ms-md-3 mt-3 mt-md-0">
-                            <span class="fs-15 fw-semibold">تعداد هشدار E </span>
+                            <span class="fs-15 fw-semibold">number of alerts E</span>
                             <div class="d-flex align-items-center justify-content-between my-1 up-down">
                                 <h3 class="body-font fw-bold fs-3 mb-0">{{$logsE}}</h3>
                                 {{--                                <span class="bg-success text-success bg-opacity-10 fs-13 fw-semibold py-1 px-2 rounded-2">%5.80 <i class="flaticon-arrow-up fs-13 fw-normal ms-1"></i></span>--}}
                             </div>
-                            <p class="fs-15">فقط هشدار های Error</p>
+                            <p class="fs-15">just alert Error</p>
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
             <div class="card bg-white border-0 mb-4">
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-center border-bottom pb-20 mb-20">
-                        <h4 class="fw-bold fs-18 mb-0">آخرین موتور های ثبتی</h4>
+                        <h4 class="fw-bold fs-18 mb-0">last created motor</h4>
                     </div>
                     <ul class="ps-0 mb-0 list-unstyled max-h-406" data-simplebar="init"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="left: -34px; bottom: 0px;"><div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;"><div class="simplebar-content" style="padding: 0px;">
 
@@ -111,7 +111,7 @@
                                                         <a href="{{route('admin.motorView',$motorSingle->id)}}" class="d-flex align-items-center text-decoration-none">
                                                             <div class="flex-grow-1 ms-10">
                                                                 <h4 class="fw-semibold fs-15 mb-0 text-body">{{$motorSingle->motor_name}}</h4>
-                                                                <span class="text-primary fs-14"> سریال :{{$motorSingle->motor_serial}}</span>
+                                                                <span class="text-primary fs-14"> Serial :{{$motorSingle->motor_serial}}</span>
                                                             </div>
                                                         </a>
                                                         <div class="d-flex align-items-center mt-2 mt-sm-0">
@@ -124,7 +124,7 @@
                                                 </li>
                                             @empty
                                                 <li class="border-bottom border-color-gray mb-3 pb-3">
-                                                    دیتا در دسترس نیست
+                                                    Data is not available
                                                 </li>
                                             @endforelse
 
@@ -148,7 +148,7 @@
         <div class="col-md-7">
             <div class="card bg-white border-0">
                 <div class="card-body">
-                    <h6 class="border-bottom pb-4 p-1">دیتای درحال دریافت</h6>
+                    <h6 class="border-bottom pb-4 p-1">Receiving data</h6>
                     <div id="dataReceivering"></div>
 
                 </div>

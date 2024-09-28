@@ -19,14 +19,14 @@
                         <tr class="text-center">
                             <th scope="col" class="text-primary text-start">
                                 <div class="form-check">
-                                    <label class="form-check-label ms-2" for="flexCheckDefault">نام/مالک</label>
+                                    <label class="form-check-label ms-2" for="flexCheckDefault">Name/Owner</label>
                                 </div>
                             </th>
-                            <th scope="col">سریال</th>
-                            <th scope="col">زمان استارت</th>
-                            <th scope="col">زمان نصب</th>
-                            <th scope="col">هشدار Err\هشدار War\هشدار Nor</th>
-                            <th scope="col">عملیات</th>
+                            <th scope="col">Serial</th>
+                            <th scope="col">Start Data</th>
+                            <th scope="col">Installation Data</th>
+                            <th scope="col">alert Nor\alert War\alert Err</th>
+                            <th scope="col">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -52,7 +52,7 @@
                                     {{$motor->motor_serial}}
                                 </td>
                                 <td>
-                                    {{ $motor->motor_start? $motor->motor_start : "راه اندازی نشده"  }}
+                                    {{ $motor->motor_start? $motor->motor_start : "no Data"  }}
                                 </td>
                                 <td>
                                     {{ verta($motor->instalation_date)->format("y/m") }}
@@ -74,13 +74,13 @@
                                             <li>
                                                 <a class="dropdown-item" href="{{route('company.motorView',$motor->id)}}">
                                                     <i data-feather="link-2"></i>
-                                                    مشاهده
+                                                    View
                                                 </a>
                                             </li>
                                             <li>
                                                 <a class="dropdown-item" href="javascript:;">
                                                     <i data-feather="link-2"></i>
-                                                    دریافت گزارشات (Excel)
+                                                    Receive Report (Excel)
                                                 </a>
                                             </li>
                                         </ul>

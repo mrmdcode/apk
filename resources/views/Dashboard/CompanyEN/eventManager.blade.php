@@ -12,14 +12,14 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>نام رویداد</th>
-                        <th>تعداد دیتا</th>
-                        <th> مقادیر (کم - نرمال - زیاد)</th>
-                        <th>مقدار E</th>
-                        <th>مقدار W</th>
-                        <th>مقدار N</th>
-                        <th>payload</th>
-                        <th>topic</th>
+                        <th>Event Name</th>
+                        <th>Data Count</th>
+                        <th> Values (min - normal - max)</th>
+                        <th>Count E</th>
+                        <th>Count W</th>
+                        <th>Count N</th>
+                        <th>Payload</th>
+                        <th>Topic</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,7 +40,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8">دیتا نا موجود</td>
+                            <td colspan="8">Data is not available</td>
                         </tr>
                     @endforelse
                     </tbody>
