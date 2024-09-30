@@ -28,7 +28,7 @@
         <div class="col-md-6 col-xl-8">
             <div class="card bg-white mt-5">
                 <div class="card-body">
-                    <h3 class="fs-18 mb-20 pb-20 border-bottom">دمای </h3>
+                    <h3 class="fs-18 mb-20 pb-20 border-bottom">دما </h3>
                     <div id="temperatureChart" class="w-100" style="height: 350px;"></div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
         <div class="col-md-6 col-xl-4">
             <div class="card bg-white border-0 rounded-10 mt-5" style="height: 350px;">
                 <div class="card-body">
-                    <h3 class="fs-18 mb-20 pb-20  border-bottom">حجم درتای دریافتی</h3>
+                    <h3 class="fs-18 mb-20 pb-20  border-bottom">حجم دیتای دریافتی</h3>
                     <canvas id="eventChart" ></canvas>
                 </div>
             </div>

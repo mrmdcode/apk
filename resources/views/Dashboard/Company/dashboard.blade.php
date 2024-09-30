@@ -18,7 +18,7 @@
                                 <h3 class="body-font fw-bold fs-3 mb-0">{{$motor->count()}}</h3>
                                 {{--                                <span class="bg-success text-success bg-opacity-10 fs-13 fw-semibold py-1 px-2 rounded-2">%5.80 <i class="flaticon-arrow-up fs-13 fw-normal ms-1"></i></span>--}}
                             </div>
-                            <p class="fs-15">با احتصاب موتور های غیرفعال</p>
+                            <p class="fs-15">با احتساب موتور های غیرفعال</p>
                         </div>
                     </div>
                 </div>
