@@ -93,7 +93,7 @@
                         @if($errors->has('motor_address'))
                             <div class="form-control-feedback">{{ $errors->first('motor_address') }}</div>
                         @endif
-                        <small class="form-text text-muted">مثال: پایین تر از مدرسه افق دانش</small>
+                        <small class="form-text text-muted">مثال: استان ، شهر ، خیابان ، کوچه</small>
                     </div>
 
                     <div class="form-group col-md-6 @if($errors->has('motor_description')) has-danger @endif">
