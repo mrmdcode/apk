@@ -183,7 +183,7 @@
                 </div>
 
 
-                <button type="submit" class="btn btn-primary m-3 px-5">ایجاد</button>
+                <button type="submit" class="btn btn-primary m-3 px-5">ذخیره</button>
             </form>
 
         </div>
